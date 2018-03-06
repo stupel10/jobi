@@ -42,14 +42,14 @@ function get_user(){
 	global $database;
 
 	if (
-			$database->count("users",
+			$database->count("users_details",
 							[ "name" => $_POST['name'],
 							"password" => $_POST['pass']
 			]) > 1
 		){
 		return false;
 	}
-	$user = $database->select("users",['id','name','surname','email','birthdate','date_registered','jobs_registered'] , [
+	$user = $database->select("users_details",['id','name','surname','email','birthdate','date_registered','jobs_registered'] , [
 		"name" => $_POST['name'],
 		"password" => $_POST['pass']
 	]);

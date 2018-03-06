@@ -52,16 +52,12 @@
 				<input type="hidden" name="user_id" value="<?php echo $user['id']?>">
 			</p>
 			<p class="form-group">
-				<!--<input type="submit" value="FAKE SCAN" class="btn btn-small btn-danger"/>-->
-
-
+				<input type="submit" value="FAKE SCAN" class="btn btn-small btn-danger"/>
 			</p>
 		</form>
-		<!--<div class="row">-->
-		<!--	<div class="col-sm-12">-->
-		<!--		<input type="file" accept="image/*" >-->
-		<!--	</div>-->
-		<!--</div>-->
+		<div>
+			<?php require '_inc/scan.php'; ?>
+		</div>
 	</div>
 	<div class="col-sm-12">
 		<h3>Yours CVs:</h3>

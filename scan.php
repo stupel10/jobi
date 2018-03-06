@@ -1,22 +1,22 @@
 
 
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/grid.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/version.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/detector.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/formatinf.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/errorlevel.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/bitmat.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/datablock.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/bmparser.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/datamask.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/rsdecoder.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/gf256poly.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/gf256.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/decoder.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/qrcode.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/findpat.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/alignpat.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode-master/src/databr.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/grid.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/version.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/detector.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/formatinf.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/errorlevel.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/bitmat.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/datablock.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/bmparser.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/datamask.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/rsdecoder.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/gf256poly.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/gf256.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/decoder.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/qrcode.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/findpat.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/alignpat.js"></script>
+<script type="text/javascript" src="assets/js/jsqrcode/src/databr.js"></script>
 
 
 <!--<form action='#' onsubmit="return false;">-->
