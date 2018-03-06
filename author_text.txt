@@ -1,0 +1,16 @@
+kniznicea MEDOO:
+-> jednoducha kniznica pre databazy
+
+kniznica whoops
+-> perfektna kniznica na errory
+
+kniznica PHPAuth
+-> kniznica pre autorizaciu.
+
+
+
+
+Co treba upravit:
+-> PHPAuth -> upravil som v triede Auth na 38 riadku povodneho suboru -> vracalo to $language, napisal som to na tvrdo lebo to hadzalo error.
+-> vsetky validacie do DB
+-> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne

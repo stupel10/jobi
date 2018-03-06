@@ -13,10 +13,14 @@
 	$whoops->register();
 
 
-	//global variables
+	// global variables
 	require_once 'variables.php';
-	//database
+
+	// database
 	require_once 'database.php';
+
+	// authorization -  PHPAuth
+	require_once 'authorization.php';
 
 	// global functions
 	require_once 'global_functions.php';

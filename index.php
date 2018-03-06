@@ -50,29 +50,6 @@
 				<input type="submit" value="LOG IN" class="btn btn-small btn-primary">
 			</p>
 		</form>
-	</div><br><br><br><br>
-
-	<div class="row">
-		<div class="col-sm-12">
-			<h3>Dotazy k stretnutiu:</h3>
-			<ul class="list-group">
-				<li class="list-group-item">
-					<input type="checkbox">
-					<p>
-						QR kod: <br>
-						- <a href="https://developers.google.com/chart/infographics/docs/qr_codes?csw=1">GOOGLE CHARTS API</a><br>
-						- alebo nejaku PHP kniznicu? <a href="https://stackoverflow.com/questions/5943368/dynamically-generating-a-qr-code-with-php">Tu su nejake</a>
-						<br>
-					</p>
-				</li>
-				<li class="list-group-item">
-					<input type="checkbox">
-					<p>
-						Na co hlavne sa teraz zamerat?
-					</p>
-				</li>
-			</ul>
-		</div>
 	</div>
 
 <?php include_once "_partials/footer.php" ?>
