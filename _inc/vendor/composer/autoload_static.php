@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
 {
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'ZxcvbnPhp\\' => 10,
+        ),
         'W' => 
         array (
             'Whoops\\' => 7,
@@ -14,6 +18,7 @@ class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'PHPAuth\\' => 8,
         ),
         'M' => 
         array (
@@ -22,6 +27,10 @@ class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
     );
 
     public static $prefixDirsPsr4 = array (
+        'ZxcvbnPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bjeavons/zxcvbn-php/src',
+        ),
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
@@ -30,10 +39,25 @@ class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'PHPAuth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpauth/phpauth',
+        ),
         'Medoo\\' => 
         array (
             0 => __DIR__ . '/..' . '/catfan/medoo/src',
         ),
+    );
+
+    public static $classMap = array (
+        'EasyPeasyICS' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
+        'PHPMailer' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
+        'PHPMailerOAuth' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauth.php',
+        'PHPMailerOAuthGoogle' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmaileroauthgoogle.php',
+        'POP3' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.pop3.php',
+        'SMTP' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.smtp.php',
+        'ntlm_sasl_client_class' => __DIR__ . '/..' . '/phpmailer/phpmailer/extras/ntlm_sasl_client.php',
+        'phpmailerException' => __DIR__ . '/..' . '/phpmailer/phpmailer/class.phpmailer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -41,6 +65,7 @@ class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a::$classMap;
 
         }, null, ClassLoader::class);
     }

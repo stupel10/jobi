@@ -1,6 +1,7 @@
 {
     "require": {
         "catfan/medoo": "^1.5",
-        "filp/whoops" : "2.1.14"
+        "filp/whoops" : "2.1.14",
+        "phpauth/phpauth": "dev-master"
     }
 }

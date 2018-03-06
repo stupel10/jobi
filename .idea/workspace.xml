@@ -2,41 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c209c8f9-c1da-466a-8a4f-b7a65a38aad6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/qr_codes/1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/qr_codes/2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/qr_codes/3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/qr_codes/4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/qr_codes/5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_inc/scan.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/images/qr_codes/green.svg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/COPYING" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/COPYING" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/README" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/README" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/alignpat.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/alignpat.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/bitmat.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/bitmat.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/bmparser.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/bmparser.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/datablock.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/datablock.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/databr.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/databr.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/datamask.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/datamask.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/decoder.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/decoder.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/detector.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/detector.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/errorlevel.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/errorlevel.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/findpat.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/findpat.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/formatinf.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/formatinf.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/gf256.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/gf256.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/gf256poly.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/gf256poly.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/grid.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/grid.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/qrcode.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/qrcode.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/rsdecoder.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/rsdecoder.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/test.html" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/test.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/assets/js/jsqrcode-master/src/version.js" afterPath="$PROJECT_DIR$/assets/js/jsqrcode/src/version.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/global_functions.php" afterPath="$PROJECT_DIR$/_inc/global_functions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/job-qr-scan.php" afterPath="$PROJECT_DIR$/_inc/job-qr-scan.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/registration.php" afterPath="$PROJECT_DIR$/_inc/registration.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_partials/footer.php" afterPath="$PROJECT_DIR$/_partials/footer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_partials/header.php" afterPath="$PROJECT_DIR$/_partials/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scan.php" afterPath="$PROJECT_DIR$/scan.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user-homepage.php" afterPath="$PROJECT_DIR$/user-homepage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/composer.json" afterPath="$PROJECT_DIR$/_inc/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/composer.lock" afterPath="$PROJECT_DIR$/_inc/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/_inc/vendor/composer/autoload_classmap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/vendor/composer/autoload_psr4.php" afterPath="$PROJECT_DIR$/_inc/vendor/composer/autoload_psr4.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/vendor/composer/autoload_static.php" afterPath="$PROJECT_DIR$/_inc/vendor/composer/autoload_static.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_inc/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/_inc/vendor/composer/installed.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -67,11 +39,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="job-qr-scan.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="job-qr-scan.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_inc/job-qr-scan.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+            <state relative-caret-position="168">
+              <caret line="8" column="42" lean-forward="false" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="composer.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_inc/composer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -124,6 +106,8 @@
         <option value="$PROJECT_DIR$/_partials/header.php" />
         <option value="$PROJECT_DIR$/_inc/job-qr-scan.php" />
         <option value="$PROJECT_DIR$/_inc/scan.php" />
+        <option value="$PROJECT_DIR$/_inc/composer.lock" />
+        <option value="$PROJECT_DIR$/_inc/composer.json" />
       </list>
     </option>
   </component>
@@ -278,7 +262,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30387000" />
+    <option name="totallyTimeSpent" value="31435000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="778" extended-state="0" />
@@ -292,7 +276,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53824365" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.53824365" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -476,14 +460,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_inc/composer.lock">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/_inc/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -580,14 +556,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="77">
           <caret line="39" column="30" lean-forward="false" selection-start-line="39" selection-start-column="30" selection-end-line="39" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_inc/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -711,10 +679,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/_inc/composer.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/_inc/job-qr-scan.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+        <state relative-caret-position="168">
+          <caret line="8" column="42" lean-forward="false" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_inc/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
