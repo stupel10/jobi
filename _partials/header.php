@@ -26,6 +26,15 @@
 </head>
 <body>
 <br>
+<?php
+
+	if (!$auth->isLogged()) {
+		header('HTTP/1.0 403 Forbidden');
+		echo "Forbidden";
+
+		exit();
+	}
+?>
 <header class="container">
 	<?= flash()->display() ?>
 </header>

@@ -5,18 +5,20 @@ require_once '../config.php';
 if( $_SERVER['REQUEST_METHOD']==='POST' ){
 	$email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
 	$password = $_POST['password'];
-	//$password_repeat = $_POST['repeat'];
-	$password_repeat = $_POST['password'];
+	$remember = $_POST['rememberMe'] ? true : false;
 
-	$register = $auth->register($email,$password,$password_repeat);
 
-	if( $register['error'] ){
-		flash()->error($register['message']);
+	$login = $auth->login($email, $password, $remember);
+
+	if($login['error']) {
+		flash()->error($login['message']);
 		redirect('/index-company.php');
-	}else {
-		flash()->success('Company registered!');
+	} else {
+		// Logged in successfully, set cookie, display success message
+		do_login( $login );
+
+		flash()->success('Successfully logged in!');
 		redirect('/company-homepage.php');
 	}
-
 }
 

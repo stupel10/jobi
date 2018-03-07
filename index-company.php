@@ -29,6 +29,10 @@
 		<p class="form-group">
 			<input type="email" name="email" class="form-control" placeholder = "COMPANY EMAIL" >
 			<input type="password" name="password" class="form-control" placeholder = "COMPANY PASSWORD" >
+			<label for="remember-me" class="checkbox">
+				<input type="checkbox" value="remember-me" name="rememberMe" checked>
+				Remember me
+			</label>
 		</p>
 		<p class="form-group">
 			<input type="submit" value="LOG IN" class="btn btn-small btn-primary">

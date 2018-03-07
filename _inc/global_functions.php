@@ -122,3 +122,26 @@ function redirect( $page ){
 	header("Location: $base_url/$page");
 	die();
 }
+
+/**
+ * Do Login
+ *
+ * Create cookie after logging in
+ *
+ * @param $data
+ * @return bool
+ */
+function do_login( $data ){
+
+	global $auth_config;
+
+	setcookie(
+		$auth_config->cookie_name,
+		$data['hash'],
+		$data['expire'],
+		$auth_config->cookie_path,
+		$auth_config->cookie_domain,
+		$auth_config->cookie_secure,
+		$auth_config->cookie_http
+	);
+}
