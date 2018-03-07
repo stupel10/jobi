@@ -25,8 +25,10 @@
 	<script src="assets/js/app.js"></script>
 </head>
 <body>
-
-<header></header>
+<br>
+<header class="container">
+	<?= flash()->display() ?>
+</header>
 <main>
 	<section>
 		<div class="container">

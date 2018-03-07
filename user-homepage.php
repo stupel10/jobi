@@ -1,7 +1,6 @@
 <?php
 
 	require_once '_inc/config.php';
-
 	$user = get_user();
 	if( ! $user ) show_404();
 

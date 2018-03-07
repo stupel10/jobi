@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
 {
+    public static $files = array (
+        '6157b075b923803e5ef157aeb43b83bd' => __DIR__ . '/..' . '/tamtamchik/simple-flash/src/function.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'Z' => 
         array (
@@ -14,6 +18,10 @@ class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
         'W' => 
         array (
             'Whoops\\' => 7,
+        ),
+        'T' => 
+        array (
+            'Tamtamchik\\SimpleFlash\\' => 23,
         ),
         'P' => 
         array (
@@ -34,6 +42,10 @@ class ComposerStaticInit9300685f1934e027c0da8a4ed7d63a6a
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
+        ),
+        'Tamtamchik\\SimpleFlash\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tamtamchik/simple-flash/src',
         ),
         'Psr\\Log\\' => 
         array (

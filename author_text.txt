@@ -8,9 +8,86 @@ kniznica PHPAuth
 -> kniznica pre autorizaciu.
 
 
+najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
+1. nacitam fotku do input type=file
+2. rozpoznam QR kod cez kniznicu https://github.com/LazarSoft/jsqrcode
+
+
 
 
 Co treba upravit:
 -> PHPAuth -> upravil som v triede Auth na 38 riadku povodneho suboru -> vracalo to $language, napisal som to na tvrdo lebo to hadzalo error.
 -> vsetky validacie do DB
 -> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne
+
+
+
+
+Dilemy:
+1. skenovanie QR kodov - nacitanie kamery:
+
+ ------------------------------
+|                              |
+|      SCANNING QR CODES       |
+|                              |
+ ------------------------------
+
+1.
+<input type="file"> a nasledne na to pouzit kniznicu na rozpoznanie QR z fotky,
+napr: JSQRCODE :
+
+plusy:
+- iOS aj android
+- moznost pouzit fotku z galerie
+
+problemy:
+- na PC nejde odfotit, iba nahrat.
+- co ak user odfoti rozmazanu foto?
+
+---------------------------------------------------------------------------------------------------------
+
+2.
+pouzit externu aplikaciu a tu volat pri skenovani, napr:
+- http://www.pic2shop.com/developers.html
+
+nevyhody:
+- asi to bude tazsie implementovat
+- user musi mat nainstalovanu apku
+
+vyhody;
+- spolahlivost
+
+---------------------------------------------------------------------------------------------------------
+
+3.1
+getUserMedia() + kniznica na rozpoznanie QR z fotiek
+
+plusy
+- kamera na stranke
+
+
+problemy:
+- iOS partial support !!! - mne to napr. vobec nejde
+
+tutorials:
+https://codepen.io/blaberus/pen/raGdBG
+
+---------------------------------------------------------------------------------------------------------
+
+3.2
+quaqqaJS
+
+- alternativa k getUserMedia - vraj funguje aj pre iOS
+https://github.com/serratus/quaggaJS#browser-support
+---------------------------------------------------------------------------------------------------------
+3.3
+https://whatwebcando.today/camera-microphone.html
+
+ - ide aj na iOS - ale iba safari ...
+ - vychadza to z  https://www.html5rocks.com/en/tutorials/getusermedia/intro/a/
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------------

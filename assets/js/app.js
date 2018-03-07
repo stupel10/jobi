@@ -3,8 +3,8 @@
 	var user_reg_form = $('#reg-user');
 	makeAjax(user_reg_form);
 
-	var company_reg_form = $('#reg-company');
-	makeAjax(company_reg_form);
+	// var company_reg_form = $('#reg-company');
+	// makeAjax(company_reg_form);
 
 	var scan_qr_form = $('#job-qr-scan');
 	makeAjax(scan_qr_form);

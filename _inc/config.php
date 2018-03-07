@@ -1,5 +1,7 @@
 <?php
 
+	// require stuff
+	if( !session_id() ) @session_start();
 	require_once 'vendor/autoload.php';
 
 	// show all errors

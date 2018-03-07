@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf0698ae27a50cd33cca79f6c8187675",
+    "content-hash": "59802f3cfc3e6a4162178e3366b7f291",
     "packages": [
         {
             "name": "bjeavons/zxcvbn-php",
@@ -53,16 +53,16 @@
         },
         {
             "name": "catfan/medoo",
-            "version": "v1.5.4",
+            "version": "v1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
-                "reference": "a6b7b05b18fa7c8f955e259d491344b1db9a51bf"
+                "reference": "4e51f7483b01ed1195565bb64e85ea8bd17b63cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/catfan/Medoo/zipball/a6b7b05b18fa7c8f955e259d491344b1db9a51bf",
-                "reference": "a6b7b05b18fa7c8f955e259d491344b1db9a51bf",
+                "url": "https://api.github.com/repos/catfan/Medoo/zipball/4e51f7483b01ed1195565bb64e85ea8bd17b63cb",
+                "reference": "4e51f7483b01ed1195565bb64e85ea8bd17b63cb",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +108,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2018-01-08T20:01:12+00:00"
+            "time": "2018-03-07T09:42:23+00:00"
         },
         {
             "name": "filp/whoops",
@@ -332,6 +332,65 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
+        },
+        {
+            "name": "tamtamchik/simple-flash",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tamtamchik/simple-flash.git",
+                "reference": "5fc0da268b6640a395f6ccd3c9c12d67f5e6b355"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tamtamchik/simple-flash/zipball/5fc0da268b6640a395f6ccd3c9c12d67f5e6b355",
+                "reference": "5fc0da268b6640a395f6ccd3c9c12d67f5e6b355",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev",
+                    "1.2.x": "1.2.x-dev",
+                    "1.1.x": "1.1.x-dev",
+                    "1.0.x": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tamtamchik\\SimpleFlash\\": "src"
+                },
+                "files": [
+                    "src/function.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yuri Tkachenko",
+                    "email": "yuri.tam.tkachenko@gmail.com",
+                    "homepage": "http://tamtamchika.net"
+                }
+            ],
+            "description": "Easy, framework agnostic flash notifications for PHP.",
+            "homepage": "http://github.com/tamtamchik/simple-flash",
+            "keywords": [
+                "agnostic",
+                "flash",
+                "messages",
+                "notifications"
+            ],
+            "time": "2017-04-05T08:56:49+00:00"
         }
     ],
     "packages-dev": [],

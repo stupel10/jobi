@@ -11,12 +11,12 @@
 </div>
 
 <div class="row">
-	<form action="_inc/registration.php" class="col-sm-6" method="post" id="reg-company">
+	<form action="_inc/company/registration.php" class="col-sm-6" method="post" id="reg-company">
 		<h2>COMPANY REGISTER</h2>
 		<p class="form-group">
-			<input type="text" name="name" id="company_reg_name" class="form-control" placeholder = "COMPANY NAME" >
-			<input type="password" name="pass" id="company_reg_pass" class="form-control" placeholder = "COMPANY PASSWORD" >
-			<input type="hidden" value="company" name="reg_type">
+			<input type="email" name="email" class="form-control" placeholder = "EMAIL" >
+			<input type="password" name="password" class="form-control" placeholder = "PASSWORD" >
+			<!--<input type="hidden" value="company" name="reg_type">-->
 		</p>
 		<p class="form-group">
 			<input type="submit" value="REGISTER" class="btn btn-small btn-danger">
@@ -24,11 +24,11 @@
 	</form>
 </div>
 <div class="row">
-	<form action="company-homepage.php" class="col-sm-6" method="post" id="login-company">
+	<form action="_inc/company/login.php" class="col-sm-6" method="post" id="login-company">
 		<h2>COMPANY LOGIN</h2>
 		<p class="form-group">
-			<input type="text" name="name" id="company_login_name" class="form-control" placeholder = "COMPANY NAME" >
-			<input type="password" name="pass" id="company_login_pass" class="form-control" placeholder = "COMPANY PASSWORD" >
+			<input type="email" name="email" class="form-control" placeholder = "COMPANY EMAIL" >
+			<input type="password" name="password" class="form-control" placeholder = "COMPANY PASSWORD" >
 		</p>
 		<p class="form-group">
 			<input type="submit" value="LOG IN" class="btn btn-small btn-primary">

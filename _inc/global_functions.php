@@ -114,3 +114,11 @@ function get_resumes($user_id){
 	return $resumes;
 
 }
+function redirect( $page ){
+	global $base_url;
+
+	$page = ltrim( $page, '/');
+
+	header("Location: $base_url/$page");
+	die();
+}
