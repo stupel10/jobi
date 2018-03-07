@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3bc6cd973daa9eff251a505bfad263e",
+    "content-hash": "bf0698ae27a50cd33cca79f6c8187675",
     "packages": [
         {
             "name": "bjeavons/zxcvbn-php",
@@ -173,20 +173,20 @@
         },
         {
             "name": "phpauth/phpauth",
-            "version": "dev-master",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPAuth/PHPAuth.git",
-                "reference": "f29aeec0e58754779dd8c034894a399f19d59876"
+                "reference": "849274911beb8d235f3eb8228bb13ce77962be75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPAuth/PHPAuth/zipball/f29aeec0e58754779dd8c034894a399f19d59876",
-                "reference": "f29aeec0e58754779dd8c034894a399f19d59876",
+                "url": "https://api.github.com/repos/PHPAuth/PHPAuth/zipball/849274911beb8d235f3eb8228bb13ce77962be75",
+                "reference": "849274911beb8d235f3eb8228bb13ce77962be75",
                 "shasum": ""
             },
             "require": {
-                "bjeavons/zxcvbn-php": "^0.3",
+                "bjeavons/zxcvbn-php": "*",
                 "php": ">=5.4.0",
                 "phpmailer/phpmailer": "^5.2"
             },
@@ -207,7 +207,7 @@
                 "class",
                 "secure"
             ],
-            "time": "2018-01-06T14:40:11+00:00"
+            "time": "2016-07-14T15:45:30+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -337,9 +337,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "phpauth/phpauth": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
