@@ -46,7 +46,7 @@
 		<br>
 	</div>
 	<div class="col-sm-6">
-		<form method="GET" action="_inc/job-qr-scan.php" id="job-qr-scan">
+		<form method="GET" action="_inc/user/job-qr-scan.php" id="job-qr-scan">
 			<p class="form-group">
 				<input type="text" class="form-control" name="job_qr_id" placeholder="JOB QR CODE ID"/>
 				<input type="hidden" name="user_id" value="<?php echo $user['id']?>">
@@ -56,7 +56,7 @@
 			</p>
 		</form>
 		<div>
-			<?php require '_inc/scan.php'; ?>
+			<?php require '_inc/user/scan.php'; ?>
 		</div>
 	</div>
 	<div class="col-sm-12">

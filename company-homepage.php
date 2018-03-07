@@ -40,7 +40,7 @@ include_once "_partials/header.php";
 		</ul>
 		<br>
 	</div>
-	<form action="_inc/add_job.php" method="GET" class="col-sm-6" id="add-job-form">
+	<form action="_inc/company/add_job.php" method="GET" class="col-sm-6" id="add-job-form">
 		<p class="form-group">
 			<input type="hidden" class="form-control" name="company_id" value="<?php echo $company['id'];?>">
 			<input type="text" name="title" class="form-control" placeholder="JOB TITLE">

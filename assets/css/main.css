@@ -51,5 +51,7 @@ a {
 
 .controls a {
 	/*font-size: 13px;*/
-
+}
+.pull-right {
+	float: right;
 }
