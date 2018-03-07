@@ -52,15 +52,15 @@
 					var qrID = Number(decodedDATA);
 					if( qrID !== null && qrID !== '' && qrID !== 'NaN') {
 						var req = $.ajax({
-							//url : baseUrl + '/_inc/job-qr-scan.php?job_qr_id='+qrID+'&user_id=<?php //echo $user['id']?>//',
-							url : baseUrl + '/_inc/job-qr-scan.php?job_qr_id='+qrID+'&user_id=5',
+							url : baseUrl + '/_inc/user/job-qr-scan.php?job_qr_id='+qrID+'&user_id=<?php echo $user['id']?>',
 							type: 'POST'
 						});
 						req.done(function (data) {
+							data = JSON.parse(data);
 							if (data.status === 'success') {
 								alert("DONE");
 							}else{
-								alert(data);
+								console.log(data);
 							}
 						});
 					}

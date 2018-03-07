@@ -1,7 +1,7 @@
 <?php
 
 // include
-require_once 'config.php';
+require_once '../config.php';
 
 $qr_id = $_GET['job_qr_id'];
 $user_id = $_GET['user_id'];

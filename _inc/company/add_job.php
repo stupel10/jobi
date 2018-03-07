@@ -1,7 +1,7 @@
 <?php
 
 // include
-require_once 'config.php';
+require_once '../config.php';
 
 $company_id = $_GET['company_id'];
 $title = $_GET['title'];
@@ -11,7 +11,6 @@ $insertion = $database->insert('jobs',
 								['company_id'=> $_GET['company_id'],
 									'title'=> $_GET['title'],
 								'text'=> $_GET['text']] );
-
 
 //success
 if( $insertion->rowCount() >0){
