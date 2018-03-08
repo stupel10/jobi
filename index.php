@@ -1,40 +1,31 @@
 <?php include_once "_partials/header.php" ?>
 
+<?php
 
-	<div class="page-header">
-		<h1>JOBI HOME</h1>
-	</div>
-	<div class="row">
-		<div class="col-sm-12">
-			<a href="index-company.php" class="btn btn-danger pull-right">COMPANY</a>
-		</div>
-	</div>
+if (isset($_GET['url'])) {
+	$explode = explode("/", $_GET["url"]);
+	$user_company_dir = $explode[0];
+	$id = isset($explode[1]) ? intval($explode[1]) : 0;
+	$page = isset($explode[1]) ? trim($explode[1]) : '';
+	$param2 = isset($explode[2]) ? trim($explode[2]) : '';
+	$param3 = isset($explode[3]) ? trim($explode[3]) : '';
+}
+else $user_company_dir = '';
 
-	<div class="row">
-		<form action="_inc/registration.php" class="col-sm-6" method="post" id="reg-user">
-			<h2>USER REGISTER</h2>
-			<p class="form-group">
-				<input type="text" name="name" id="user_reg_name" class="form-control" placeholder = "USER NAME" >
-				<input type="password" name="pass" id="user_reg_pass" class="form-control" placeholder = "USER PASSWORD" >
-				<input type="hidden" value="user" name="reg_type">
-			</p>
-			<p class="form-group">
-				<input type="submit" value="REGISTER" class="btn btn-small btn-danger">
-			</p>
-		</form>
-	</div>
-	<div class="row">
-		<form action="user-homepage.php" class="col-sm-6" method="post" id="login-user">
-			<h2>USER LOGIN</h2>
-			<p class="form-group">
-				<input type="text" name="name" id="user_login_name" class="form-control" placeholder = "USER NAME" >
-				<input type="password" name="pass" id="user_login_pass" class="form-control" placeholder = "USER PASSWORD" >
-			</p>
-			<p class="form-group">
-				<input type="submit" value="LOG IN" class="btn btn-small btn-primary">
-			</p>
-		</form>
-	</div>
+?>
+
+	<?php
+	if( $user_company_dir !== '' ) {
+		$link = 'pages/' . $user_company_dir .'/'. $page . '.php';
+		echo $link;
+		include file_exists( $link ) ? $link : '404.php';
+	}else {
+		include 'main.php';
+	}
+	?>
+
+
+
 
 <?php include_once "_partials/footer.php" ?>
 

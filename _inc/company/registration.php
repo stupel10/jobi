@@ -15,7 +15,7 @@ if( $_SERVER['REQUEST_METHOD']==='POST' ){
 		redirect('/index-company.php');
 	}else {
 		flash()->success('Company registered!');
-		redirect('/company-homepage.php');
+		redirect('/pages/company/company-homepage.php');
 	}
 
 }

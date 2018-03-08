@@ -1,10 +1,10 @@
 <?php
 
-	require_once '_inc/config.php';
-	$user = get_user();
-	if( ! $user ) show_404();
+	//require_once '_inc/config.php';
 
-	include_once "_partials/header.php";
+//include_once "../../_partials/header.php";
+$user = get_user();
+if( ! $user ) show_404();
 
 ?>
 
@@ -45,7 +45,7 @@
 		<br>
 	</div>
 	<div class="col-sm-6">
-		<form method="GET" action="_inc/user/job-qr-scan.php" id="job-qr-scan">
+		<form method="GET" action="../../_inc/user/job-qr-scan.php" id="job-qr-scan">
 			<p class="form-group">
 				<input type="text" class="form-control" name="job_qr_id" placeholder="JOB QR CODE ID"/>
 				<input type="hidden" name="user_id" value="<?php echo $user['id']?>">
@@ -77,5 +77,5 @@
 		</ul>
 	</div>
 </div>
-<?php include_once "_partials/footer.php" ?>
+<?php //include_once "_partials/footer.php" ?>
 

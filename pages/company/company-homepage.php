@@ -1,11 +1,11 @@
 <?php
 //
-require_once "_inc/config.php";
+//require_once "_inc/config.php";
 //
 //$company = get_company_from_POST();
 //if( ! $company ) show_404();
 //
-include_once "_partials/header.php";
+//include_once "../../_partials/header.php";
 //
 //?>
 <!---->
@@ -51,5 +51,5 @@ include_once "_partials/header.php";
 <!--		</p>-->
 <!--	</form>-->
 <!--</div>-->
-<?php include_once "_partials/footer.php" ?>
+<?php //include_once "../../_partials/footer.php" ?>
 <!---->

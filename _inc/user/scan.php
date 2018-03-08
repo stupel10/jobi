@@ -1,21 +1,21 @@
 
-<script type="text/javascript" src="assets/js/jsqrcode/src/grid.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/version.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/detector.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/formatinf.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/errorlevel.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/bitmat.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/datablock.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/bmparser.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/datamask.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/rsdecoder.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/gf256poly.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/gf256.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/decoder.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/qrcode.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/findpat.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/alignpat.js"></script>
-<script type="text/javascript" src="assets/js/jsqrcode/src/databr.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/grid.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/version.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/detector.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/formatinf.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/errorlevel.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/bitmat.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/datablock.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/bmparser.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/datamask.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/rsdecoder.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/gf256poly.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/gf256.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/decoder.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/qrcode.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/findpat.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/alignpat.js"></script>
+<script type="text/javascript" src="/assets/js/jsqrcode/src/databr.js"></script>
 
 
 

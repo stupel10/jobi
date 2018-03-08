@@ -1,4 +1,8 @@
-<?php require_once '_inc/config.php'; ?>
+<?php
+	//$root = $_SERVER['DOCUMENT_ROOT'] . '/jobi/';
+	//require_once $root.'_inc/config.php';
+	require_once '_inc/config.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,19 +14,19 @@
 
 	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<!--<link rel="stylesheet" href="assets/css/bootstrap-grid.css">-->
-	<!--<link rel="stylesheet" href="assets/css/bootstrap-reboot.css">-->
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+	<!--<link rel="stylesheet" href="/assets/css/bootstrap-grid.css">-->
+	<!--<link rel="stylesheet" href="/assets/css/bootstrap-reboot.css">-->
+	<link rel="stylesheet" href="/assets/css/main.css">
 
 	<script>
 		var baseUrl = '<?php echo $base_url ?>'
 	</script>
-	<script src="assets/js/jquery.js"></script>
-	<script src="assets/js/plugins.js"></script>
-	<!--<script src="assets/js/bootstrap.bundle.js"></script>-->
-	<!--<script src="assets/js/bootstrap.js"></script>-->
-	<script src="assets/js/app.js"></script>
+	<script src="/assets/js/jquery.js"></script>
+	<script src="/assets/js/plugins.js"></script>
+	<!--<script src="/assets/js/bootstrap.bundle.js"></script>-->
+	<!--<script src="/assets/js/bootstrap.js"></script>-->
+	<script src="/assets/js/app.js"></script>
 </head>
 <body>
 <br>
