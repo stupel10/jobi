@@ -6,7 +6,7 @@ kniznica whoops
 
 kniznica PHPAuth
 -> kniznica pre autorizaciu.
-
+-> premiestnil som ju do vendor_edited, pretoze som editoval jej zdrojaky a pri jej update by sa moje zmeny prepisali
 
 najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
 1. nacitam fotku do input type=file
