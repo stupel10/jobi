@@ -8,14 +8,14 @@ if( $_SERVER['REQUEST_METHOD']==='POST' ){
 	//$password_repeat = $_POST['repeat'];
 	$password_repeat = $_POST['password'];
 
-	$register = $auth->register($email,$password,$password_repeat, Array(),NULL,NULL,'company');
+	$register = $auth->register($email,$password,$password_repeat, Array(),NULL,NULL,'user');
 
 	if( $register['error'] ){
 		flash()->error($register['message']);
-		redirect('/index-company');
+		redirect('/');
 	}else {
 		flash()->success('Company registered!');
-		redirect('/company/homepage');
+		redirect('/user/homepage');
 	}
 
 }

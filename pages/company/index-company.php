@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-	<form action="../../_inc/company/registration.php" class="col-sm-6" method="post" id="reg-company">
+	<form action="../../_inc/company/registration" class="col-sm-6" method="post" id="reg-company">
 		<h2>COMPANY REGISTER</h2>
 		<p class="form-group">
 			<input type="email" name="email" class="form-control" placeholder = "EMAIL" >
@@ -24,7 +24,7 @@
 	</form>
 </div>
 <div class="row">
-	<form action="../../_inc/company/login.php" class="col-sm-6" method="post" id="login-company">
+	<form action="../../_inc/company/login" class="col-sm-6" method="post" id="login-company">
 		<h2>COMPANY LOGIN</h2>
 		<p class="form-group">
 			<input type="email" name="email" class="form-control" placeholder = "COMPANY EMAIL" >
