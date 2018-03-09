@@ -8,17 +8,17 @@ if( $_SERVER['REQUEST_METHOD']==='POST' ){
 	$remember = $_POST['rememberMe'] ? true : false;
 
 
-	$login = $auth->login($email, $password, $remember);
+	$login = $auth->login($email, $password, $remember, NULL, 'company');
 
 	if($login['error']) {
 		flash()->error($login['message']);
-		redirect('/index-company.php');
+		redirect('/pages/company/index-company');
 	} else {
 		// Logged in successfully, set cookie, display success message
 		do_login( $login );
 
 		flash()->success('Successfully logged in!');
-		redirect('/company-homepage.php');
+		redirect('/company/company-homepage');
 	}
 }
 

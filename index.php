@@ -17,7 +17,7 @@ else $user_company_dir = '';
 	<?php
 	if( $user_company_dir !== '' ) {
 		$link = 'pages/' . $user_company_dir .'/'. $page . '.php';
-		echo $link;
+		//echo $link;
 		include file_exists( $link ) ? $link : '404.php';
 	}else {
 		include 'main.php';

@@ -19,8 +19,11 @@ Co treba upravit:
 -> pridat skenovanie kamerou pomocou getUserMedia() pre platformy, ktore to podporuju.
 
 -> PHPAuth
-	-> upravil som v triede Auth na 38 riadku povodneho suboru -> vracalo to $language, napisal som to na tvrdo lebo to hadzalo error.
 	-> aktivacne emaily
+	-> naco mi tu je capthcha? ...ved vzdy ta fnc vrati true
+	-> pomenit config v db
+	-> zlepsit zvolenie tabulky v classe Auth.php
+	-> unit testy su teraz odveci. treba podoplnat do funkcii posledny parameter $role : 'user' alebo 'company'
 
 -> vsetky validacie dopytov do DB
 -> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne

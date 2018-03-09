@@ -39,20 +39,24 @@ class Auth
         date_default_timezone_set($this->config->site_timezone);
     }
 
-    /**
-     * Logs a user in
-     * @param string $email
-     * @param string $password
-     * @param int $remember
-     * @param string $captcha = NULL
-     * @return array $return
-     */
-    public function login($email, $password, $remember = 0, $captcha = NULL)
+	/**
+	 * Logs a user in
+	 *
+	 * @param string $email
+	 * @param string $password
+	 * @param int $remember
+	 * @param string $captcha = NULL
+	 * @param string $role
+	 *
+	 * @return array $return
+	 */
+    public function login($email, $password, $remember = 0, $captcha = NULL, $role = 'user')
     {
         $return['error'] = true;
 
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
+        // ??????
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
                 $return['message'] = $this->lang["user_verify_failed"];
@@ -70,48 +74,48 @@ class Auth
         $validatePassword = $this->validatePassword($password);
 
         if ($validateEmail['error'] == 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["email_password_invalid"];
 
             return $return;
         } elseif ($validatePassword['error'] == 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["email_password_invalid"];
 
             return $return;
         } elseif ($remember != 0 && $remember != 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["remember_me_invalid"];
 
             return $return;
         }
 
-        $uid = $this->getUID(strtolower($email));
+        $uid = $this->getUID( strtolower($email), $role );
 
         if (!$uid) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["email_password_incorrect"];
 
             return $return;
         }
 
-        $user = $this->getBaseUser($uid);
+        $user = $this->getBaseUser($uid,$role);
 
         if (!password_verify($password, $user['password'])) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["email_password_incorrect"];
 
             return $return;
         }
 
         if ($user['isactive'] != 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["account_inactive"];
 
             return $return;
         }
 
-        $sessiondata = $this->addSession($user['uid'], $remember);
+        $sessiondata = $this->addSession($user['uid'], $remember, $role);
 
         if ($sessiondata == false) {
             $return['message'] = $this->lang["system_error"] . " #01";
@@ -139,10 +143,10 @@ class Auth
     * @return array $return
     */
 
-    public function register($email, $password, $repeatpassword, $params = Array(), $captcha = NULL, $sendmail = NULL)
+    public function register($email, $password, $repeatpassword, $params = Array(), $captcha = NULL, $sendmail = NULL, $role = 'user')
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
@@ -190,14 +194,14 @@ class Auth
             return $return;
         }
 
-        if ($this->isEmailTaken($email)) {
-            $this->addAttempt();
+        if ($this->isEmailTaken($email,$role)) {
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["email_taken"];
 
             return $return;
         }
 
-        $addUser = $this->addUser($email, $password, $params, $sendmail);
+        $addUser = $this->addUser($email, $password, $params, $sendmail, $role);
 
         if ($addUser['error'] != 0) {
             $return['message'] = $addUser['message'];
@@ -216,11 +220,10 @@ class Auth
     * @param string $key
     * @return array $return
     */
-
-    public function activate($key)
+    public function activate($key,$role)
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "block") {
             $return['message'] = $this->lang["user_blocked"];
@@ -229,13 +232,13 @@ class Auth
         }
 
         if (strlen($key) !== 20) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["activationkey_invalid"];
 
             return $return;
         }
 
-        $getRequest = $this->getRequest($key, "activation");
+        $getRequest = $this->getRequest($key, "activation",$role);
 
         if ($getRequest['error'] == 1) {
             $return['message'] = $getRequest['message'];
@@ -243,18 +246,24 @@ class Auth
             return $return;
         }
 
-        if ($this->getBaseUser($getRequest['uid'])['isactive'] == 1) {
-            $this->addAttempt();
-            $this->deleteRequest($getRequest['id']);
+        if ($this->getBaseUser($getRequest['uid'],$role)['isactive'] == 1) {
+            $this->addAttempt( $role );
+            $this->deleteRequest($getRequest['id'], $role);
             $return['message'] = $this->lang["system_error"] . " #02";
 
             return $return;
         }
 
-        $query = $this->dbh->prepare("UPDATE {$this->config->table_users} SET isactive = ? WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("UPDATE {$table} SET isactive = ? WHERE id = ?");
         $query->execute(array(1, $getRequest['uid']));
 
-        $this->deleteRequest($getRequest['id']);
+        $this->deleteRequest($getRequest['id'],$role);
 
         $return['error'] = false;
         $return['message'] = $this->lang["account_activated"];
@@ -268,10 +277,10 @@ class Auth
     * @return array $return
     */
 
-    public function requestReset($email, $sendmail = NULL)
+    public function requestReset($email, $sendmail = NULL,$role)
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "block") {
             $return['message'] = $this->lang["user_blocked"];
@@ -287,21 +296,29 @@ class Auth
             return $return;
         }
 
-        $query = $this->dbh->prepare("SELECT id FROM {$this->config->table_users} WHERE email = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }else {
+	    	return $return;
+	    }
+
+        $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
         $query->execute(array($email));
 
         if ($query->rowCount() == 0) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
 
             $return['message'] = $this->lang["email_incorrect"];
 
             return $return;
         }
 
-        $addRequest = $this->addRequest($query->fetch(\PDO::FETCH_ASSOC)['id'], $email, "reset", $sendmail);
+        $addRequest = $this->addRequest($query->fetch(\PDO::FETCH_ASSOC)['id'], $email, "reset", $sendmail,$role);
 
         if ($addRequest['error'] == 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $addRequest['message'];
 
             return $return;
@@ -318,14 +335,13 @@ class Auth
     * @param string $hash
     * @return boolean
     */
-
-    public function logout($hash)
+    public function logout($hash,$role)
     {
         if (strlen($hash) != 40) {
             return false;
         }
 
-        return $this->deleteSession($hash);
+        return $this->deleteSession($hash,$role);
     }
 
     /**
@@ -334,7 +350,6 @@ class Auth
     * @param string $password
     * @return string
     */
-
     public function getHash($password)
     {
         return password_hash($password, PASSWORD_BCRYPT, ['cost' => $this->config->bcrypt_cost]);
@@ -345,11 +360,15 @@ class Auth
     * @param string $email
     * @return array $uid
     */
-
-
-    public function getUID($email)
+    public function getUID($email,$role)
     {
-        $query = $this->dbh->prepare("SELECT id FROM {$this->config->table_users} WHERE email = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
         $query->execute(array($email));
 
         if ($query->rowCount() == 0) {
@@ -359,17 +378,20 @@ class Auth
         return $query->fetch(\PDO::FETCH_ASSOC)['id'];
     }
 
-    /**
-    * Creates a session for a specified user id
-    * @param int $uid
-    * @param boolean $remember
-    * @return array $data
-    */
+	/**
+	 * Creates a session for a specified user id
+	 *
+	 * @param int $uid
+	 * @param boolean $remember
+	 * @param $role
+	 *
+	 * @return array $data
+	 */
 
-    protected function addSession($uid, $remember)
+    protected function addSession($uid, $remember, $role)
     {
         $ip = $this->getIp();
-        $user = $this->getBaseUser($uid);
+        $user = $this->getBaseUser($uid, $role);
 
         if (!$user) {
             return false;
@@ -378,7 +400,7 @@ class Auth
         $data['hash'] = sha1($this->config->site_key . microtime());
         $agent = $_SERVER['HTTP_USER_AGENT'];
 
-        $this->deleteExistingSessions($uid);
+        $this->deleteExistingSessions($uid,$role);
 
         if ($remember == true) {
             $data['expire'] = date("Y-m-d H:i:s", strtotime($this->config->cookie_remember));
@@ -390,7 +412,13 @@ class Auth
 
         $data['cookie_crc'] = sha1($data['hash'] . $this->config->site_key);
 
-        $query = $this->dbh->prepare("INSERT INTO {$this->config->table_sessions} (uid, hash, expiredate, ip, agent, cookie_crc) VALUES (?, ?, ?, ?, ?, ?)");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_sessions;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_sessions;
+	    }
+
+        $query = $this->dbh->prepare("INSERT INTO {$table} (uid, hash, expiredate, ip, agent, cookie_crc) VALUES (?, ?, ?, ?, ?, ?)");
 
         if (!$query->execute(array($uid, $data['hash'], $data['expire'], $ip, $agent, $data['cookie_crc']))) {
             return false;
@@ -406,10 +434,15 @@ class Auth
     * @param int $uid
     * @return boolean
     */
-
-    protected function deleteExistingSessions($uid)
+    protected function deleteExistingSessions($uid,$role)
     {
-        $query = $this->dbh->prepare("DELETE FROM {$this->config->table_sessions} WHERE uid = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_sessions;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_sessions;
+	    }
+
+        $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
         $query->execute(array($uid));
 
         return $query->rowCount() == 1;
@@ -420,10 +453,15 @@ class Auth
     * @param string $hash
     * @return boolean
     */
-
-    protected function deleteSession($hash)
+    protected function deleteSession($hash,$role)
     {
-        $query = $this->dbh->prepare("DELETE FROM {$this->config->table_sessions} WHERE hash = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_sessions;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_sessions;
+	    }
+
+        $query = $this->dbh->prepare("DELETE FROM {$table} WHERE hash = ?");
         $query->execute(array($hash));
 
         return $query->rowCount() == 1;
@@ -434,11 +472,10 @@ class Auth
     * @param string $hash
     * @return boolean
     */
-
-    public function checkSession($hash)
+    public function checkSession($hash,$role)
     {
         $ip = $this->getIp();
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "block") {
             $return['message'] = $this->lang["user_blocked"];
@@ -449,7 +486,13 @@ class Auth
             return false;
         }
 
-        $query = $this->dbh->prepare("SELECT id, uid, expiredate, ip, agent, cookie_crc FROM {$this->config->table_sessions} WHERE hash = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_sessions;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_sessions;
+	    }
+
+        $query = $this->dbh->prepare("SELECT id, uid, expiredate, ip, agent, cookie_crc FROM {$table} WHERE hash = ?");
         $query->execute(array($hash));
 
         if ($query->rowCount() == 0) {
@@ -466,7 +509,7 @@ class Auth
         $db_cookie = $row['cookie_crc'];
 
         if ($currentdate > $expiredate) {
-            $this->deleteExistingSessions($uid);
+            $this->deleteExistingSessions($uid,$role);
 
             return false;
         }
@@ -487,10 +530,15 @@ class Auth
     * @param string $hash
     * @return int $uid
     */
-
-    public function getSessionUID($hash)
+    public function getSessionUID($hash,$role)
     {
-        $query = $this->dbh->prepare("SELECT uid FROM {$this->config->table_sessions} WHERE hash = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_sessions;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_sessions;
+	    }
+
+        $query = $this->dbh->prepare("SELECT uid FROM {$table} WHERE hash = ?");
         $query->execute(array($hash));
 
         if ($query->rowCount() == 0) {
@@ -506,9 +554,15 @@ class Auth
     * @return boolean
     */
 
-    public function isEmailTaken($email)
+    public function isEmailTaken($email,$role)
     {
-        $query = $this->dbh->prepare("SELECT count(*) FROM {$this->config->table_users} WHERE email = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("SELECT count(*) FROM {$table} WHERE email = ?");
         $query->execute(array($email));
 
         if ($query->fetchColumn() == 0) {
@@ -525,12 +579,17 @@ class Auth
     * @param array $params      -- additional params
     * @return int $uid
     */
-
-    protected function addUser($email, $password, $params = array(), &$sendmail)
+    protected function addUser($email, $password, $params = array(), &$sendmail, $role)
     {
         $return['error'] = true;
 
-        $query = $this->dbh->prepare("INSERT INTO {$this->config->table_users} VALUES ()");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("INSERT INTO {$table} VALUES ()");
 
         if (!$query->execute()) {
             $return['message'] = $this->lang["system_error"] . " #03";
@@ -541,10 +600,10 @@ class Auth
         $email = htmlentities(strtolower($email));
 
         if ($sendmail) {
-            $addRequest = $this->addRequest($uid, $email, "activation", $sendmail);
+            $addRequest = $this->addRequest($uid, $email, "activation", $sendmail, $role);
 
             if ($addRequest['error'] == 1) {
-                $query = $this->dbh->prepare("DELETE FROM {$this->config->table_users} WHERE id = ?");
+                $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
                 $query->execute(array($uid));
                 $return['message'] = $addRequest['message'];
 
@@ -570,12 +629,12 @@ class Auth
             }, $customParamsQueryArray));
         } else { $setParams = ''; }
 
-        $query = $this->dbh->prepare("UPDATE {$this->config->table_users} SET email = ?, password = ?, isactive = ? {$setParams} WHERE id = ?");
+        $query = $this->dbh->prepare("UPDATE {$table} SET email = ?, password = ?, isactive = ? {$setParams} WHERE id = ?");
 
         $bindParams = array_values(array_merge(array($email, $password, $isactive), $params, array($uid)));
 
         if (!$query->execute($bindParams)) {
-            $query = $this->dbh->prepare("DELETE FROM {$this->config->table_users} WHERE id = ?");
+            $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
             $query->execute(array($uid));
             $return['message'] = $this->lang["system_error"] . " #04";
 
@@ -591,10 +650,15 @@ class Auth
     * @param int $uid
     * @return array $data
     */
-
-    protected function getBaseUser($uid)
+    protected function getBaseUser($uid, $role)
     {
-        $query = $this->dbh->prepare("SELECT email, password, isactive FROM {$this->config->table_users} WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("SELECT email, password, isactive FROM {$table} WHERE id = ?");
         $query->execute(array($uid));
 
         if ($query->rowCount() == 0) {
@@ -617,10 +681,15 @@ class Auth
     * @param int $uid
     * @return array $data
     */
-
-    public function getUser($uid)
+    public function getUser($uid,$role)
     {
-        $query = $this->dbh->prepare("SELECT * FROM {$this->config->table_users} WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("SELECT * FROM {$table} WHERE id = ?");
         $query->execute(array($uid));
 
         if ($query->rowCount() == 0) {
@@ -646,12 +715,11 @@ class Auth
     * @param string $captcha = NULL
     * @return array $return
     */
-
-    public function deleteUser($uid, $password, $captcha = NULL)
+    public function deleteUser($uid, $password, $captcha = NULL,$role)
     {
         $return['error'] = true;
 
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
                 $return['message'] = $this->lang["user_verify_failed"];
@@ -669,30 +737,40 @@ class Auth
         $validatePassword = $this->validatePassword($password);
 
         if ($validatePassword['error'] == 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $validatePassword['message'];
 
             return $return;
         }
 
-        $user = $this->getBaseUser($uid);
+        $user = $this->getBaseUser($uid,$role);
 
         if (!password_verify($password, $user['password'])) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["password_incorrect"];
 
             return $return;
         }
 
-        $query = $this->dbh->prepare("DELETE FROM {$this->config->table_users} WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+
+        $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
 
         if (!$query->execute(array($uid))) {
             $return['message'] = $this->lang["system_error"] . " #05";
 
             return $return;
         }
-
-        $query = $this->dbh->prepare("DELETE FROM {$this->config->table_sessions} WHERE uid = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_sessions;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_sessions;
+	    }
+        $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
 
         if (!$query->execute(array($uid))) {
             $return['message'] = $this->lang["system_error"] . " #06";
@@ -700,7 +778,12 @@ class Auth
             return $return;
         }
 
-        $query = $this->dbh->prepare("DELETE FROM {$this->config->table_requests} WHERE uid = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_requests;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_requests;
+	    }
+        $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
 
         if (!$query->execute(array($uid))) {
             $return['message'] = $this->lang["system_error"] . " #07";
@@ -722,8 +805,7 @@ class Auth
     * @param boolean $sendmail = NULL
     * @return boolean
     */
-
-    protected function addRequest($uid, $email, $type, &$sendmail)
+    protected function addRequest($uid, $email, $type, &$sendmail, $role)
     {
         $return['error'] = true;
 
@@ -751,7 +833,13 @@ class Auth
             }
         }
 
-        $query = $this->dbh->prepare("SELECT id, expire FROM {$this->config->table_requests} WHERE uid = ? AND type = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_requests;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_requests;
+	    }
+
+        $query = $this->dbh->prepare("SELECT id, expire FROM {$table} WHERE uid = ? AND type = ?");
         $query->execute(array($uid, $type));
 
         if ($query->rowCount() > 0) {
@@ -766,10 +854,10 @@ class Auth
                 return $return;
             }
 
-            $this->deleteRequest($row['id']);
+            $this->deleteRequest($row['id'],$role);
         }
 
-        if ($type == "activation" && $this->getBaseUser($uid)['isactive'] == 1) {
+        if ($type == "activation" && $this->getBaseUser($uid,$role)['isactive'] == 1) {
             $return['message'] = $this->lang["already_activated"];
 
             return $return;
@@ -778,7 +866,12 @@ class Auth
         $key = $this->getRandomKey(20);
         $expire = date("Y-m-d H:i:s", strtotime($this->config->request_key_expiration));
 
-        $query = $this->dbh->prepare("INSERT INTO {$this->config->table_requests} (uid, rkey, expire, type) VALUES (?, ?, ?, ?)");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_requests;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_requests;
+	    }
+        $query = $this->dbh->prepare("INSERT INTO {$table} (uid, rkey, expire, type) VALUES (?, ?, ?, ?)");
 
         if (!$query->execute(array($uid, $key, $expire, $type))) {
             $return['message'] = $this->lang["system_error"] . " #09";
@@ -823,7 +916,7 @@ class Auth
             }
 
             if (!$mail->send()) {
-                $this->deleteRequest($request_id);
+                $this->deleteRequest($request_id,$role);
                 $return['message'] = $this->lang["system_error"] . " #10";
 
                 return $return;
@@ -842,16 +935,21 @@ class Auth
     * @param string $type
     * @return array $return
     */
-
-    public function getRequest($key, $type)
+    public function getRequest($key, $type, $role)
     {
         $return['error'] = true;
 
-        $query = $this->dbh->prepare("SELECT id, uid, expire FROM {$this->config->table_requests} WHERE rkey = ? AND type = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_requests;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_requests;
+	    }
+
+        $query = $this->dbh->prepare("SELECT id, uid, expire FROM {$table} WHERE rkey = ? AND type = ?");
         $query->execute(array($key, $type));
 
         if ($query->rowCount() === 0) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang[$type."key_incorrect"];
 
             return $return;
@@ -863,7 +961,7 @@ class Auth
         $currentdate = strtotime(date("Y-m-d H:i:s"));
 
         if ($currentdate > $expiredate) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $this->deleteRequest($row['id']);
             $return['message'] = $this->lang[$type."key_expired"];
 
@@ -882,10 +980,15 @@ class Auth
     * @param int $id
     * @return boolean
     */
-
-    protected function deleteRequest($id)
+    protected function deleteRequest($id,$role)
     {
-        $query = $this->dbh->prepare("DELETE FROM {$this->config->table_requests} WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_requests;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_requests;
+	    }
+
+        $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
 
         return $query->execute(array($id));
     }
@@ -895,7 +998,6 @@ class Auth
     * @param string $password
     * @return array $return
     */
-
     protected function validatePassword($password) {
         $return['error'] = true;
 
@@ -915,7 +1017,6 @@ class Auth
     * @param string $email
     * @return array $return
     */
-
     protected function validateEmail($email) {
         $return['error'] = true;
 
@@ -957,11 +1058,10 @@ class Auth
     * @param string $captcha = NULL
     * @return array $return
     */
-
-    public function resetPass($key, $password, $repeatpassword, $captcha = NULL)
+    public function resetPass($key, $password, $repeatpassword, $captcha = NULL,$role)
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
@@ -997,7 +1097,7 @@ class Auth
             return $return;
         }
 
-        $data = $this->getRequest($key, "reset");
+        $data = $this->getRequest($key, "reset",$role);
 
         if ($data['error'] == 1) {
             $return['message'] = $data['message'];
@@ -1005,25 +1105,31 @@ class Auth
             return $return;
         }
 
-        $user = $this->getBaseUser($data['uid']);
+        $user = $this->getBaseUser($data['uid'],$role);
 
         if (!$user) {
-            $this->addAttempt();
-            $this->deleteRequest($data['id']);
+            $this->addAttempt( $role );
+            $this->deleteRequest($data['id'],$role);
             $return['message'] = $this->lang["system_error"] . " #11";
 
             return $return;
         }
 
         if (password_verify($password, $user['password'])) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["newpassword_match"];
 
             return $return;
         }
 
         $password = $this->getHash($password);
-        $query = $this->dbh->prepare("UPDATE {$this->config->table_users} SET password = ? WHERE id = ?");
+
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+        $query = $this->dbh->prepare("UPDATE {$table} SET password = ? WHERE id = ?");
         $query->execute(array($password, $data['uid']));
 
         if ($query->rowCount() == 0) {
@@ -1032,7 +1138,7 @@ class Auth
             return $return;
         }
 
-        $this->deleteRequest($data['id']);
+        $this->deleteRequest($data['id'],$table);
         $return['error'] = false;
         $return['message'] = $this->lang["password_reset"];
 
@@ -1044,11 +1150,10 @@ class Auth
     * @param string $email
     * @return array $return
     */
-
-    public function resendActivation($email, $sendmail = NULL)
+    public function resendActivation($email, $sendmail = NULL,$role)
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "block") {
             $return['message'] = $this->lang["user_blocked"];
@@ -1070,11 +1175,16 @@ class Auth
             return $return;
         }
 
-        $query = $this->dbh->prepare("SELECT id FROM {$this->config->table_users} WHERE email = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+        $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
         $query->execute(array($email));
 
         if ($query->rowCount() == 0) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["email_incorrect"];
 
             return $return;
@@ -1082,17 +1192,17 @@ class Auth
 
         $row = $query->fetch(\PDO::FETCH_ASSOC);
 
-        if ($this->getBaseUser($row['id'])['isactive'] == 1) {
-            $this->addAttempt();
+        if ($this->getBaseUser($row['id'],$role)['isactive'] == 1) {
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["already_activated"];
 
             return $return;
         }
 
-        $addRequest = $this->addRequest($row['id'], $email, "activation", $sendmail);
+        $addRequest = $this->addRequest($row['id'], $email, "activation", $sendmail,$role);
 
         if ($addRequest['error'] == 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $addRequest['message'];
 
             return $return;
@@ -1112,10 +1222,10 @@ class Auth
     * @param string $captcha = NULL
     * @return array $return
     */
-    public function changePassword($uid, $currpass, $newpass, $repeatnewpass, $captcha = NULL)
+    public function changePassword($uid, $currpass, $newpass, $repeatnewpass, $captcha = NULL,$role)
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
@@ -1133,7 +1243,7 @@ class Auth
         $validatePassword = $this->validatePassword($currpass);
 
         if ($validatePassword['error'] == 1) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $validatePassword['message'];
 
             return $return;
@@ -1159,17 +1269,17 @@ class Auth
             return $return;
         }
 
-        $user = $this->getBaseUser($uid);
+        $user = $this->getBaseUser($uid,$role);
 
         if (!$user) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["system_error"] . " #13";
 
             return $return;
         }
 
         if (!password_verify($currpass, $user['password'])) {
-            $this->addAttempt();
+            $this->addAttempt( $role );
             $return['message'] = $this->lang["password_incorrect"];
 
             return $return;
@@ -1177,7 +1287,12 @@ class Auth
 
         $newpass = $this->getHash($newpass);
 
-        $query = $this->dbh->prepare("UPDATE {$this->config->table_users} SET password = ? WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+        $query = $this->dbh->prepare("UPDATE {$table} SET password = ? WHERE id = ?");
         $query->execute(array($newpass, $uid));
 
         $return['error'] = false;
@@ -1194,11 +1309,10 @@ class Auth
     * @param string $captcha = NULL
     * @return array $return
     */
-
-    public function changeEmail($uid, $email, $password, $captcha = NULL)
+    public function changeEmail($uid, $email, $password, $captcha = NULL,$role)
     {
         $return['error'] = true;
-        $block_status = $this->isBlocked();
+        $block_status = $this->isBlocked($role);
 
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
@@ -1230,30 +1344,35 @@ class Auth
             return $return;
         }
 
-        $user = $this->getBaseUser($uid);
+        $user = $this->getBaseUser($uid,$role);
 
         if (!$user) {
-            $this->addAttempt();
+            $this->addAttempt( $role);
             $return['message'] = $this->lang["system_error"] . " #14";
 
             return $return;
         }
 
         if (!password_verify($password, $user['password'])) {
-            $this->addAttempt();
+            $this->addAttempt( $role);
             $return['message'] = $this->lang["password_incorrect"];
 
             return $return;
         }
 
         if ($email == $user['email']) {
-            $this->addAttempt();
+            $this->addAttempt( $role);
             $return['message'] = $this->lang["newemail_match"];
 
             return $return;
         }
 
-        $query = $this->dbh->prepare("UPDATE {$this->config->table_users} SET email = ? WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+        $query = $this->dbh->prepare("UPDATE {$table} SET email = ? WHERE id = ?");
         $query->execute(array($email, $uid));
 
         if ($query->rowCount() == 0) {
@@ -1272,12 +1391,18 @@ class Auth
     * Informs if a user is locked out
     * @return string
     */
-
-    public function isBlocked()
+    public function isBlocked( $role )
     {
-        $ip = $this->getIp();
-        $this->deleteAttempts($ip, false);
-        $query = $this->dbh->prepare("SELECT count(*) FROM {$this->config->table_attempts} WHERE ip = ?");
+    	if ( $role === 'user'){
+    		$table = $this->config->table_user_attempts;
+	    }elseif ($role === 'company' ){
+    		$table = $this->config->table_company_attempts;
+	    }else{
+	    	return 'block';
+	    }
+	    $ip = $this->getIp();
+        $this->deleteAttempts($ip, false,$role);
+        $query = $this->dbh->prepare("SELECT count(*) FROM {$table} WHERE ip = ?");
         $query->execute(array($ip));
         $attempts = $query->fetchColumn();
 
@@ -1307,12 +1432,16 @@ class Auth
     * Adds an attempt to database
     * @return boolean
     */
-
-    protected function addAttempt()
+    protected function addAttempt( $role )
     {
+    	if($role === 'user' ){
+    		$table= $this->config->table_user_attempts;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_attempts;
+	    }
         $ip = $this->getIp();
         $attempt_expiredate = date("Y-m-d H:i:s", strtotime($this->config->attack_mitigation_time));
-        $query = $this->dbh->prepare("INSERT INTO {$this->config->table_attempts} (ip, expiredate) VALUES (?, ?)");
+        $query = $this->dbh->prepare("INSERT INTO {$table} (ip, expiredate) VALUES (?, ?)");
 
         return $query->execute(array($ip, $attempt_expiredate));
     }
@@ -1323,23 +1452,27 @@ class Auth
         * @param boolean $all = false
     * @return boolean
     */
-
-    protected function deleteAttempts($ip, $all = false)
+    protected function deleteAttempts($ip, $all = false,$role)
     {
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_attempts;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_attempts;
+	    }
         if ($all==true) {
-            $query = $this->dbh->prepare("DELETE FROM {$this->config->table_attempts} WHERE ip = ?");
+            $query = $this->dbh->prepare("DELETE FROM {$table} WHERE ip = ?");
 
             return $query->execute(array($ip));
         }
 
-        $query = $this->dbh->prepare("SELECT id, expiredate FROM {$this->config->table_attempts} WHERE ip = ?");
+        $query = $this->dbh->prepare("SELECT id, expiredate FROM {$table} WHERE ip = ?");
         $query->execute(array($ip));
 
         while ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
             $expiredate = strtotime($row['expiredate']);
             $currentdate = strtotime(date("Y-m-d H:i:s"));
             if ($currentdate > $expiredate) {
-                $queryDel = $this->dbh->prepare("DELETE FROM {$this->config->table_attempts} WHERE id = ?");
+                $queryDel = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
                 $queryDel->execute(array($row['id']));
             }
         }
@@ -1380,7 +1513,16 @@ class Auth
     * @return boolean
     */
     public function isLogged() {
-        return (isset($_COOKIE[$this->config->cookie_name]) && $this->checkSession($_COOKIE[$this->config->cookie_name]));
+    	return (
+	                isset($_COOKIE[$this->config->cookie_name])
+	                &&
+	                (
+		            $this->checkSession($_COOKIE[$this->config->cookie_name],'user')
+	                ) || (
+		                $this->checkSession($_COOKIE[$this->config->cookie_name],'company')
+	                )
+
+	    );
     }
 
     /**
@@ -1397,9 +1539,14 @@ class Auth
      * @param string $password_for_check
      * @return bool
      */
-    public function comparePasswords($userid, $password_for_check)
+    public function comparePasswords($userid, $password_for_check,$role)
     {
-        $query = $this->dbh->prepare("SELECT password FROM {$this->config->table_users} WHERE id = ?");
+	    if($role === 'user' ){
+		    $table= $this->config->table_users;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_companies;
+	    }
+        $query = $this->dbh->prepare("SELECT password FROM {$table} WHERE id = ?");
         $query->execute(array($userid));
 
         if ($query->rowCount() == 0) {
