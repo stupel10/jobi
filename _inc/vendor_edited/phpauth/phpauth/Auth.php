@@ -2,6 +2,7 @@
 
 namespace PHPAuth;
 
+use Medoo\Medoo;
 use ZxcvbnPhp\Zxcvbn;
 use PHPMailer\PHPMailer;
 
@@ -56,7 +57,6 @@ class Auth
 
         $block_status = $this->isBlocked($role);
 
-        // ??????
         if ($block_status == "verify") {
             if ($this->checkCaptcha($captcha) == false) {
                 $return['message'] = $this->lang["user_verify_failed"];
@@ -142,7 +142,6 @@ class Auth
     * @param bool $sendmail = NULL
     * @return array $return
     */
-
     public function register($email, $password, $repeatpassword, $params = Array(), $captcha = NULL, $sendmail = NULL, $role = 'user')
     {
         $return['error'] = true;
@@ -201,7 +200,27 @@ class Auth
             return $return;
         }
 
-        $addUser = $this->addUser($email, $password, $params, $sendmail, $role);
+        // creating User
+
+	    // creating profile
+	    global $database;
+	    if($role === 'user' ){
+		    $table= $this->config->table_user_profiles;
+	    }elseif ($role === 'company'){
+		    $table= $this->config->table_company_profiles;
+	    }
+	    $database->insert($table,
+		    [ 'email'=> $email ] );
+
+	    if( !( $profile_id = $database->id() ) ) {
+		    $this->addAttempt( $role );
+		    $return['message'] = "USER PROFILE NOT GENERATED CORRECTLY";
+
+		    return $return;
+	    }
+
+
+        $addUser = $this->addUser($email, $password, $params, $sendmail, $role, $profile_id);
 
         if ($addUser['error'] != 0) {
             $return['message'] = $addUser['message'];
@@ -335,7 +354,7 @@ class Auth
     * @param string $hash
     * @return boolean
     */
-    public function logout($hash,$role)
+    public function logout($hash,$role = 'user')
     {
         if (strlen($hash) != 40) {
             return false;
@@ -377,6 +396,31 @@ class Auth
 
         return $query->fetch(\PDO::FETCH_ASSOC)['id'];
     }
+
+	/**
+	 * Gets UID for a given email address and returns an array
+	 * @param string $user_id
+	 *
+	 * @return array $user_profile
+	 */
+	public function getUserActiveProfile($user_id)
+	{
+		$role = $this->getRole();
+		if($role === 'user' ){
+			$table= $this->config->table_users;
+		}elseif ($role === 'company'){
+			$table= $this->config->table_companies;
+		}
+
+		$query = $this->dbh->prepare("SELECT active_profile FROM {$table} WHERE id = ?");
+		$query->execute(array($user_id));
+
+		if ($query->rowCount() == 0) {
+			return false;
+		}
+
+		return $query->fetch(\PDO::FETCH_ASSOC);
+	}
 
 	/**
 	 * Creates a session for a specified user id
@@ -425,6 +469,7 @@ class Auth
         }
 
         $data['expire'] = strtotime($data['expire']);
+        $data['role'] = $role;
 
         return $data;
     }
@@ -579,7 +624,7 @@ class Auth
     * @param array $params      -- additional params
     * @return int $uid
     */
-    protected function addUser($email, $password, $params = array(), &$sendmail, $role)
+    protected function addUser($email, $password, $params = array(), &$sendmail, $role, $profile_id)
     {
         $return['error'] = true;
 
@@ -629,9 +674,9 @@ class Auth
             }, $customParamsQueryArray));
         } else { $setParams = ''; }
 
-        $query = $this->dbh->prepare("UPDATE {$table} SET email = ?, password = ?, isactive = ? {$setParams} WHERE id = ?");
+        $query = $this->dbh->prepare("UPDATE {$table} SET email = ?, password = ?, isactive = ?, active_profile = ? {$setParams} WHERE id = ?");
 
-        $bindParams = array_values(array_merge(array($email, $password, $isactive), $params, array($uid)));
+        $bindParams = array_values(array_merge(array($email, $password, $isactive, $profile_id), $params, array($uid)));
 
         if (!$query->execute($bindParams)) {
             $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
@@ -1513,15 +1558,17 @@ class Auth
     * @return boolean
     */
     public function isLogged() {
-    	return (
-	                isset($_COOKIE[$this->config->cookie_name])
-	                &&
-	                (
-		            $this->checkSession($_COOKIE[$this->config->cookie_name],'user')
-	                ) || (
-		                $this->checkSession($_COOKIE[$this->config->cookie_name],'company')
-	                )
 
+    	return (
+	                (
+	                	isset($_COOKIE[$this->config->cookie_name])
+	                    &&
+		                $this->checkSession($_COOKIE[$this->config->cookie_name],'company')
+	                ) || (
+		                isset($_COOKIE[$this->config->cookie_name])
+		                &&
+		                $this->checkSession($_COOKIE[$this->config->cookie_name],'user')
+	                )
 	    );
     }
 
@@ -1532,6 +1579,29 @@ class Auth
     public function getSessionHash(){
         return $_COOKIE[$this->config->cookie_name];
     }
+
+	/**
+	 * Returns role of user that is logged in
+	 * @return string $role
+	 */
+    public function getRole(){
+		$hash = $this->getSessionHash();
+
+		if( isset($hash) ){
+			$query = $this->dbh->prepare("SELECT id FROM {$this->config->table_user_sessions} WHERE hash = ?");
+			if( $query->execute(array($hash)) ){
+				return 'user';
+			}else {
+				$query = $this->dbh->prepare("SELECT id FROM {$this->config->table_company_sessions} WHERE hash = ?");
+				if( $query->execute(array($hash)) ){
+					return 'company';
+				}
+			}
+		}
+		return 'no_role_found';
+    }
+
+
 
     /**
      * Compare user's password with given password

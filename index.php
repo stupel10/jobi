@@ -1,6 +1,7 @@
-<?php include_once "_partials/header.php" ?>
-
 <?php
+
+require_once '_inc/config.php';
+
 
 if (isset($_GET['url'])) {
 	$explode = explode("/", $_GET["url"]);
@@ -12,20 +13,25 @@ if (isset($_GET['url'])) {
 }
 else $user_company_dir = '';
 
-?>
 
-	<?php
+
 	if( $user_company_dir !== '' ) {
+		if( $user_company_dir === 'user'){
+			include_once '_partials/user_header.php';
+		}elseif ( $user_company_dir === 'company' && $page !== 'index-company'){
+			include_once '_partials/company_header.php';
+		}else {
+			include_once "_partials/header.php";
+		}
+
 		$link = 'pages/' . $user_company_dir .'/'. $page . '.php';
 		echo $link;
 		include file_exists( $link ) ? $link : '404.php';
 	}else {
+		include_once "_partials/header.php";
 		include 'main.php';
 	}
-	?>
+include_once "_partials/footer.php";
+?>
 
-
-
-
-<?php include_once "_partials/footer.php" ?>
 

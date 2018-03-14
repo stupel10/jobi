@@ -1,3 +1,30 @@
+<?php
+
+if ( logged_in() ) {
+	//echo 'logged in';
+
+	$user = get_user();
+	$user_profile = get_user_profile($user->id)[0];
+	//echo '<pre>';
+	//print_r( $user );
+	//echo '</pre>';
+
+
+}else {
+	header('HTTP/1.0 403 Forbidden');
+
+	include_once '403.php';
+	//echo "Forbidden".
+	//     "<br>".
+	//     "<a href='/' class='btn btn-danger'>GO TO HOMEPAGE</a>";
+
+	//echo "YOU ARE NOT LOGGED IN!!!";
+	exit();
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +57,7 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="pull-right">
+				<a href="" class="btn btn-success">SCAN JOB</a>
 				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
 			</div>
 		</div>

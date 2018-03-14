@@ -9,11 +9,10 @@
 
 <div class="row">
 	<form action="/_inc/user/registration.php" class="col-sm-6" method="post">
-		<h2>COMPANY REGISTER</h2>
+		<h2>USER REGISTER</h2>
 		<p class="form-group">
 			<input type="email" name="email" class="form-control" placeholder = "EMAIL" >
 			<input type="password" name="password" class="form-control" placeholder = "PASSWORD" >
-			<!--<input type="hidden" value="company" name="reg_type">-->
 		</p>
 		<p class="form-group">
 			<input type="submit" value="REGISTER" class="btn btn-small btn-danger">
@@ -22,7 +21,7 @@
 </div>
 <div class="row">
 	<form action="/_inc/user/login.php" class="col-sm-6" method="post">
-		<h2>COMPANY LOGIN</h2>
+		<h2>USER LOGIN</h2>
 		<p class="form-group">
 			<input type="email" name="email" class="form-control" placeholder = "EMAIL" >
 			<input type="password" name="password" class="form-control" placeholder = "PASSWORD" >

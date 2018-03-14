@@ -6,7 +6,7 @@ require_once '../config.php';
 $qr_id = $_GET['job_qr_id'];
 $user_id = $_GET['user_id'];
 
-$user = $database->select('users_details',
+$user = $database->select('users_profiles',
 				['id','jobs_registered'],
 				[ 'id' => $user_id ]);
 $user=$user[0];
@@ -29,7 +29,7 @@ if( $database->count('jobs',['id'=>$qr_id]) <1 ){
 $all_jobs = $user['jobs_registered'];
 $all_jobs = $all_jobs . ",".$qr_id;
 
-$data = $database->update('users_details',
+$data = $database->update('users_profiles',
 				[ 'jobs_registered' => $all_jobs ],
 				[ 'id' => $user_id ]);
 

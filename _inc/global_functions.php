@@ -33,7 +33,7 @@ function get_company_from_POST(){
 
 	return $company[0];
 }
-function get_user(){
+function get_user_from_POST(){
 	if( ! isset($_POST['name']) || empty($_POST['name']) ||
 	    ! isset($_POST['pass']) || empty($_POST['pass']) ) {
 		show_404();
@@ -42,14 +42,14 @@ function get_user(){
 	global $database;
 
 	if (
-			$database->count("users_details",
+			$database->count("user_profiles",
 							[ "name" => $_POST['name'],
 							"password" => $_POST['pass']
 			]) > 1
 		){
 		return false;
 	}
-	$user = $database->select("users_details",['id','name','surname','email','birthdate','date_registered','jobs_registered'] , [
+	$user = $database->select("user_profiles",['id','name','surname','email','birthdate','date_registered','jobs_registered'] , [
 		"name" => $_POST['name'],
 		"password" => $_POST['pass']
 	]);
@@ -144,4 +144,78 @@ function do_login( $data ){
 		$auth_config->cookie_secure,
 		$auth_config->cookie_http
 	);
+}
+/**
+ * Do Logout
+ *
+ * Logs the user out
+ *
+ * @return bool
+ */
+function do_logout(){
+
+	if ( !logged_in() ) return true;
+
+	global $auth;
+	global $auth_config;
+
+	return $auth->logout( $_COOKIE[$auth_config->cookie_name] );
+
+}
+/**
+ * Is user logged in?
+ *
+ * returns true if user is logged in
+ *
+ * @return bool
+ */
+function logged_in(){
+	global $auth;
+
+	return $auth->isLogged();
+}
+
+/**
+ * Get user
+ *
+ * Grab data for the logged in user
+ * @param int $user_id
+ * @return bool|mixed
+ */
+function get_user( $user_id = 0){
+
+	global $auth;
+
+	$role = $auth->getRole();
+	if( ! $user_id && logged_in() ){
+		$user_id = $auth->getSessionUID($auth->getSessionHash(),$role);
+	}
+	return (object) $auth->getUser($user_id,$role);
+}
+
+function get_user_profile($user_id){
+	global $auth;
+	global $auth_config;
+	global $database;
+
+	$role = $auth->getRole();
+	if( ! $user_id && logged_in() ){
+		$user_id = $auth->getSessionUID($auth->getSessionHash(),$role);
+	}
+	if($role === 'user' ){
+		$table= $auth_config->table_user_profiles;
+	}elseif ($role === 'company'){
+		$table= $auth_config->table_company_profiles;
+	}
+	$profile_id = $auth->getUserActiveProfile($user_id);
+	$user_profiles = $database->select($table,
+		//	[
+		//	"id","email","name","surname","birthdate","sex","title","photo_link","address_street","address_street_number","address_PSC","address_city","address_country","phone","jobs_registered"
+		//]
+		"*"
+		,[
+			"id" => $profile_id
+		]);
+
+	return $user_profiles;
 }

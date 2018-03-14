@@ -9,7 +9,7 @@ $reg_type = $_POST['reg_type'];
 
 switch ($reg_type){
 	case 'user':
-		$database->insert('users_details', [
+		$database->insert('users_profiles', [
 		'name' => $name,
 		'password' => $pass
 		]);

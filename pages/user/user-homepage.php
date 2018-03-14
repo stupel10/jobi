@@ -3,7 +3,7 @@
 	//require_once '_inc/config.php';
 
 //include_once "../../_partials/header.php";
-$user = get_user();
+$user = get_user_from_POST();
 if( ! $user ) show_404();
 
 ?>
