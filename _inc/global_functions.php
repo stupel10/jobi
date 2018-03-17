@@ -219,3 +219,76 @@ function get_user_profile($user_id){
 
 	return $user_profiles;
 }
+
+/**
+ *
+ * Get all jobs assigned to user.
+ *
+ * @param $user_id - id from table users
+ *
+ * @return array|bool
+ */
+function get_user_assigned_jobs($user_id){
+	global $database;
+
+	$user_active_profile = get_user_profile($user_id)[0];
+	$jobs_array = explode(',',$user_active_profile['jobs_registered']);
+	$jobs_array = array_unique($jobs_array);
+
+	$jobs = $database->select('jobs',"*",[
+		'id' => $jobs_array
+	]);
+
+
+	return $jobs;
+}
+
+/**
+ *
+ * Get all user CVs.
+ *
+ * @param $user_id - id from table users
+ *
+ * @return array|bool
+ */
+function get_user_CVs($user_id){
+	global $database;
+
+	$user_active_profile = get_user_profile($user_id)[0];
+
+
+	$resumes = $database->select("resumes", "*" ,
+		[ "user_id" => $user_active_profile['id'] ]);
+
+	if( ! $resumes ){
+		return false;
+	}
+
+	return $resumes;
+}
+
+/**
+ *
+ * Get cv by id. Must belong to user!
+ *
+ * @param $user_id - id of user in 'users' table
+ * @param $cv_id - id of CV in resumes table
+ *
+ * @return object|bool
+ */
+function get_user_cv( $user_id,$cv_id){
+	global $database;
+
+	$user_active_profile = get_user_profile($user_id)[0];
+
+	$resumes = $database->select("resumes", "*" ,
+		[
+			"id" => $cv_id,
+			"user_id" => $user_active_profile['id'] ]);
+
+	if( ! $resumes ){
+		return false;
+	}
+
+	return $resumes[0];
+}

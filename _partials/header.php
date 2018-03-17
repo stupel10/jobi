@@ -23,17 +23,10 @@
 	<!--<script src="/assets/js/bootstrap.js"></script>-->
 	<script src="/assets/js/app.js"></script>
 </head>
-<body>
+<body class="<?php echo $page ?>">
 <br>
 <header class="container">
 	<?= flash()->display() ?>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="pull-right">
-				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
-			</div>
-		</div>
-	</div>
 </header>
 <main>
 	<section>

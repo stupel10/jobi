@@ -46,7 +46,7 @@ if ( logged_in() ) {
 	<!--<script src="/assets/js/bootstrap.js"></script>-->
 	<script src="/assets/js/app.js"></script>
 </head>
-<body>
+<body class="company <?php echo $page ?>">
 <br>
 <header class="container">
 	<?= flash()->display() ?>

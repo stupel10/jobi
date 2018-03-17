@@ -26,6 +26,5 @@
 	</div>
 	<div class="col-sm-12">
 		<a href="/user/edit_profile" class="btn btn-success">EDIT MY PROFILE</a>
-		<a href="/user/jobs" class="btn btn-success">SCANED JOBS</a>
 	</div>
 </div>

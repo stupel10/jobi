@@ -1,5 +1,10 @@
 (function($) {
 
+	setTimeout(function(){
+		$('.alert').fadeOut();
+	},3000);
+
+	// FORMS
 	var user_reg_form = $('#reg-user');
 	makeAjax(user_reg_form);
 
@@ -30,4 +35,13 @@
 			});
 		});
 	}
+
 }(jQuery));
+
+function deleteCV( id ){
+	if ( confirm("Realy delete this CV?") ){
+		$link = '/_inc/user/delete_cv.php?cv_id='+id;
+		console.log( $link  );
+		window.location.href = $link;
+	}
+}

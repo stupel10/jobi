@@ -50,18 +50,27 @@ if ( logged_in() ) {
 	<!--<script src="/assets/js/bootstrap.js"></script>-->
 	<script src="/assets/js/app.js"></script>
 </head>
-<body>
+<body class="user <?php echo $page ?>">
 <br>
 <header class="container">
 	<?= flash()->display() ?>
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="pull-right">
-				<a href="" class="btn btn-success">SCAN JOB</a>
+				<form action="" method="post">
+					<input type="file" name="snanedFile" id="scanBtn" accept=".png, .jpg, .jpeg" style="display:none;"/>
+				</form>
+				<a href="javacsript:void(0)" class="btn btn-success" onclick="$('#scanBtn').click();">SCAN JOB</a>
 				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
 			</div>
 		</div>
 	</div>
+	<nav>
+		<a href="/user/homepage" class="btn btn-primary">HOME</a>
+		<a href="/user/jobs" class="btn btn-primary">SCANED JOBS</a>
+		<a href="/user/cvs" class="btn btn-primary">MY CVs</a>
+	</nav>
+	<br>
 </header>
 <main>
 	<section>
