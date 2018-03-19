@@ -14,8 +14,10 @@ if( !isset($cv_id) || empty($cv_id)) {
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="form-group">
+				<label for="title">TITLE</label><br>
+				<input type="text" name="title"><br>
 				<label for="text">TEXT</label><br>
-				<textarea name="text" cols="80" rows="10"placeholder="text">
+				<textarea name="text" cols="80" rows="10">
 					<?php if(isset($cv) && $cv) echo $cv['text'] ?>
 				</textarea>
 			</div>

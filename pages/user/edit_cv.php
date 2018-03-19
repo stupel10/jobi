@@ -15,6 +15,8 @@ if( !isset($_GET['cv_id']) || empty($_GET['cv_id']) ) {
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="form-group">
+				<label for="title">TITLE</label><br>
+				<input type="text" name="title" value="<?php if(isset($cv) && $cv) echo $cv['title'] ?>"><br>
 				<label for="text">TEXT</label><br>
 				<textarea name="text" cols="80" rows="10"placeholder="text"><?php if(isset($cv) && $cv) echo $cv['text'] ?></textarea>
 			</div>

@@ -154,7 +154,7 @@ function do_login( $data ){
  */
 function do_logout(){
 
-	if ( !logged_in() ) return true;
+	if ( !is_logged_in() ) return true;
 
 	global $auth;
 	global $auth_config;
@@ -163,17 +163,44 @@ function do_logout(){
 
 }
 /**
+ * Is user or company logged in?
+ *
+ * returns true if user is logged in
+ *
+ * @return bool
+ */
+function is_logged_in(){
+	global $auth;
+
+	return ($auth->isUserLogged() || $auth->isCompanyLogged() );
+}
+
+/**
  * Is user logged in?
  *
  * returns true if user is logged in
  *
  * @return bool
  */
-function logged_in(){
+function is_user_logged_in(){
 	global $auth;
 
-	return $auth->isLogged();
+	return ($auth->isUserLogged() );
 }
+
+/**
+ * Is user logged in?
+ *
+ * returns true if user is logged in
+ *
+ * @return bool
+ */
+function is_company_logged_in(){
+	global $auth;
+
+	return ($auth->isCompanyLogged() );
+}
+
 
 /**
  * Get user
@@ -187,7 +214,7 @@ function get_user( $user_id = 0){
 	global $auth;
 
 	$role = $auth->getRole();
-	if( ! $user_id && logged_in() ){
+	if( ! $user_id && is_logged_in() ){
 		$user_id = $auth->getSessionUID($auth->getSessionHash(),$role);
 	}
 	return (object) $auth->getUser($user_id,$role);
@@ -199,7 +226,7 @@ function get_user_profile($user_id){
 	global $database;
 
 	$role = $auth->getRole();
-	if( ! $user_id && logged_in() ){
+	if( ! $user_id && is_logged_in() ){
 		$user_id = $auth->getSessionUID($auth->getSessionHash(),$role);
 	}
 	if($role === 'user' ){

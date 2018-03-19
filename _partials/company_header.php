@@ -1,11 +1,13 @@
 <?php
 
-if ( logged_in() ) {
-	echo 'logged in';
+if ( is_company_logged_in() ) {
+	//echo 'logged in';
 
-	echo '<pre>';
-	print_r( get_user() );
-	echo '</pre>';
+	//$user = get_user();
+	//$user_profile = get_user_profile($user->id)[0];
+	//echo '<pre>';
+	//print_r( $user );
+	//echo '</pre>';
 
 
 }else {

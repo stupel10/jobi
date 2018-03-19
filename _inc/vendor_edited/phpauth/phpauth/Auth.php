@@ -1572,6 +1572,32 @@ class Auth
 	    );
     }
 
+	/**
+	 * Returns is user logged in
+	 * @return boolean
+	 */
+	public function isUserLogged() {
+
+		return (
+			isset($_COOKIE[$this->config->cookie_name])
+			&&
+			$this->checkSession($_COOKIE[$this->config->cookie_name],'user')
+		);
+	}
+
+	/**
+	 * Returns is company logged in
+	 * @return boolean
+	 */
+	public function isCompanyLogged() {
+
+		return (
+			isset($_COOKIE[$this->config->cookie_name])
+			&&
+			$this->checkSession($_COOKIE[$this->config->cookie_name],'company')
+		);
+	}
+
     /**
      * Returns current session hash
      * @return string

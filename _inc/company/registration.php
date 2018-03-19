@@ -12,11 +12,10 @@ if( $_SERVER['REQUEST_METHOD']==='POST' ){
 
 	if( $register['error'] ){
 		flash()->error($register['message']);
-		redirect('/index-company');
+		redirect('/company/index-company');
 	}else {
 		flash()->success('Company registered!');
 		redirect('/company/homepage');
 	}
-
 }
 

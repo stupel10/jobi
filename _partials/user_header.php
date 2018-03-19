@@ -1,6 +1,6 @@
 <?php
 
-if ( logged_in() ) {
+if ( is_user_logged_in() ) {
 	//echo 'logged in';
 
 	$user = get_user();
@@ -58,9 +58,9 @@ if ( logged_in() ) {
 		<div class="col-sm-12">
 			<div class="pull-right">
 				<form action="" method="post">
-					<input type="file" name="snanedFile" id="scanBtn" accept=".png, .jpg, .jpeg" style="display:none;"/>
+					<input type="file" name="snanedFile" id="scanBtn" accept=".png, .jpg, .jpeg" style="display:none;" onchange="imageScanned(this);"/>
 				</form>
-				<a href="javacsript:void(0)" class="btn btn-success" onclick="$('#scanBtn').click();">SCAN JOB</a>
+				<a href="javacsript:void(0)" class="btn btn-success" onclick="scanImage()">SCAN JOB</a>
 				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
 			</div>
 		</div>

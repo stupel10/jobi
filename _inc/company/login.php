@@ -12,7 +12,7 @@ if( $_SERVER['REQUEST_METHOD']==='POST' ){
 
 	if($login['error']) {
 		flash()->error($login['message']);
-		redirect('/pages/company/index-company');
+		redirect('/company/index-company');
 	} else {
 		// Logged in successfully, set cookie, display success message
 		do_login( $login );

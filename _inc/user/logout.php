@@ -2,7 +2,7 @@
 
 require_once '../config.php';
 
-if (! $auth->isLogged() ){
+if (! $auth->isUserLogged() ){
 	// u arent logged in, y u want to logout?
 	redirect('/');
 }
