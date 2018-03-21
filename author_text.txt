@@ -4,6 +4,9 @@ kniznicea MEDOO:
 kniznica whoops
 -> perfektna kniznica na errory
 
+kniznica FPDF
+-> tvorba PDF
+
 kniznica PHPAuth
 -> kniznica pre autorizaciu.
 -> premiestnil som ju do vendor_edited, pretoze som editoval jej zdrojaky a pri jej update by sa moje zmeny prepisali

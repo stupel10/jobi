@@ -238,46 +238,6 @@
         "description": "PHPMailer is a full-featured email creation and transfer class for PHP"
     },
     {
-        "name": "phpauth/phpauth",
-        "version": "1.1.1",
-        "version_normalized": "1.1.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/PHPAuth/PHPAuth.git",
-            "reference": "849274911beb8d235f3eb8228bb13ce77962be75"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/PHPAuth/PHPAuth/zipball/849274911beb8d235f3eb8228bb13ce77962be75",
-            "reference": "849274911beb8d235f3eb8228bb13ce77962be75",
-            "shasum": ""
-        },
-        "require": {
-            "bjeavons/zxcvbn-php": "*",
-            "php": ">=5.4.0",
-            "phpmailer/phpmailer": "^5.2"
-        },
-        "time": "2016-07-14T15:45:30+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "PHPAuth\\": "/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "A secure user authentication class for PHP websites, using a powerful password hashing system and attack blocking to keep your website and users secure.",
-        "homepage": "http://phpauth.github.io/PHPAuth/",
-        "keywords": [
-            "Authentication",
-            "class",
-            "secure"
-        ]
-    },
-    {
         "name": "catfan/medoo",
         "version": "v1.5.5",
         "version_normalized": "1.5.5.0",
@@ -397,6 +357,87 @@
             "flash",
             "messages",
             "notifications"
+        ]
+    },
+    {
+        "name": "phpauth/phpauth",
+        "version": "1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/PHPAuth/PHPAuth.git",
+            "reference": "849274911beb8d235f3eb8228bb13ce77962be75"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/PHPAuth/PHPAuth/zipball/849274911beb8d235f3eb8228bb13ce77962be75",
+            "reference": "849274911beb8d235f3eb8228bb13ce77962be75",
+            "shasum": ""
+        },
+        "require": {
+            "bjeavons/zxcvbn-php": "*",
+            "php": ">=5.4.0",
+            "phpmailer/phpmailer": "^5.2"
+        },
+        "time": "2016-07-14T15:45:30+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "PHPAuth\\": "/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "A secure user authentication class for PHP websites, using a powerful password hashing system and attack blocking to keep your website and users secure.",
+        "homepage": "http://phpauth.github.io/PHPAuth/",
+        "keywords": [
+            "Authentication",
+            "class",
+            "secure"
+        ]
+    },
+    {
+        "name": "setasign/fpdf",
+        "version": "1.8.1",
+        "version_normalized": "1.8.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Setasign/FPDF.git",
+            "reference": "2c68c9e6c034ac3187d25968790139a73184cdb1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Setasign/FPDF/zipball/2c68c9e6c034ac3187d25968790139a73184cdb1",
+            "reference": "2c68c9e6c034ac3187d25968790139a73184cdb1",
+            "shasum": ""
+        },
+        "time": "2016-01-01T17:47:15+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "fpdf.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "no usage restriction"
+        ],
+        "authors": [
+            {
+                "name": "Olivier Plathey",
+                "email": "oliver@fpdf.org",
+                "homepage": "http://fpdf.org/"
+            }
+        ],
+        "description": "FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.",
+        "homepage": "http://www.fpdf.org",
+        "keywords": [
+            "fpdf",
+            "pdf"
         ]
     }
 ]

@@ -24,5 +24,10 @@
 	// authorization -  PHPAuth
 	require_once 'authorization.php';
 
+	// pdf creator
+	require_once 'vendor/setasign/fpdf/font/helvetica.php' ;
+	require_once 'vendor/setasign/fpdf/fpdf.php' ;
+	//use it in file: $pdf = new FPDF();
+
 	// global functions
 	require_once 'global_functions.php';
