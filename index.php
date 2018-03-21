@@ -2,7 +2,6 @@
 
 require_once '_inc/config.php';
 
-
 if (isset($_GET['url'])) {
 	$explode = explode("/", $_GET["url"]);
 	$user_company_dir = $explode[0];
@@ -12,8 +11,6 @@ if (isset($_GET['url'])) {
 	$param3 = isset($explode[3]) ? trim($explode[3]) : '';
 }
 else $user_company_dir = '';
-
-
 
 	if( $user_company_dir !== '' ) {
 		if( $user_company_dir === 'user'){
@@ -25,7 +22,7 @@ else $user_company_dir = '';
 		}
 
 		$link = 'pages/' . $user_company_dir .'/'. $page . '.php';
-		echo $link;
+		//echo $link;
 		include file_exists( $link ) ? $link : '404.php';
 	}else {
 		include_once "_partials/header.php";

@@ -354,12 +354,12 @@ class Auth
     * @param string $hash
     * @return boolean
     */
-    public function logout($hash,$role = 'user')
+    public function logout($hash)
     {
         if (strlen($hash) != 40) {
             return false;
         }
-
+	    $role = $this->getRole();
         return $this->deleteSession($hash,$role);
     }
 
@@ -582,7 +582,6 @@ class Auth
 	    }elseif ($role === 'company'){
 		    $table= $this->config->table_company_sessions;
 	    }
-
         $query = $this->dbh->prepare("SELECT uid FROM {$table} WHERE hash = ?");
         $query->execute(array($hash));
 
@@ -1612,14 +1611,15 @@ class Auth
 	 */
     public function getRole(){
 		$hash = $this->getSessionHash();
-
 		if( isset($hash) ){
 			$query = $this->dbh->prepare("SELECT id FROM {$this->config->table_user_sessions} WHERE hash = ?");
-			if( $query->execute(array($hash)) ){
+			$query->execute(array($hash));
+			if( $query->rowCount() >0 ){
 				return 'user';
 			}else {
 				$query = $this->dbh->prepare("SELECT id FROM {$this->config->table_company_sessions} WHERE hash = ?");
-				if( $query->execute(array($hash)) ){
+				$query->execute(array($hash));
+				if( $query->rowCount() >0 ){
 					return 'company';
 				}
 			}

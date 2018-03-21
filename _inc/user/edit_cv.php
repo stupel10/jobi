@@ -25,7 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						'title' => $title,
 						'text' => $text
 					],[
-						'id' => $cv_id
+						'id' => $cv_id,
+						'user_id' => $user_profile['id']
 			]);
 	}
 	if( $upd->rowCount() > 0  ){

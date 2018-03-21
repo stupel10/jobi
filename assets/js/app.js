@@ -38,12 +38,16 @@ function deleteCV( id ){
 
 	}
 }
-function deleteJob( id ){
-	if ( confirm("Realy delete this CV?") ){
+function deleteUserJob( id ){
+	if ( confirm("Realy delete this Job you scanned?") ){
 		window.location.href = 	'/_inc/user/delete_job.php?job_id='+id;
 	}
 }
-
+function deleteJob(id){
+	if ( confirm("Realy delete this Job?") ) {
+		window.location.href = 	'/_inc/company/delete_job.php?job_id='+id;
+	}
+}
 // ==========================================================
 //    SCANING QR CODE
 var scriptsLoaded = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];

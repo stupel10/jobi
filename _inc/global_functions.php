@@ -153,9 +153,9 @@ function do_login( $data ){
  * @return bool
  */
 function do_logout(){
-
-	if ( !is_logged_in() ) return true;
-
+	if ( !is_logged_in() ){
+		return true;
+	}
 	global $auth;
 	global $auth_config;
 
@@ -318,4 +318,107 @@ function get_user_cv( $user_id,$cv_id){
 	}
 
 	return $resumes[0];
+}
+
+/**
+*
+* Get all jobs company is offering
+ *
+ * @param $company_id - id of company in 'company_profiles' table
+ *                                                                                *
+ * @return object|bool
+ */
+function get_company_jobs($company_id){
+
+	// is logged?
+	if( !is_logged_in() ){
+		return false;
+	}
+
+	global $database;
+
+	$jobs = $database->select('jobs',"*",['company_id' => $company_id]);
+
+	if( !$jobs ){
+		return false;
+	}
+
+	return $jobs;
+}
+
+/**
+ *
+ * Get job by id. Must belong to company!
+ *
+ * @param $user_id - id of company in 'companies' table
+ * @param $job_id - id of job in jobs table
+ *
+ * @return object|bool
+ */
+function get_company_job( $user_id,$job_id){
+	global $database;
+
+	$user_active_profile = get_user_profile($user_id)[0];
+
+	$jobs = $database->select("jobs", "*" ,
+		[
+			"id" => $job_id,
+			"company_id" => $user_active_profile['id'] ]);
+
+	if( ! $jobs ){
+		return false;
+	}
+
+	return $jobs[0];
+}
+
+/**
+ *
+ * Create qr
+ *
+ * @param $data
+ * @param $link
+ *
+ * @return bool|string
+ */
+function createQR($data,$link,$root_dir = '../../'){
+	//  data = '12'
+	//	link = '/company_qr/company12.png'
+
+	if( empty($data) || empty($link)){
+		echo 'error input';
+		return false;
+	}
+
+	// CREATE GOOGLE LINK
+	$width = 500;
+	$height = 500;
+	$google_root_link = 'https://chart.googleapis.com/chart?';
+	$google_param_type = 'cht=qr';
+	$google_param_size = 'chs='. $width.'x'.$height;
+	$google_param_data = 'chl='.$data;
+	$google_link = $google_root_link.
+	               $google_param_type.
+	               '&'.
+	               $google_param_size.
+	               '&'.
+	               $google_param_data;
+
+
+
+	// CREATE FILE, WHERE TO SAVE IMAGE
+	$image_directory_root_link = $root_dir.'assets/images/qr_codes/' ;
+	$link = ltrim($link, '/');
+	$img_link = $image_directory_root_link.
+	            $link;
+	$img = fopen($img_link,'w');
+	fclose($img);
+
+	if( ! file_put_contents($img_link, file_get_contents($google_link)) ){
+		flash()->error('QR image not created correctly');
+		return false;
+	}
+
+	$img_link2 = '/assets/images/qr_codes/'.$link;
+	return file_exists( $img_link ) ? $img_link2 : false;
 }

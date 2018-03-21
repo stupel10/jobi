@@ -22,7 +22,7 @@ $jobs = get_user_assigned_jobs($user->id);
 						 '<h4>' . $job["title"] . '</h4>' .
 						 '<p>' . $job["text"] . '</p>' .
 						 '<div class="tools pull-right">' .
-						 '<a href="javascript:void(0)" onclick="deleteJob(' . $job['id'] . ')" class="btn btn-danger delete">DELETE</a>' .
+						 '<a href="javascript:void(0)" onclick="deleteUserJob(' . $job['id'] . ')" class="btn btn-danger delete">DELETE</a>' .
 						 '</div>' .
 						 '</li>';
 				}

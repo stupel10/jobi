@@ -1,4 +1,4 @@
-<form action="/_inc/user/edit_profile.php" method="POST">
+<form action="/_inc/company/edit_profile.php" method="POST">
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group">
@@ -6,24 +6,8 @@
 				<input type="email" name="email" placeholder="email" value="<?php echo $user_profile['email']?>">
 			</div>
 			<div class="form-group">
-				<label for="title">TITLE</label>
-				<input type="text" name="title" placeholder="title" value="<?php echo $user_profile['title']?>">
-			</div>
-			<div class="form-group">
 				<label for="name">NAME</label>
 				<input type="text" name="name" placeholder="name" value="<?php echo $user_profile['name']?>">
-			</div>
-			<div class="form-group">
-				<label for="surname">SURNAME</label>
-				<input type="text" name="surname" placeholder="surname" value="<?php echo $user_profile['surname']?>">
-			</div>
-			<div class="form-group">
-				<label for="sex">SEX</label>
-				<input type="text" name="sex" placeholder="sex" value="<?php echo $user_profile['sex']?>">
-			</div>
-			<div class="form-group">
-				<label for="birthdate">BIRTH DATE</label>
-				<input type="text" name="birthdate" placeholder="birthdate" value="<?php echo $user_profile['birthdate']?>">
 			</div>
 			<div class="form-group">
 				<label for="phone">PHONE</label>

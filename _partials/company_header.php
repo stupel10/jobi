@@ -3,12 +3,8 @@
 if ( is_company_logged_in() ) {
 	//echo 'logged in';
 
-	//$user = get_user();
-	//$user_profile = get_user_profile($user->id)[0];
-	//echo '<pre>';
-	//print_r( $user );
-	//echo '</pre>';
-
+	$user = get_user();
+	$user_profile = get_user_profile($user->id)[0];
 
 }else {
 	header('HTTP/1.0 403 Forbidden');
@@ -59,6 +55,11 @@ if ( is_company_logged_in() ) {
 			</div>
 		</div>
 	</div>
+	<nav>
+		<a href="/company/homepage" class="btn btn-primary">HOME</a>
+		<a href="/company/offered_jobs" class="btn btn-primary">OFFERED JOBS</a>
+	</nav>
+	<br>
 </header>
 <main>
 	<section>
