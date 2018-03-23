@@ -17,14 +17,16 @@ $jobs = get_user_assigned_jobs($user->id);
 		?>
 		<ul class="list-group">
 			<?php
-				foreach ( $jobs AS $job ) {
-					echo '<li class="list-group-item">' .
-						 '<h4>' . $job["title"] . '</h4>' .
-						 '<p>' . $job["text"] . '</p>' .
-						 '<div class="tools pull-right">' .
-						 '<a href="javascript:void(0)" onclick="deleteUserJob(' . $job['id'] . ')" class="btn btn-danger delete">DELETE</a>' .
-						 '</div>' .
-						 '</li>';
+				foreach ( $jobs AS $job ) { ?>
+					<li class="list-group-item">
+						<h4><?=$job["title"]?></h4>
+						<p><?=$job["text"]?></p>
+						<div class="tools pull-right">
+							<a href="/public/job?job_id=<?=$job['id']?>" class="btn btn-primary">DETAIL</a>
+							<a href="javascript:void(0)" onclick="deleteUserJob(<?=$job['id']?>)" class="btn btn-danger delete">DELETE</a>
+						</div>
+					</li>
+					<?php
 				}
 			}
 			?>

@@ -212,13 +212,27 @@ class Auth
 	    $database->insert($table,
 		    [ 'email'=> $email ] );
 
-	    if( !( $profile_id = $database->id() ) ) {
-		    $this->addAttempt( $role );
+	    $profile_id = $database->id();
+	    if( !$profile_id ) {
 		    $return['message'] = "USER PROFILE NOT GENERATED CORRECTLY";
 
 		    return $return;
 	    }
+	    // if it is user, generate him QR code
+	    if($role == 'user') {
+		    $qr_link = createQR( $profile_id, '/user_profile_qr/user_profile' . $profile_id . '.png' );
+		    if ( ! $qr_link ) {
+			    $return['message'] = "QR CODE FOR USER NOT GENERATED CORRECTLY";
 
+			    return $return;
+		    }
+		    $upd = $database->update( $table, [ 'qr_link' => $qr_link ], [ 'id' => $profile_id ] );
+		    if ( ! $upd->rowCount() ) {
+			    $return['message'] = "USER PROFILE DB UPDATE NOT OK - ERROR WHEN UPDATING QR CODE LINK";
+
+			    return $return;
+		    }
+	    }
 
         $addUser = $this->addUser($email, $password, $params, $sendmail, $role, $profile_id);
 

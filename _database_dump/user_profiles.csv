@@ -1,0 +1,3 @@
+id,"email","name","surname","birthdate","sex","title","photo_link","qr_link","address_street","address_street_number",address_PSC,"address_city","address_country","phone","date_registered","jobs_registered"
+20,"jakub.vyskoc@gmail.com","Jakub","Vyskoc","1993-10-02","MALE","Bc.",NULL,NULL,"Orechova","36",91927,"Brestovany","Slovakia","0915125789","2018-03-18 17:32:44",""
+33,"jozo.raz@minister.vnutra","NAME","SURNAME","0000-00-00","MALE","TITLE ",NULL,"/assets/images/qr_codes/user_profile_qr/user_profile33.png","","",0,"","","","2018-03-21 23:50:00",NULL

@@ -10,6 +10,10 @@
 	$job_id = $_GET['job_id'];
 	$job = get_company_job($user->id,$job_id);
 
+	if(!$job){
+		flash()->error('Something went wrong. Job does not belong to you or is not found.');
+		redirect('/company/offered_jobs');
+	}
 
 	class PDF extends FPDF
 	{
@@ -51,7 +55,9 @@
 	$pdf->Cell(0,10,'',0,1);
 	$pdf->SetFont('Times','',12);
 	$pdf->Cell(0,10,$job['text'],0,1);
-	$pdf->Image('../../assets/images/qr_codes/job_qr/job'.$job['id'].'.png',10,60,50);
-
+	$job_qr_link = '../../assets/images/qr_codes/job_qr/job'.$job['id'].'.png';
+	if(file_exists($job_qr_link)) {
+		$pdf->Image( $job_qr_link, 10, 60, 50 );
+	}
 	$pdf->Output('I','job.pdf',true);
 

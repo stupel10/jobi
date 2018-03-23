@@ -1,23 +1,13 @@
 <?php
 
 if ( is_company_logged_in() ) {
-	//echo 'logged in';
-
 	$user = get_user();
 	$user_profile = get_user_profile($user->id)[0];
-
 }else {
 	header('HTTP/1.0 403 Forbidden');
-
 	include_once '403.php';
-	//echo "Forbidden".
-	//     "<br>".
-	//     "<a href='/' class='btn btn-danger'>GO TO HOMEPAGE</a>";
-
-	//echo "YOU ARE NOT LOGGED IN!!!";
 	exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html>

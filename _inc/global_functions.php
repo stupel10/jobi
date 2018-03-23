@@ -63,13 +63,9 @@ function get_user_from_POST(){
 }
 
 function get_job($id){
-	if( ! isset($id) || empty($id) ) {
-		show_404();
-	}
-
 	global $database;
 
-	$job = $database->select("jobs",['id','company_id','title','text','qr_source'] ,
+	$job = $database->select("jobs","*",
 								[ "id" => $id ]);
 
 	if( ! $job ){
@@ -407,7 +403,8 @@ function createQR($data,$link,$root_dir = '../../'){
 
 
 	// CREATE FILE, WHERE TO SAVE IMAGE
-	$image_directory_root_link = $root_dir.'assets/images/qr_codes/' ;
+	$root_dir = rtrim($root_dir,'/');
+	$image_directory_root_link = $root_dir.'/assets/images/qr_codes/' ;
 	$link = ltrim($link, '/');
 	$img_link = $image_directory_root_link.
 	            $link;

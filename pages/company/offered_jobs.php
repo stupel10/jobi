@@ -21,16 +21,11 @@ $jobs = get_company_jobs($user_profile['id']);
 				?>
 			<li class="list-group-item">
 				<h4><?=$job["title"]?></h4>
-				<p><?=$job["text"]?></p>
-				<?php if(isset($job['qr_link'])){?>
-					<a href="<?=$job['qr_link']?>">
-				<img src="<?=$job['qr_link']?>" alt="qr-job<?=$job['id']?>" style="width:100px;height:auto;"/>
-					</a>
-				<?php }?>
 				<div class="tools pull-right">
+					<a href="/public/job?job_id=<?=$job['id']?>" class="btn btn-success">VIEW</a>
+					<a href="/_inc/company/create_job_pdf.php?job_id=<?=$job['id']?>" class="btn btn-primary">CREATE PDF</a>
 					<a href="/company/edit_job?job_id=<?=$job['id']?>" class="btn btn-warning">EDIT</a>
 					<a href="javascript:void(0)" onclick="deleteJob(<?=$job['id']?>)" class="btn btn-danger delete">DELETE</a>
-					<a href="/_inc/company/create_job_pdf.php?job_id=<?=$job['id']?>" class="btn btn-primary">CREATE PDF</a>
 				</div>
 			</li>
 		<?php }

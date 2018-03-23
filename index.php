@@ -17,6 +17,8 @@ else $user_company_dir = '';
 			include_once '_partials/user_header.php';
 		}elseif ( $user_company_dir === 'company' && $page !== 'index-company'){
 			include_once '_partials/company_header.php';
+		}elseif ( $user_company_dir === 'public' ){
+			include_once '_partials/public_header.php';
 		}else {
 			include_once "_partials/header.php";
 		}

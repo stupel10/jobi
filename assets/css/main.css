@@ -55,3 +55,9 @@ a {
 .pull-right {
 	float: right;
 }
+/*.company.offered_jobs ul.list-group li.list-group-item .tools {*/
+	/*display: none;*/
+/*}*/
+/*.company.offered_jobs ul.list-group li.list-group-item:hover .tools {*/
+	/*display:inline-block;*/
+/*}*/
