@@ -59,7 +59,8 @@ function scriptLoaded (num){
 	}
 }
 function isScritptsLoaded(){
-	return ( scriptsLoaded[0] && scriptsLoaded[1] && scriptsLoaded[2] &&
+	return (
+		scriptsLoaded[0] && scriptsLoaded[1] && scriptsLoaded[2] &&
 		scriptsLoaded[3] && scriptsLoaded[4] && scriptsLoaded[5] &&
 		scriptsLoaded[6] && scriptsLoaded[7] && scriptsLoaded[8] &&
 		scriptsLoaded[9] && scriptsLoaded[10] && scriptsLoaded[11] &&
@@ -91,15 +92,25 @@ function scanImage(){
 	}
 }
 function imageScanned( fileInput ) {
-	console.log(fileInput.files[0]);
 
 	qrcode.callback = function (decodedData) {
-		//...
+
 		console.log('decodedData:');
 		console.log(decodedData);
-		if( Number.isInteger( parseInt(decodedData) ) ){
-			window.location.href="/_inc/user/add_job.php?job_id="+decodedData;
+
+		var qr_data_json = parse_qr_data(decodedData);
+		console.log( 'json: '+ JSON.stringify(qr_data_json) );
+		var job_id = qr_data_json.searchObject.id;
+		var page = qr_data_json.searchObject.page;
+
+		if(page == 'job' && Number.isInteger( parseInt(job_id))) {
+			window.location.href = "/_inc/user/add_job.php?job_id=" + job_id;
+		}else {
+			// TODO: ak je to cudzi kod, a je tam nieco ine, padne to....osetrit!
+			alert('This is not QR code with jobi job!');
+			window.location.href = decodedData;
 		}
+
 	}
 
 	var file = fileInput.files[0];
@@ -115,6 +126,32 @@ function imageScanned( fileInput ) {
 	} else {
 		//preview.src = "";
 	}
+}
+function parse_qr_data(decodedData){
+	return parseURL( decodeURIComponent(decodedData) );
+}
+function parseURL(url) {
+	var parser = document.createElement('a'),
+	    searchObject = {},
+	    queries, split, i;
+	// Let the browser do the work
+	parser.href = url;
+	// Convert query string to object
+	queries = parser.search.replace(/^\?/, '').split('&');
+	for( i = 0; i < queries.length; i++ ) {
+		split = queries[i].split('=');
+		searchObject[split[0]] = split[1];
+	}
+	return {
+		protocol: parser.protocol,
+		host: parser.host,
+		hostname: parser.hostname,
+		port: parser.port,
+		pathname: parser.pathname,
+		search: parser.search,
+		searchObject: searchObject,
+		hash: parser.hash
+	};
 }
 //       END SCANING QR CODE
 // ============================================================================================================

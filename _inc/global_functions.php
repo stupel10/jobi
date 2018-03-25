@@ -75,7 +75,19 @@ function get_job($id){
 	return $job[0];
 
 }
+function get_company_profile($id){
+	if( ! isset($id) || empty($id) ) {
+		show_404();
+	}
 
+	global $database;
+	global $auth_config;
+
+	$company = $database->select($auth_config->table_company_profiles,"*" , [ "id" => $id ]);
+
+	return $company ? $company[0] : $company;
+
+}
 function get_company($id){
 	if( ! isset($id) || empty($id) ) {
 		show_404();
@@ -242,7 +254,20 @@ function get_user_profile($user_id){
 
 	return $user_profiles;
 }
+function get_public_user_profile($user_profile_id,$role){
+	global $auth_config;
+	global $database;
 
+	if($role === 'user' ){
+		$table= $auth_config->table_user_profiles;
+	}elseif ($role === 'company'){
+		$table= $auth_config->table_company_profiles;
+	}
+	$user_profiles = $database->select($table, "*",[ "id" => $user_profile_id ]);
+
+
+	return $user_profiles[0];
+}
 /**
  *
  * Get all jobs assigned to user.
@@ -370,21 +395,55 @@ function get_company_job( $user_id,$job_id){
 
 /**
  *
- * Create qr
+ * create link to QR code encoded to url.
  *
- * @param $data
- * @param $link
+ * @param $type - type of QR code generated in ['job','user','company']
+ * @param $id - id of selected type to be shown when scanned
+ * @param string $more_params_formated - additional parameters to url correctly formated
  *
  * @return bool|string
  */
-function createQR($data,$link,$root_dir = '../../'){
-	//  data = '12'
-	//	link = '/company_qr/company12.png'
+function createLinkToQR($type,$id,$more_params_formated = ''){
 
-	if( empty($data) || empty($link)){
-		echo 'error input';
+	$all_types = ['job','user','company'];
+	if(empty($type) || empty($id) || !in_array($type,$all_types)){
+		flash()->error('error input parameter swhen creating QR link');
 		return false;
 	}
+
+	global $base_url;
+	$result = $base_url.
+	        '/public/page?page='.
+	        $type.
+	        '&'.
+	        'id'.
+	        '='.
+	        $id;
+	if($more_params_formated != ''){
+		$more_params_formated = ltrim($more_params_formated,'&');
+		$result = $result.'&'.$more_params_formated;
+	}
+	return urlencode($result);
+}
+/**
+ *
+ * Create qr
+ *
+ * @param $id - id of selected type to be shown when scanned
+ * @param $type - type of created QR code from array ['job','user','company']
+ * @param string $more_params - additional parameters to url correctly formated
+ * @param $root_dir_path - path to root directory
+ *
+ * @return bool|string
+ */
+function createQR($type,$id,$root_dir_path = '../..',$more_params = ''){
+
+	$all_types = ['job','user','company'];
+	if( empty($id) || empty($type) || !in_array($type,$all_types)){
+		flash()->error('error input parameters when creating QR');
+		return false;
+	}
+
 
 	// CREATE GOOGLE LINK
 	$width = 500;
@@ -392,7 +451,8 @@ function createQR($data,$link,$root_dir = '../../'){
 	$google_root_link = 'https://chart.googleapis.com/chart?';
 	$google_param_type = 'cht=qr';
 	$google_param_size = 'chs='. $width.'x'.$height;
-	$google_param_data = 'chl='.$data;
+	$google_param_data = 'chl='.createLinkToQR($type,$id,$more_params);
+
 	$google_link = $google_root_link.
 	               $google_param_type.
 	               '&'.
@@ -401,21 +461,22 @@ function createQR($data,$link,$root_dir = '../../'){
 	               $google_param_data;
 
 
-
 	// CREATE FILE, WHERE TO SAVE IMAGE
-	$root_dir = rtrim($root_dir,'/');
-	$image_directory_root_link = $root_dir.'/assets/images/qr_codes/' ;
-	$link = ltrim($link, '/');
-	$img_link = $image_directory_root_link.
-	            $link;
-	$img = fopen($img_link,'w');
+	$root_dir_path = rtrim($root_dir_path,'/');
+	$image_directory_root_link = $root_dir_path.'/assets/images/qr_codes/' ;
+	$image_directory_relative_file_path = $type. '/'.$type.'_'.$id.'.png';
+	$img_link_absolute = $image_directory_root_link.
+	                     $image_directory_relative_file_path;
+
+
+	$img = fopen($img_link_absolute,'w');
 	fclose($img);
 
-	if( ! file_put_contents($img_link, file_get_contents($google_link)) ){
+	if( ! file_put_contents($img_link_absolute, file_get_contents($google_link)) ){
 		flash()->error('QR image not created correctly');
 		return false;
 	}
 
-	$img_link2 = '/assets/images/qr_codes/'.$link;
-	return file_exists( $img_link ) ? $img_link2 : false;
+	$img_link_relative = '/assets/images/qr_codes/'.$image_directory_relative_file_path;
+	return file_exists( $img_link_absolute ) ? $img_link_relative : false;
 }

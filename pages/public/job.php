@@ -1,10 +1,19 @@
 <?php
-if( !isset($_GET['job_id']) || empty($_GET['job_id']) ) {
-	flash()->error('No job_id in url!');
+if( !isset($_GET['id']) || empty($_GET['id']) ) {
+	flash()->error('No id in url!');
 	redirect('/'); // TODO: nefunguje redirect!
 }else{
-	$job_id = $_GET['job_id'];
+	$job_id = $_GET['id'];
 	$job = get_job( $job_id );
+	if(!$job){
+		flash()->error('Job not found!');
+		redirect('/'); // TODO: nefunguje redirect!
+	}
+	$company = get_company_profile($job['company_id']);
+	if(!$company){
+		flash()->error('Company not found!');
+		redirect('/'); // TODO: nefunguje redirect!
+	}
 }
 
 ?>
@@ -17,5 +26,6 @@ if( !isset($_GET['job_id']) || empty($_GET['job_id']) ) {
 				<img src="<?=$job['qr_link']?>" alt="qr-job<?=$job['id']?>" style="width:100px;"/>
 			</a>
 		<?php }?>
+		<h3><?=$company['name']?></h3>
 	</div>
 </div>

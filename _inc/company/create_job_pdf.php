@@ -55,7 +55,7 @@
 	$pdf->Cell(0,10,'',0,1);
 	$pdf->SetFont('Times','',12);
 	$pdf->Cell(0,10,$job['text'],0,1);
-	$job_qr_link = '../../assets/images/qr_codes/job_qr/job'.$job['id'].'.png';
+	$job_qr_link = '../..'.$job['qr_link'];
 	if(file_exists($job_qr_link)) {
 		$pdf->Image( $job_qr_link, 10, 60, 50 );
 	}

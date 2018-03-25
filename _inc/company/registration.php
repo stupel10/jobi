@@ -14,8 +14,18 @@ if( $_SERVER['REQUEST_METHOD']==='POST' ){
 		flash()->error($register['message']);
 		redirect('/company/index-company');
 	}else {
-		flash()->success('Company registered!');
-		redirect('/company/homepage');
+		$login = $auth->login($email, $password, false, NULL, 'company');
+
+		if($login['error']) {
+			flash()->error($login['message']);
+			redirect('/');
+		} else {
+			// Logged in successfully, set cookie, display success message
+			do_login( $login );
+
+			flash()->success('Company registered successfully!');
+			redirect('/company/homepage');
+		}
 	}
 }
 

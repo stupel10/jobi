@@ -22,7 +22,7 @@ $resumes = get_user_CVs($user->id);
 						echo '<li class="list-group-item">'.
 						     '<span>' . $cv["title"] . '</span>'.
 							 '<div class="tools pull-right">'.
-								'<a href="/user/cv?cv_id='.$cv['id'].'" class="btn btn-success">VIEW</a>'.
+								'<a href="/user/cv?cv_id='.$cv['id'].'" class="btn btn-success">DETAIL</a>'.
 								'<a href="/user/edit_cv?cv_id='.$cv['id'].'" class="btn btn-warning">EDIT</a>'.
 								'<a href="javascript:void(0)" onclick="deleteCV('.$cv['id'].')" class="btn btn-danger delete">DELETE</a>'.
 							 '</div>'.

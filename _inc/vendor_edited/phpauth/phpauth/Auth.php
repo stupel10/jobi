@@ -218,9 +218,9 @@ class Auth
 
 		    return $return;
 	    }
-	    // if it is user, generate him QR code
-	    if($role == 'user') {
-		    $qr_link = createQR( $profile_id, '/user_profile_qr/user_profile' . $profile_id . '.png' );
+
+	    // Generate QR code
+		    $qr_link = createQR( $role,$profile_id );
 		    if ( ! $qr_link ) {
 			    $return['message'] = "QR CODE FOR USER NOT GENERATED CORRECTLY";
 
@@ -232,7 +232,7 @@ class Auth
 
 			    return $return;
 		    }
-	    }
+		// end generate QR code
 
         $addUser = $this->addUser($email, $password, $params, $sendmail, $role, $profile_id);
 
@@ -734,11 +734,14 @@ class Auth
         return $data;
     }
 
-    /**
-    * Gets public user data for a given UID and returns an array, password is not returned
-    * @param int $uid
-    * @return array $data
-    */
+	/**
+	 * Gets public user data for a given UID and returns an array, password is not returned
+	 *
+	 * @param int $uid
+	 * @param $role
+	 *
+	 * @return array $data
+	 */
     public function getUser($uid,$role)
     {
 	    if($role === 'user' ){

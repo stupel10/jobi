@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$id = $database->id();
 
 		// create QR
-		$qr_link = createQR($id,'/job_qr/job'.$id.'.png');
+		$qr_link = createQR('job',$id);
 		if( $qr_link == false ){
 			flash()->error('JOB created, but QR creation failed!');
 			redirect('/company/offered_jobs');
