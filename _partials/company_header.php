@@ -23,6 +23,7 @@ if ( is_company_logged_in() ) {
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-grid.css">-->
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-reboot.css">-->
+	<link rel="stylesheet" href="/assets/plugins/font-awesome.5.0.8/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="/assets/css/main.css">
 
 	<script>
@@ -32,6 +33,7 @@ if ( is_company_logged_in() ) {
 	<script src="/assets/js/plugins.js"></script>
 	<!--<script src="/assets/js/bootstrap.bundle.js"></script>-->
 	<!--<script src="/assets/js/bootstrap.js"></script>-->
+	<script src="/assets/plugins/ckeditor/ckeditor.js"></script>
 	<script src="/assets/js/app.js"></script>
 </head>
 <body class="company <?php echo $page ?>">

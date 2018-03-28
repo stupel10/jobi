@@ -23,6 +23,9 @@ $jobs = get_company_jobs($user_profile['id']);
 				<h4><?=$job["title"]?></h4>
 				<div class="tools pull-right">
 					<a href="/public/job?id=<?=$job['id']?>" class="btn btn-success">DETAIL</a>
+					<?php if($job['users_registered']) {?>
+						<a href="/company/job_users_registered?id=<?=$job['id']?>" class="btn btn-success">USERS REGISTERED</a>
+					<?php } ?>
 					<a href="/_inc/company/create_job_pdf.php?job_id=<?=$job['id']?>" class="btn btn-primary">CREATE PDF</a>
 					<a href="/company/edit_job?job_id=<?=$job['id']?>" class="btn btn-warning">EDIT</a>
 					<a href="javascript:void(0)" onclick="deleteJob(<?=$job['id']?>)" class="btn btn-danger delete">DELETE</a>

@@ -22,9 +22,9 @@ $jobs = get_user_assigned_jobs($user->id);
 						<h4><?=$job["title"]?></h4>
 						<!--<p>--><?//=$job["text"]?><!--</p>-->
 						<div class="tools pull-right">
-							<a href="/public/job?id=<?=$job['id']?>" class="btn btn-primary">DETAIL</a>
-							<a href="/user/send_cv_to_job?id=<?=$job['id']?>" class="btn btn-success">SEND CV</a>
-							<a href="javascript:void(0)" onclick="deleteUserJob(<?=$job['id']?>)" class="btn btn-danger delete">DELETE</a>
+							<a href="/public/job?id=<?=$job['id']?>" class="btn btn-primary"><i class="fa fa-info"></i></a>
+							<a href="/user/send_cv_to_job?id=<?=$job['id']?>" class="btn btn-success"><i class="far fa-share-square"></i></a>
+							<a href="javascript:void(0)" onclick="deleteUserJob(<?=$job['id']?>)" class="btn btn-danger delete"><i class="far fa-trash-alt"></i></a>
 						</div>
 					</li>
 					<?php

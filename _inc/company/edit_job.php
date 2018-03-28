@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$id = $_POST['job_id'];
 	$title = $_POST['title'];
 	$text = $_POST['text'];
+	$category = $_POST['category'];
+	$area = $_POST['area'];
+	isset($_POST['send_email']) ?  $send_email = true : $send_email=false;
 
 
 	$user         = get_user();
@@ -19,7 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if( $id == 0){
 		$upd = $database->insert('jobs',[
 			'title' => $title,
+			'category' => $category,
+			'area' => $area,
 			'text' => $text,
+			'send_email' => $send_email,
 			'company_id' => $user_profile['id']
 		]);
 		$id = $database->id();
@@ -39,16 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}else{
 		$upd = $database->update( 'jobs', [
 			'title' => $title,
-			'text' => $text
+			'text' => $text,
+			'category' => $category,
+			'area' => $area,
+			'send_email' => $send_email,
 		],[
 			'id' => $id,
 			'company_id' => $user_profile['id']
 		]);
 	}
 	if( $upd->rowCount() > 0  ){
-		flash()->success('Job saved/created');
+		flash()->success('Job saved.');
 	}else{
-		flash()->error('Job not created');
+		flash()->error('Job not created/edited.');
 	}
 }else{
 	flash()->error('no POST request');

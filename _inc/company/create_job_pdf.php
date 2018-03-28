@@ -54,6 +54,8 @@
 	$pdf->Cell(0,10,$job['title'],0,1);
 	$pdf->Cell(0,10,'',0,1);
 	$pdf->SetFont('Times','',12);
+	$pdf->Cell(0,10,$job['category'],0,1);
+	$pdf->Cell(0,10,$job['area'],0,1);
 	$pdf->Cell(0,10,$job['text'],0,1);
 	$job_qr_link = '../..'.$job['qr_link'];
 	if(file_exists($job_qr_link)) {

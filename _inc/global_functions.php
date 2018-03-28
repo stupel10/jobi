@@ -254,6 +254,16 @@ function get_user_profile($user_id){
 
 	return $user_profiles;
 }
+
+/**
+ *
+ * Get public info of user
+ *
+ * @param $user_profile_id
+ * @param $role
+ *
+ * @return bool | array
+ */
 function get_public_user_profile($user_profile_id,$role){
 	global $auth_config;
 	global $database;
@@ -265,9 +275,52 @@ function get_public_user_profile($user_profile_id,$role){
 	}
 	$user_profiles = $database->select($table, "*",[ "id" => $user_profile_id ]);
 
+	if(!$user_profiles){
+		return false;
+	}
 
 	return $user_profiles[0];
 }
+
+
+/**
+ *
+ * Get all jobs offered.
+ **
+ * @return array|bool
+ */
+function get_all_offered_jobs(){
+	global $database;
+
+	return $database->select('jobs',"*");
+}
+
+/**
+ *
+ * Get all jobs offered filtered
+ **
+ *
+ * @param $category
+ * @param $area
+ *
+ * @return array|bool
+ */
+function get_all_offered_jobs_filtered($category,$area){
+	global $database;
+
+	if( !empty($category) && !empty($area)){
+		$return = $database->select('jobs',"*",['category'=>$category,'area'=>$area]);
+	}elseif ( empty( $category ) && !empty($area) ) {
+		$return =  $database->select( 'jobs', "*", [ 'area' => $area ] );
+	} elseif( !empty( $category ) && empty($area) ) {
+		$return =  $database->select( 'jobs', "*", [ 'category' => $category ] );
+	}else{
+		$return = $database->select( 'jobs', "*" );
+	}
+
+	return $return;
+	}
+
 /**
  *
  * Get all jobs assigned to user.
@@ -479,4 +532,50 @@ function createQR($type,$id,$root_dir_path = '../..',$more_params = ''){
 
 	$img_link_relative = '/assets/images/qr_codes/'.$image_directory_relative_file_path;
 	return file_exists( $img_link_absolute ) ? $img_link_relative : false;
+}
+
+/**
+ *  Register user CV to offered job
+ *
+ * @param $job_id
+ * @param $cv_id
+ *
+ * @return bool
+ */
+function register_user_for_job($job_id,$cv_id){
+
+	if( !isset($job_id) || empty($job_id) ||
+	    !isset($cv_id) || empty($cv_id)
+	){
+		flash()->error('wrong parameters job_id or cv_id when connecting to DB.');
+		return false;
+	}
+
+	// get job
+	$job = get_job($_GET['job_id']);
+	if(!$job){
+		flash()->error('Job not found');
+		return false;
+	}
+
+	// get resume;
+	$user = get_user();
+	$resume = get_user_cv($user->id,$_GET['cv_id']);
+	if(!$user || !$resume) {
+		flash()->error('USER or CV not found!');
+		return false;
+	}
+
+	global $database;
+	$users_before = $database->get('jobs',['users_registered'],['id'=>$job_id]);
+	$users_before = $users_before['users_registered'];
+	$users_before.= ','.$cv_id;
+	$users_before = rtrim($users_before,',');
+	$users_before = ltrim($users_before,',');
+	$upd = $database->update('jobs',['users_registered'=> $users_before],['id'=>$job_id]);
+	if(!$upd->rowCount()){
+		return false;
+	}else{
+		return true;
+	}
 }

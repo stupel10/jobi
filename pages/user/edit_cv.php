@@ -18,7 +18,14 @@ if( !isset($_GET['cv_id']) || empty($_GET['cv_id']) ) {
 				<label for="title">TITLE</label><br>
 				<input type="text" name="title" value="<?php if(isset($cv) && $cv) echo $cv['title'] ?>"><br>
 				<label for="text">TEXT</label><br>
-				<textarea name="text" cols="80" rows="10"placeholder="text"><?php if(isset($cv) && $cv) echo $cv['text'] ?></textarea>
+				<textarea name="text" id='editor1' cols="80" rows="100" placeholder="text"><?php if(isset($cv) && $cv) echo $cv['text'] ?></textarea>
+				<script>
+					// Replace the <textarea id="editor1"> with a CKEditor
+					// instance, using default configuration.
+					CKEDITOR.replace( 'editor1', {
+						//uiColor: '#333333',
+					});
+				</script>
 			</div>
 		</div>
 		<div class="col-sm-12">

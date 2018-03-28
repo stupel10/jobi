@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-grid.css">-->
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-reboot.css">-->
+	<link rel="stylesheet" href="/assets/plugins/font-awesome.5.0.8/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="/assets/css/main.css">
 
 	<script>
@@ -42,7 +43,7 @@
 		</div>
 		<nav>
 			<a href="/user/homepage" class="btn btn-primary">HOME</a>
-			<a href="/user/jobs" class="btn btn-primary">SCANED JOBS</a>
+			<a href="/user/scanned_jobs" class="btn btn-primary">SCANED JOBS</a>
 			<a href="/user/cvs" class="btn btn-primary">MY CVs</a>
 		</nav>
 		<br>

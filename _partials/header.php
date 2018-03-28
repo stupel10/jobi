@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-grid.css">-->
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-reboot.css">-->
+	<link rel="stylesheet" href="/assets/plugins/font-awesome.5.0.8/css/fontawesome-all.min.css">
 	<link rel="stylesheet" href="/assets/css/main.css">
 
 	<script>

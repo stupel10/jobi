@@ -20,12 +20,16 @@ if( !isset($_GET['id']) || empty($_GET['id']) ) {
 <div class="row">
 	<div class="col-sm-12">
 		<h1><?=$job['title']?></h1>
-		<p><?=$job['text']?></p>
+		<h4><?=$job['category']?></h4>
+		<h4><?=$job['area']?></h4>
+		<div>
+			<?=$job['text']?>
+		</div>
 		<?php if(isset($job['qr_link'])){?>
 			<a href="<?=$job['qr_link']?>">
 				<img src="<?=$job['qr_link']?>" alt="qr-job<?=$job['id']?>" style="width:100px;"/>
 			</a>
-		<?php }?>
+		<?php } ?>
 		<h3><?=$company['name']?></h3>
 	</div>
 </div>
