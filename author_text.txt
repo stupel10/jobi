@@ -30,84 +30,19 @@ najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
 Co treba upravit:
 -> pridat skenovanie kamerou pomocou getUserMedia() pre platformy, ktore to podporuju.
 
+-> zryhlit nacitanie scriptov pri scanovani
+
+-> preklady - gettext:  _('some text');
+
+-> vylepsit ciselniky cez ID, nie stringy
+
 -> PHPAuth
+	-> odoslanie zivotopisu na mail ak to vyzaduje company
 	-> aktivacne emaily
 	-> naco mi tu je capthcha? ...ved vzdy ta fnc vrati true
 	-> pomenit config v db
 	-> zlepsit zvolenie tabulky v classe Auth.php
-	-> unit testy su teraz odveci. treba podoplnat do funkcii posledny parameter $role : 'user' alebo 'company'
 
 -> vsetky validacie dopytov do DB
+
 -> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne
-
-
-
-
-Dilemy:
-1. skenovanie QR kodov - nacitanie kamery:
-
- ------------------------------
-|                              |
-|      SCANNING QR CODES       |
-|                              |
- ------------------------------
-
-1.
-<input type="file"> a nasledne na to pouzit kniznicu na rozpoznanie QR z fotky,
-napr: JSQRCODE :
-
-plusy:
-- iOS aj android
-- moznost pouzit fotku z galerie
-
-problemy:
-- na PC nejde odfotit, iba nahrat.
-- co ak user odfoti rozmazanu foto?
-
----------------------------------------------------------------------------------------------------------
-
-2.
-pouzit externu aplikaciu a tu volat pri skenovani, napr:
-- http://www.pic2shop.com/developers.html
-
-nevyhody:
-- asi to bude tazsie implementovat
-- user musi mat nainstalovanu apku
-
-vyhody;
-- spolahlivost
-
----------------------------------------------------------------------------------------------------------
-
-3.1
-getUserMedia() + kniznica na rozpoznanie QR z fotiek
-
-plusy
-- kamera na stranke
-
-
-problemy:
-- iOS partial support !!! - mne to napr. vobec nejde
-
-tutorials:
-https://codepen.io/blaberus/pen/raGdBG
-
----------------------------------------------------------------------------------------------------------
-
-3.2
-quaqqaJS
-
-- alternativa k getUserMedia - vraj funguje aj pre iOS
-https://github.com/serratus/quaggaJS#browser-support
----------------------------------------------------------------------------------------------------------
-3.3
-https://whatwebcando.today/camera-microphone.html
-
- - ide aj na iOS - ale iba safari ...
- - vychadza to z  https://www.html5rocks.com/en/tutorials/getusermedia/intro/a/
-
-
----------------------------------------------------------------------------------------------------------
-
-
----------------------------------------------------------------------------------------------------------

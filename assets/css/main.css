@@ -19,7 +19,7 @@ html {
 }
 
 body {
-	color: #fff;
+	color: #333;
 	font-size: 100%;
 }
 
@@ -52,12 +52,12 @@ a {
 .controls a {
 	/*font-size: 13px;*/
 }
+
+/*  MY CSS:  */
 .pull-right {
 	float: right;
 }
-/*.company.offered_jobs ul.list-group li.list-group-item .tools {*/
-	/*display: none;*/
-/*}*/
-/*.company.offered_jobs ul.list-group li.list-group-item:hover .tools {*/
-	/*display:inline-block;*/
-/*}*/
+main {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}

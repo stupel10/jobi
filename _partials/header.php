@@ -1,3 +1,9 @@
+<?php
+
+	$user_logged = is_user_logged_in() ?  true :  false;
+	$company_logged = is_company_logged_in() ? true :  false;
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,8 +12,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>JOBI</title>
-
-	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-grid.css">-->
@@ -21,11 +25,57 @@
 	<script src="/assets/js/jquery.js"></script>
 	<script src="/assets/js/plugins.js"></script>
 	<!--<script src="/assets/js/bootstrap.bundle.js"></script>-->
-	<!--<script src="/assets/js/bootstrap.js"></script>-->
+	<script src="/assets/js/bootstrap.js"></script>
+	<script src="/assets/plugins/ckeditor/ckeditor.js"></script>
 	<script src="/assets/js/app.js"></script>
 </head>
-<body class="">
-<br>
+<body class="<?php echo isset($user_company_dir)? $user_company_dir : 'index' ?> <?php echo isset($page)? $page : 'homepage' ?>">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<div class="container">
+		<a class="navbar-brand" href="#">Jobi</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<?php
+		if($user_logged){?>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
+					<li class="nav-item"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
+					<li class="nav-item"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
+					<li class="nav-item"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
+				</ul>
+				<div class="my-2 my-lg-0">
+					<form action="" method="post">
+						<input type="file" name="snanedFile" id="scanBtn" accept=".png, .jpg, .jpeg" style="display:none;" onchange="imageScanned(this);"/>
+					</form>
+					<a href="javacsript:void(0)" class="btn btn-success" onclick="scanImage()">SCAN JOB</a>
+					<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
+				</div>
+			</div>
+		<?php }elseif($company_logged) {?>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a href="/company/homepage" class="btn nav-link">HOME</a></li>
+					<li class="nav-item"><a href="/company/offered_jobs" class="btn nav-link">OFFERED JOBS</a></li>
+				</ul>
+				<div class="my-2 my-lg-0">
+					<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
+				</div>
+			</div>
+		<?php } else{ ?>
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a href="/" class="btn nav-link">HOME</a></li>
+				</ul>
+				<div class="my-2 my-lg-0">
+					<a href="/_inc/user/login.php" class="btn btn-danger">LOG IN</a>
+				</div>
+			</div>
+		<?php } ?>
+	</div>
+</nav>
+
 <header class="container">
 	<?= flash()->display() ?>
 </header>

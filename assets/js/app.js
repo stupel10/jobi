@@ -108,7 +108,7 @@ function imageScanned( fileInput ) {
 		}else {
 			// TODO: ak je to cudzi kod, a je tam nieco ine, padne to....osetrit!
 			alert('This is not QR code with jobi job!');
-			window.location.href = decodedData;
+			// window.location.href = decodedData;
 		}
 
 	}

@@ -19,16 +19,16 @@ $resumes = get_user_CVs($user->id);
 					<?php
 
 					foreach ( $resumes AS $cv ) {
-						echo '<li class="list-group-item">'.
-						     '<span>' . $cv["title"] . '</span>'.
-							 '<div class="tools pull-right">'.
-								'<a href="/user/cv?cv_id='.$cv['id'].'" class="btn btn-success">DETAIL</a>'.
-								'<a href="/user/edit_cv?cv_id='.$cv['id'].'" class="btn btn-warning">EDIT</a>'.
-								'<a href="javascript:void(0)" onclick="deleteCV('.$cv['id'].')" class="btn btn-danger delete">DELETE</a>'.
-							 '</div>'.
-						     '</li>';
-					}
-					?>
+						?>
+					<li class="list-group-item">
+						<h4><?=$cv["title"]?></h4>
+						<div class="tools pull-right">
+							<a href="/user/cv?cv_id=<?=$cv['id']?>" class="btn btn-success">DETAIL</a>
+							<a href="/user/edit_cv?cv_id=<?=$cv['id']?>" class="btn btn-warning">EDIT</a>
+							<a href="javascript:void(0)" onclick="deleteCV(<?=$cv['id']?>)" class="btn btn-danger delete">DELETE</a>
+						</div>
+					</li>
+					<?php } ?>
 				</ul>
 			<?php } ?>
 	</div>

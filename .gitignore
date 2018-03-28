@@ -3,6 +3,8 @@
 #.AppleDouble
 #.LSOverride
 .idea/**
+/assets/images/qr_codes
+/.idea
 
 # Thumbnails
 #._*

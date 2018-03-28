@@ -19,20 +19,21 @@ else $user_company_dir = '';
 			include_once '_partials/company_header.php';
 		}elseif ( $user_company_dir === 'public' ){
 			if($page !== 'page'){
-				include_once '_partials/public_header.php';
+				include_once '_partials/header.php';
 			}
 		}else {
-			include_once "_partials/header.php";
+			include_once "_partials/header.php?only_for_logged_in=false";
 		}
 
 		$link = 'pages/' . $user_company_dir .'/'. $page . '.php';
 		//echo $link;
 		include file_exists( $link ) ? $link : '404.php';
 	}else {
+		$restricted_pages = false;
 		include_once "_partials/header.php";
 		include 'main.php';
 	}
-include_once "_partials/footer.php";
+	include_once "_partials/footer.php";
 ?>
 
 

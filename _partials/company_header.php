@@ -18,8 +18,6 @@ if ( is_company_logged_in() ) {
 
 	<title>JOBI COMPANY</title>
 
-	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
-
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-grid.css">-->
 	<!--<link rel="stylesheet" href="/assets/css/bootstrap-reboot.css">-->
@@ -32,26 +30,30 @@ if ( is_company_logged_in() ) {
 	<script src="/assets/js/jquery.js"></script>
 	<script src="/assets/js/plugins.js"></script>
 	<!--<script src="/assets/js/bootstrap.bundle.js"></script>-->
-	<!--<script src="/assets/js/bootstrap.js"></script>-->
+	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/plugins/ckeditor/ckeditor.js"></script>
 	<script src="/assets/js/app.js"></script>
 </head>
 <body class="company <?php echo $page ?>">
-<br>
-<header class="container">
-	<?= flash()->display() ?>
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="pull-right">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<div class="container">
+		<a class="navbar-brand" href="#">Jobi</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor01">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a href="/company/homepage" class="btn nav-link">HOME</a></li>
+				<li class="nav-item"><a href="/company/offered_jobs" class="btn nav-link">OFFERED JOBS</a></li>
+			</ul>
+			<div class="my-2 my-lg-0">
 				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
 			</div>
 		</div>
 	</div>
-	<nav>
-		<a href="/company/homepage" class="btn btn-primary">HOME</a>
-		<a href="/company/offered_jobs" class="btn btn-primary">OFFERED JOBS</a>
-	</nav>
-	<br>
+</nav>
+<header class="container">
+	<?= flash()->display() ?>
 </header>
 <main>
 	<section>
