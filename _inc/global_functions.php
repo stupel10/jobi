@@ -5,62 +5,6 @@ function show_404(){
 	include_once "404.php";
 	die();
 }
-function get_company_from_POST(){
-	if( ! isset($_POST['name']) || empty($_POST['name']) ||
-	    ! isset($_POST['pass']) || empty($_POST['pass']) ) {
-		show_404();
-	}
-
-	global $database;
-
-	if (
-		$database->count("companies",
-			[ "name" => $_POST['name'],
-			  "password" => $_POST['pass']
-			]) > 1
-	){
-		return false;
-	}
-	$company = $database->select("companies",['id','name','date_registered'] ,
-		[ "name" => $_POST['name'],
-		"password" => $_POST['pass']
-	]);
-
-	if( ! $company ){
-		return false;
-	}
-
-
-	return $company[0];
-}
-function get_user_from_POST(){
-	if( ! isset($_POST['name']) || empty($_POST['name']) ||
-	    ! isset($_POST['pass']) || empty($_POST['pass']) ) {
-		show_404();
-	}
-
-	global $database;
-
-	if (
-			$database->count("user_profiles",
-							[ "name" => $_POST['name'],
-							"password" => $_POST['pass']
-			]) > 1
-		){
-		return false;
-	}
-	$user = $database->select("user_profiles",['id','name','surname','email','birthdate','date_registered','jobs_registered'] , [
-		"name" => $_POST['name'],
-		"password" => $_POST['pass']
-	]);
-
-	if( ! $user ){
-		return false;
-	}
-
-
-	return $user[0];
-}
 
 function get_job($id){
 	global $database;
@@ -395,6 +339,30 @@ function get_user_cv( $user_id,$cv_id){
 }
 
 /**
+ *
+ * Get user from users table
+ *
+ * @param $user_profile_id
+ *
+ * @return array|bool
+ */
+function get_user_of_user_profile($user_profile_id,$role = 'user'){
+
+	global $database;
+	global $auth;
+
+	switch ($role){
+		case 'company': $table='companies';break;
+		default: $table='users';
+	}
+	$user = $database->select($table,'*',['active_profile'=>$user_profile_id]);
+
+	return $user ? $user[0] : false;
+}
+
+
+
+/**
 *
 * Get all jobs company is offering
  *
@@ -544,6 +512,11 @@ function createQR($type,$id,$root_dir_path = '../..',$more_params = ''){
  */
 function register_user_for_job($job_id,$cv_id){
 
+	if(!is_logged_in()){
+		flash()->error('Restricted - u are not logged in');
+		return false;
+	}
+
 	if( !isset($job_id) || empty($job_id) ||
 	    !isset($cv_id) || empty($cv_id)
 	){
@@ -551,12 +524,7 @@ function register_user_for_job($job_id,$cv_id){
 		return false;
 	}
 
-	// get job
-	$job = get_job($_GET['job_id']);
-	if(!$job){
-		flash()->error('Job not found');
-		return false;
-	}
+
 
 	// get resume;
 	$user = get_user();
@@ -565,11 +533,20 @@ function register_user_for_job($job_id,$cv_id){
 		flash()->error('USER or CV not found!');
 		return false;
 	}
+	$user_profile = get_user_profile($user->id)[0];
+
+	// get job
+	$job = get_job($_GET['job_id']);
+	if(!$job){
+		flash()->error('Job not found');
+		return false;
+	}
 
 	global $database;
 	$users_before = $database->get('jobs',['users_registered'],['id'=>$job_id]);
 	$users_before = $users_before['users_registered'];
-	$users_before.= ','.$cv_id;
+	//$users_before.= ',['.$user_profile['id'].'|'.$cv_id.']';
+	$users_before.= ''.$cv_id;
 	$users_before = rtrim($users_before,',');
 	$users_before = ltrim($users_before,',');
 	$upd = $database->update('jobs',['users_registered'=> $users_before],['id'=>$job_id]);
@@ -578,4 +555,20 @@ function register_user_for_job($job_id,$cv_id){
 	}else{
 		return true;
 	}
+}
+
+/**
+ *
+ * Get cv by id
+ *
+ * @param $cv_id
+ *
+ * @return bool|array
+ */
+function get_cv($cv_id){
+	global $database;
+
+	$cv = $database->select('resumes','*',['id'=>$cv_id]);
+
+	return $cv ? $cv[0] : false;
 }

@@ -6,7 +6,6 @@ framework CKeditor
 Font awesome
 -> ikony
 
-
 kniznicea MEDOO:
 -> jednoducha kniznica pre databazy
 
@@ -28,16 +27,34 @@ najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
 
 
 Co treba upravit:
+-> detail CV pri zobrazeni registrovanych uzivatelov pre dany job.
+
+-> linked in
+
+-> profilova fotka
+
 -> pridat skenovanie kamerou pomocou getUserMedia() pre platformy, ktore to podporuju.
 
--> zryhlit nacitanie scriptov pri scanovani
+-> odoslanie zivotopisu na mail ak to vyzaduje company
 
 -> preklady - gettext:  _('some text');
 
 -> vylepsit ciselniky cez ID, nie stringy
 
+-> flash spravy napoziciovat niekam inam
+
+-> favicon
+
+-> class="active" v <nav>
+
+-> admin stranky
+	-> dotaz do DB
+	-> vytvorenie stranky veltrhu
+	-> ...
+
+-> public pages pre veltrh -> po nacitani QR kodu pri vstupe na veltrh sa zobrazi uzivatelovy stranka o veltrhu...link na jej web, mapa, vystavovatelia a podobne. Naplnat sa to bude cez admin stranky.
+
 -> PHPAuth
-	-> odoslanie zivotopisu na mail ak to vyzaduje company
 	-> aktivacne emaily
 	-> naco mi tu je capthcha? ...ved vzdy ta fnc vrati true
 	-> pomenit config v db

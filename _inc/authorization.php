@@ -6,6 +6,8 @@ require_once 'vendor_edited/phpauth/phpauth/Config.php' ;
 require_once 'vendor_edited/phpauth/phpauth/Auth.php' ;
 
 $dbh = new PDO("mysql:host=localhost;dbname=jobi", "root", "root");
+// endora
+//$dbh = new PDO("mysql:host=localhost;dbname=jobi", "jobi6fsk", "Jakub123");
 
 // Class initialization
 $auth_config = new \PHPAuth\Config($dbh);

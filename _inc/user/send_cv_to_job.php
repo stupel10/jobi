@@ -8,7 +8,6 @@
 		flash()->error('wrong parameters job_id or cv_id');
 		redirect('/user/scanned_jobs');
 	}
-
 	$reg = register_user_for_job($_GET['job_id'], $_GET['cv_id']);
 
 	if(!$reg){

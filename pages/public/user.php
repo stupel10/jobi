@@ -11,6 +11,7 @@
 			redirect( '/' ); // TODO: nefunguje redirect!
 		}
 	}
+	$cv = isset($_GET['cv_id']) ? get_cv($_GET['cv_id']) : false;
 ?>
 <div class="page-header">
 	<h1>User profile:</h1>
@@ -47,3 +48,13 @@
 		<?php }?>
 	</div>
 </div>
+<?php if($cv){ ?>
+	<hr>
+<div class="row">
+	<div class="col-sm-12">
+		<h1>CV:</h1>
+		<h3><?=$cv['title']?></h3>
+		<p><?=$cv['text']?></p>
+	</div>
+</div>
+<?php } ?>

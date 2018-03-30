@@ -4,6 +4,8 @@
 <div class="row">
 	<div class="col-sm-6">
 		<h3>YOUR profile:</h3>
+		<img src="<? echo $user_profile['photo_link'] ? $user_profile['photo_link'] : '/assets/images/profile_photos/user.jpg' ?>" alt="Profile photo">
+		<br>
 		NAME: <?php echo $user_profile['name'] ?>
 		<br>
 		SURNAME: <?php echo $user_profile['surname'] ?>
@@ -32,6 +34,8 @@
 			</a>
 		<?php }?>
 	</div>
+</div>
+<div class="row">
 	<div class="col-sm-12">
 		<a href="/user/edit_profile" class="btn btn-success">EDIT MY PROFILE</a>
 	</div>

@@ -2,12 +2,6 @@
 	<h1>JOBI HOME</h1>
 </div>
 <div class="row">
-	<div class="col-sm-12">
-		<a href="/company/index-company" class="btn btn-danger pull-right">COMPANY</a>
-	</div>
-</div>
-
-<div class="row">
 	<form action="/_inc/user/registration.php" class="col-sm-6" method="post">
 		<h2>USER REGISTER</h2>
 		<p class="form-group">

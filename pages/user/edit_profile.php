@@ -2,59 +2,76 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group">
+				<label for="photo_link">PROFILE PHOTO</label>
+				<a href="javascript:void(0);" onclick="select_profile_photo()">
+					<img src="<? echo $user_profile['photo_link'] ? $user_profile['photo_link'] : '/assets/images/profile_photos/user.jpg' ?>" alt="Profile photo">
+					<br>Click to change.
+				</a>
+				<form action="" method="POST">
+					<input type="file" id="change_profile_photo_input" name="profile_photo" accept=".png, .jpg, .jpeg" onchange="change_profile_photo(this);" style="display:none;">
+				</form>
+			</div>
+			<div class="form-group">
 				<label for="email">EMAIL</label>
-				<input type="email" name="email" placeholder="email" value="<?php echo $user_profile['email']?>">
+				<input class="form-control" type="email" name="email" placeholder="email" value="<?php echo $user_profile['email']?>">
 			</div>
 			<div class="form-group">
 				<label for="title">TITLE</label>
-				<input type="text" name="title" placeholder="title" value="<?php echo $user_profile['title']?>">
+				<input class="form-control" type="text" name="title" placeholder="title" value="<?php echo $user_profile['title']?>">
 			</div>
 			<div class="form-group">
 				<label for="name">NAME</label>
-				<input type="text" name="name" placeholder="name" value="<?php echo $user_profile['name']?>">
+				<input class="form-control" type="text" name="name" placeholder="name" value="<?php echo $user_profile['name']?>">
 			</div>
 			<div class="form-group">
 				<label for="surname">SURNAME</label>
-				<input type="text" name="surname" placeholder="surname" value="<?php echo $user_profile['surname']?>">
+				<input class="form-control" type="text" name="surname" placeholder="surname" value="<?php echo $user_profile['surname']?>">
 			</div>
 			<div class="form-group">
 				<label for="sex">SEX</label>
-				<input type="text" name="sex" placeholder="sex" value="<?php echo $user_profile['sex']?>">
+				<select name="sex" id="user_sex" class="custom-select">
+					<option value="MALE">MALE</option>
+					<option value="FEMALE">FEMALE</option>
+				</select>
+				<script>
+					$('#user_sex').val('<?=$user_profile['sex']?>');
+				</script>
+				<!--<input class="form-control" type="text" name="sex" placeholder="sex" value="--><?php //echo $user_profile['sex']?><!--">-->
 			</div>
 			<div class="form-group">
 				<label for="birthdate">BIRTH DATE</label>
-				<input type="text" name="birthdate" placeholder="birthdate" value="<?php echo $user_profile['birthdate']?>">
+				<input class="form-control" type="text" name="birthdate" placeholder="birthdate" value="<?php echo $user_profile['birthdate']?>">
 			</div>
 			<div class="form-group">
 				<label for="phone">PHONE</label>
-				<input type="text" name="phone" placeholder="phone" value="<?php echo $user_profile['phone']?>">
+				<input class="form-control" type="text" name="phone" placeholder="phone" value="<?php echo $user_profile['phone']?>">
 			</div>
 		</div>
 		<div class="col-sm-6">
 			ADDRESS:
 			<div class="form-group">
 				<label for="street">STREET</label>
-				<input type="text" name="street" placeholder="street" value="<?php echo $user_profile['address_street']?>">
+				<input class="form-control" type="text" name="street" placeholder="street" value="<?php echo $user_profile['address_street']?>">
 			</div>
 			<div class="form-group">
 				<label for="number">NUMBER</label>
-				<input type="text" name="number" placeholder="number" value="<?php echo $user_profile['address_street_number']?>">
+				<input class="form-control" type="text" name="number" placeholder="number" value="<?php echo $user_profile['address_street_number']?>">
 			</div>
 			<div class="form-group">
 				<label for="PSC">PSC</label>
-				<input type="number" name="PSC" placeholder="PSC" value="<?php echo $user_profile['address_PSC']?>">
+				<input class="form-control" type="number" name="PSC" placeholder="PSC" value="<?php echo $user_profile['address_PSC']?>">
 			</div>
 			<div class="form-group">
 				<label for="city">CITY</label>
-				<input type="text" name="city" placeholder="city" value="<?php echo $user_profile['address_city']?>">
+				<input class="form-control" type="text" name="city" placeholder="city" value="<?php echo $user_profile['address_city']?>">
 			</div>
 			<div class="form-group">
 				<label for="country">COUNTRY</label>
-				<input type="text" name="country" placeholder="country" value="<?php echo $user_profile['address_country']?>">
+				<input class="form-control" type="text" name="country" placeholder="country" value="<?php echo $user_profile['address_country']?>">
 			</div>
 		</div>
 		<div class="col-sm-12">
-			<input type="submit" value="submit" class="btn btn-danger">
+			<input class="form-control btn btn-success" type="submit" value="submit" class="btn btn-danger">
 		</div>
 	</div>
 </form>

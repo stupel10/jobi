@@ -32,21 +32,40 @@ if ( is_user_logged_in() ) {
 	<!--<script src="/assets/js/bootstrap.bundle.js"></script>-->
 	<script src="/assets/js/bootstrap.js"></script>
 	<script src="/assets/plugins/ckeditor/ckeditor.js"></script>
+
+	<script src="/assets/js/jsqrcode/src/grid.js"></script>
+	<script src="/assets/js/jsqrcode/src/version.js"></script>
+	<script src="/assets/js/jsqrcode/src/detector.js"></script>
+	<script src="/assets/js/jsqrcode/src/formatinf.js"></script>
+	<script src="/assets/js/jsqrcode/src/errorlevel.js"></script>
+	<script src="/assets/js/jsqrcode/src/bitmat.js"></script>
+	<script src="/assets/js/jsqrcode/src/datablock.js"></script>
+	<script src="/assets/js/jsqrcode/src/bmparser.js"></script>
+	<script src="/assets/js/jsqrcode/src/datamask.js"></script>
+	<script src="/assets/js/jsqrcode/src/rsdecoder.js"></script>
+	<script src="/assets/js/jsqrcode/src/gf256poly.js"></script>
+	<script src="/assets/js/jsqrcode/src/gf256.js"></script>
+	<script src="/assets/js/jsqrcode/src/decoder.js"></script>
+	<script src="/assets/js/jsqrcode/src/qrcode.js"></script>
+	<script src="/assets/js/jsqrcode/src/findpat.js"></script>
+	<script src="/assets/js/jsqrcode/src/alignpat.js"></script>
+	<script src="/assets/js/jsqrcode/src/databr.js"></script>
+
 	<script src="/assets/js/app.js"></script>
 </head>
 <body class="user <?php echo $page ?>">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container">
-		<a class="navbar-brand" href="#">Navbar</a>
+		<a class="navbar-brand" href="#">Jobi</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
-				<li class="nav-item"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
-				<li class="nav-item"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
-				<li class="nav-item"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
+				<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
+				<li class="nav-item<?php if($page=='scanned_jobs') echo ' active'?>"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
+				<li class="nav-item<?php if($page=='all_jobs') echo ' active'?>"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
+				<li class="nav-item<?php if($page=='cvs') echo ' active'?>"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
 			</ul>
 			<div class="my-2 my-lg-0">
 				<form action="" method="post">

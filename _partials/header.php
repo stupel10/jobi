@@ -1,8 +1,8 @@
 <?php
-
 	$user_logged = is_user_logged_in() ?  true :  false;
 	$company_logged = is_company_logged_in() ? true :  false;
 
+	$page = isset($page) ? $page : '';
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,28 @@
 	<script src="/assets/js/plugins.js"></script>
 	<!--<script src="/assets/js/bootstrap.bundle.js"></script>-->
 	<script src="/assets/js/bootstrap.js"></script>
+	<?php if($user_logged || $company_logged){ ?>
 	<script src="/assets/plugins/ckeditor/ckeditor.js"></script>
+	<?php } ?>
+	<?php if($user_logged){ ?>
+		<script src="/assets/js/jsqrcode/src/grid.js"></script>
+		<script src="/assets/js/jsqrcode/src/version.js"></script>
+		<script src="/assets/js/jsqrcode/src/detector.js"></script>
+		<script src="/assets/js/jsqrcode/src/formatinf.js"></script>
+		<script src="/assets/js/jsqrcode/src/errorlevel.js"></script>
+		<script src="/assets/js/jsqrcode/src/bitmat.js"></script>
+		<script src="/assets/js/jsqrcode/src/datablock.js"></script>
+		<script src="/assets/js/jsqrcode/src/bmparser.js"></script>
+		<script src="/assets/js/jsqrcode/src/datamask.js"></script>
+		<script src="/assets/js/jsqrcode/src/rsdecoder.js"></script>
+		<script src="/assets/js/jsqrcode/src/gf256poly.js"></script>
+		<script src="/assets/js/jsqrcode/src/gf256.js"></script>
+		<script src="/assets/js/jsqrcode/src/decoder.js"></script>
+		<script src="/assets/js/jsqrcode/src/qrcode.js"></script>
+		<script src="/assets/js/jsqrcode/src/findpat.js"></script>
+		<script src="/assets/js/jsqrcode/src/alignpat.js"></script>
+		<script src="/assets/js/jsqrcode/src/databr.js"></script>
+	<?php } ?>
 	<script src="/assets/js/app.js"></script>
 </head>
 <body class="<?php echo isset($user_company_dir)? $user_company_dir : 'index' ?> <?php echo isset($page)? $page : 'homepage' ?>">
@@ -40,10 +61,10 @@
 		if($user_logged){?>
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
-					<li class="nav-item"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
-					<li class="nav-item"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
-					<li class="nav-item"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
+					<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
+					<li class="nav-item<?php if($page=='scanned_jobs') echo ' active'?>"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
+					<li class="nav-item<?php if($page=='all_jobs') echo ' active'?>"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
+					<li class="nav-item<?php if($page=='cvs') echo ' active'?>"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
 				</ul>
 				<div class="my-2 my-lg-0">
 					<form action="" method="post">
@@ -56,8 +77,8 @@
 		<?php }elseif($company_logged) {?>
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a href="/company/homepage" class="btn nav-link">HOME</a></li>
-					<li class="nav-item"><a href="/company/offered_jobs" class="btn nav-link">OFFERED JOBS</a></li>
+					<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/company/homepage" class="btn nav-link">HOME</a></li>
+					<li class="nav-item<?php if($page=='offered_jobs') echo ' active'?>"><a href="/company/offered_jobs" class="btn nav-link">OFFERED JOBS</a></li>
 				</ul>
 				<div class="my-2 my-lg-0">
 					<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
@@ -66,10 +87,12 @@
 		<?php } else{ ?>
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a href="/" class="btn nav-link">HOME</a></li>
+					<li class="nav-item<?php if($page=='') echo ' active'?>"><a href="/" class="btn nav-link">HOME</a></li>
+					<li class="nav-item<?php if($page=='index-company') echo ' active'?>"><a href="/company/index-company" class="btn nav-link">COMPANY</a>
+
 				</ul>
 				<div class="my-2 my-lg-0">
-					<a href="/_inc/user/login.php" class="btn btn-danger">LOG IN</a>
+					<a href="/_inc/user/login.php" class="btn btn-success">LOG IN</a>
 				</div>
 			</div>
 		<?php } ?>

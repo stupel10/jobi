@@ -1,16 +1,16 @@
 <?php
 
-require_once '_inc/config.php';
+	require_once '_inc/config.php';
 
-if (isset($_GET['url'])) {
-	$explode = explode("/", $_GET["url"]);
-	$user_company_dir = $explode[0];
-	$id = isset($explode[1]) ? intval($explode[1]) : 0;
-	$page = isset($explode[1]) ? trim($explode[1]) : '';
-	$param2 = isset($explode[2]) ? trim($explode[2]) : '';
-	$param3 = isset($explode[3]) ? trim($explode[3]) : '';
-}
-else $user_company_dir = '';
+	if (isset($_GET['url'])) {
+		$explode = explode("/", $_GET["url"]);
+		$user_company_dir = $explode[0];
+		$id = isset($explode[1]) ? intval($explode[1]) : 0;
+		$page = isset($explode[1]) ? trim($explode[1]) : '';
+		$param2 = isset($explode[2]) ? trim($explode[2]) : '';
+		$param3 = isset($explode[3]) ? trim($explode[3]) : '';
+	}
+	else $user_company_dir = '';
 
 	if( $user_company_dir !== '' ) {
 		if( $user_company_dir === 'user'){
@@ -22,7 +22,7 @@ else $user_company_dir = '';
 				include_once '_partials/header.php';
 			}
 		}else {
-			include_once "_partials/header.php?only_for_logged_in=false";
+			include_once "_partials/header.php";
 		}
 
 		$link = 'pages/' . $user_company_dir .'/'. $page . '.php';
@@ -34,6 +34,6 @@ else $user_company_dir = '';
 		include 'main.php';
 	}
 	include_once "_partials/footer.php";
-?>
+
 
 

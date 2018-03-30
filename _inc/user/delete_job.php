@@ -1,15 +1,13 @@
 <?php
 
 require_once '../config.php';
-$next_page = 'user/jobs';
+$next_page = 'user/all_jobs';
 
 	if( ! isset($_GET['job_id']) || empty($_GET['job_id']) ){
 			flash()->error('Missing or invalid job id in url.');
 			redirect($next_page);
 		}
 	$job_id     = $_GET['job_id'];
-
-
 
 	$user         = get_user();
 	$user_profile = get_user_profile( $user->id )[0];

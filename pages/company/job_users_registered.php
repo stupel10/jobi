@@ -1,5 +1,5 @@
 <?php
-
+// TODO : redirect nejde!
 if( !isset($_GET['id']) || empty($_GET['id']) ){
 	flash()->error('Job id not found!');
 	redirect('/company/offered_jobs');
@@ -7,6 +7,10 @@ if( !isset($_GET['id']) || empty($_GET['id']) ){
 $job = get_company_job($user->id,$_GET['id']);
 if(!$job){
 	flash()->error('Job not found!');
+	redirect('/company/offered_jobs');
+}
+if(empty($job['users_registered'])){
+	flash()->error('You have no registrants for this job!');
 	redirect('/company/offered_jobs');
 }
 $job_registrants_cv_ids = explode(',',$job['users_registered']);
@@ -24,25 +28,31 @@ $job_registrants_cv_ids = array_unique($job_registrants_cv_ids);
 		if( !count($job_registrants_cv_ids) ) {
 			echo "<br><h3 style='color:red;'>There are no registrants for this job";
 		}else {
+			// TODO: nelubi sa mi tento sposob ziskavania dat, resp. do tabulky 'jobs' - pole 'users registered' by sa malo zapisovat mozno aj user id, nielen cv id, napr. [12,12],[11,11] alebo podobne....
+			// chcel som to spravit, ale je tu vela funkcii ktore beru getUser, a teda pri hladani 'user' pouziju 'company' a je to v pecku
+
 			global $database;
 			global $auth_config;
-			$all_registrants_cvs = $database->get('resumes','user_id',['id'=>$job_registrants_cv_ids]);
-			$all_registrants = $database->select($auth_config->table_user_profiles,'*',['id'=>$all_registrants_cvs]);
-			if(count($all_registrants) != count($job_registrants_cv_ids)){
-				echo 'Not all registrants found in DB. Please contact support center.';
+
+			for ( $i = count($job_registrants_cv_ids); $i > 0; $i-- ) {
+				$cv         = get_cv( $job_registrants_cv_ids[ $i-1 ] );
+				$registrant = $database->get( 'resumes', 'user_id', [ 'id' => $cv['id'] ] );
+				$registrant = get_public_user_profile($registrant,'user');
+				if ( $cv && $registrant ) { ?>
+					<li class="list-group-item">
+						<h4><?= $registrant["name"] ?> <?= $registrant["surname"] ?></h4>
+						<div class="tools pull-right">
+							<a href="/public/user?id=<?= $registrant['id'] ?>&cv_id=<?= $cv['id'] ?>"
+							   class="btn btn-success">DETAIL</a>
+							<a href="mailto:<?= $registrant['email'] ?>" class="btn btn-success">CONTACT</a>
+						</div>
+					</li>
+				<?php } else { ?>
+					<li class="list-group-item">
+						<h4 class="text-danger">User or CV not found...</h4>
+					</li>
+				<?php }
 			}
-			for ( $i = 0; $i < count($all_registrants); $i++ )
-			{
-				$registrant = get_public_user_profile($all_registrants[$i]['id'],'user');
-				?>
-				<li class="list-group-item">
-					<h4><?=$registrant["name"]?> <?=$registrant["surname"]?></h4>
-					<div class="tools pull-right">
-						<a href="/public/user?id=<?=$registrant['id']?>" class="btn btn-success">DETAIL</a>
-						<a href="mailto:<?=$registrant['email']?>" class="btn btn-success">CONTACT</a>
-					</div>
-				</li>
-		<?php }
 		 } ?>
 		</ul>
 	</div>
