@@ -2,16 +2,6 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group">
-				<label for="photo_link">PROFILE PHOTO</label>
-				<a href="javascript:void(0);" onclick="select_profile_photo()">
-					<img src="<? echo $user_profile['photo_link'] ? $user_profile['photo_link'] : '/assets/images/profile_photos/user.jpg' ?>" alt="Profile photo">
-					<br>Click to change.
-				</a>
-				<form action="" method="POST">
-					<input type="file" id="change_profile_photo_input" name="profile_photo" accept=".png, .jpg, .jpeg" onchange="change_profile_photo(this);" style="display:none;">
-				</form>
-			</div>
-			<div class="form-group">
 				<label for="email">EMAIL</label>
 				<input class="form-control" type="email" name="email" placeholder="email" value="<?php echo $user_profile['email']?>">
 			</div>

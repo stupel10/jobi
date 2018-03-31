@@ -353,7 +353,8 @@ function get_user_of_user_profile($user_profile_id,$role = 'user'){
 
 	switch ($role){
 		case 'company': $table='companies';break;
-		default: $table='users';
+		case 'user': $table='users';break;
+		default: return false;
 	}
 	$user = $database->select($table,'*',['active_profile'=>$user_profile_id]);
 
@@ -571,4 +572,27 @@ function get_cv($cv_id){
 	$cv = $database->select('resumes','*',['id'=>$cv_id]);
 
 	return $cv ? $cv[0] : false;
+}
+
+function set_profile_photo($photo_link){
+	global $database;
+	global $auth;
+	global $auth_config;
+
+	$role = $auth->getRole();
+	switch ($role){
+		case 'company': $table=$auth_config->table_company_profiles;break;
+		case 'user': $table=$auth_config->table_user_profiles;break;
+		default: return false;
+	}
+	$user = get_user();
+	$user_profile = get_user_profile($user->id)[0];
+
+	$upd = $database->update($table,['photo_link'=>$photo_link],['id'=>$user_profile['id']]);
+
+	if(!$upd->rowCount()){
+		flash()->error('Photo link not updated');
+		return false;
+	}
+	return true;
 }

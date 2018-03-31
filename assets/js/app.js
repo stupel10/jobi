@@ -59,8 +59,7 @@ function change_profile_photo( input ){
 
 	reader.onloadend = function () {
 		//preview.src = reader.result;
-		// TODO: dorobit!
-		alert('dorobit upload!!');
+		$('#change_profile_photo_form').submit();
 	}
 
 	if (file) {

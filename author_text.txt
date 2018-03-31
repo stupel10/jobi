@@ -27,17 +27,13 @@ najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
 
 
 Co treba upravit:
--> detail CV pri zobrazeni registrovanych uzivatelov pre dany job.
-
 -> linked in
-
--> profilova fotka
 
 -> pridat skenovanie kamerou pomocou getUserMedia() pre platformy, ktore to podporuju.
 
--> odoslanie zivotopisu na mail ak to vyzaduje company
+!-> odoslanie zivotopisu na mail ak to vyzaduje company
 
--> preklady - gettext:  _('some text');
+!-> preklady - gettext:  _('some text');
 
 -> vylepsit ciselniky cez ID, nie stringy
 

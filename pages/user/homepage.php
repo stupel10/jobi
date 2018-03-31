@@ -4,7 +4,18 @@
 <div class="row">
 	<div class="col-sm-6">
 		<h3>YOUR profile:</h3>
-		<img src="<? echo $user_profile['photo_link'] ? $user_profile['photo_link'] : '/assets/images/profile_photos/user.jpg' ?>" alt="Profile photo">
+		<div class="form-group">
+			PROFILE PHOTO
+			<a href="javascript:void(0);" onclick="select_profile_photo()">
+				<img src="<? echo $user_profile['photo_link'] ? $user_profile['photo_link'] : '/assets/images/profile_photos/user.png' ?>" alt="Profile photo" style="height:200px;width:auto;">
+				Click to change.
+			</a>
+			<form name="change_profile_photo_form" id="change_profile_photo_form" action="/_inc/user/change_profile_photo.php" method="POST" enctype="multipart/form-data">
+				<input type="file" id="change_profile_photo_input" name="profile_photo" accept=".png, .jpg, .jpeg" onchange="change_profile_photo(this);" style="display:none;">
+				<!--<input type="submit" id="change_profile_photo_submit" style="display:none;">-->
+			</form>
+		</div>
+		<!--<img src="--><?// echo $user_profile['photo_link'] ? $user_profile['photo_link'] : '/assets/images/profile_photos/user.jpg' ?><!--" alt="Profile photo">-->
 		<br>
 		NAME: <?php echo $user_profile['name'] ?>
 		<br>
