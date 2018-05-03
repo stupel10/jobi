@@ -58,6 +58,21 @@ function get_company($id){
 
 }
 
+function get_admin_profile($id){
+	if( ! isset($id) || empty($id) ) {
+		show_404();
+	}
+
+	global $database;
+	global $auth_config;
+
+	$company = $database->select($auth_config->table_admin_profiles,"*" , [ "id" => $id ]);
+
+	return $company ? $company[0] : $company;
+
+}
+
+
 function get_resumes($user_id){
 	if( ! isset($user_id) || empty($user_id) ) {
 		show_404();
@@ -137,7 +152,7 @@ function do_logout(){
 function is_logged_in(){
 	global $auth;
 
-	return ($auth->isUserLogged() || $auth->isCompanyLogged() );
+	return ($auth->isUserLogged() || $auth->isCompanyLogged() || $auth->isAdminLogged());
 }
 
 /**
@@ -154,7 +169,7 @@ function is_user_logged_in(){
 }
 
 /**
- * Is user logged in?
+ * Is company logged in?
  *
  * returns true if user is logged in
  *
@@ -164,6 +179,19 @@ function is_company_logged_in(){
 	global $auth;
 
 	return ($auth->isCompanyLogged() );
+}
+
+/**
+ * Is admin logged in?
+ *
+ * returns true if user is logged in
+ *
+ * @return bool
+ */
+function is_admin_logged_in(){
+	global $auth;
+
+	return ($auth->isAdminLogged() );
 }
 
 
@@ -440,9 +468,9 @@ function get_company_job( $user_id,$job_id){
  */
 function createLinkToQR($type,$id,$more_params_formated = ''){
 
-	$all_types = ['job','user','company'];
+	$all_types = ['job','user','company','admin'];
 	if(empty($type) || empty($id) || !in_array($type,$all_types)){
-		flash()->error('error input parameter swhen creating QR link');
+		flash()->error('error 2 input parameters when creating QR link');
 		return false;
 	}
 
@@ -473,7 +501,8 @@ function createLinkToQR($type,$id,$more_params_formated = ''){
  */
 function createQR($type,$id,$root_dir_path = '../..',$more_params = ''){
 
-	$all_types = ['job','user','company'];
+
+	$all_types = ['job','user','company','admin'];
 	if( empty($id) || empty($type) || !in_array($type,$all_types)){
 		flash()->error('error input parameters when creating QR');
 		return false;
@@ -692,6 +721,7 @@ function make_log($text){
  * @return mixed
  */
 function lang($str){
+	global $lng;
 	if ( isset($lng[$str]) && !empty($lng[$str]) ){
 		return $lng[$str];
 	}

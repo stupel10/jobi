@@ -196,17 +196,15 @@ class Auth
         if ($this->isEmailTaken($email,$role)) {
             $this->addAttempt( $role );
             $return['message'] = $this->lang["email_taken"];
-
             return $return;
         }
-
         // creating User
 
 	    // creating profile
 	    global $database;
-	    $table = $this->getTableName('profiles');
+	    $table = $this->getTableName('profiles',$role);
 	    if(!$table) {
-	    	$return['message'] = "wrong table chosen!";
+	    	$return['message'] = "wrong table chosen1!";
 	    	return $return;
 	    }
 	    $database->insert($table,
@@ -233,7 +231,6 @@ class Auth
 			    return $return;
 		    }
 		// end generate QR code
-
         $addUser = $this->addUser($email, $password, $params, $sendmail, $role, $profile_id);
 
         if ($addUser['error'] != 0) {
@@ -289,7 +286,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen2!";
 		    return $return;
 	    }
 
@@ -331,7 +328,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen3!";
 		    return $return;
 	    }
 
@@ -465,7 +462,7 @@ class Auth
 
 	    $table = $this->getTableName('sessions',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen4!";
 		    return $return;
 	    }
 
@@ -490,7 +487,7 @@ class Auth
     {
 	    $table = $this->getTableName('sessions',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen5!";
 		    return $return;
 	    }
 
@@ -509,7 +506,7 @@ class Auth
     {
 	    $table = $this->getTableName('sessions');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen6!";
 		    return $return;
 	    }
 
@@ -540,7 +537,7 @@ class Auth
 
 	    $table = $this->getTableName('sessions',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen7!";
 		    return $return;
 	    }
 
@@ -586,7 +583,7 @@ class Auth
     {
 	    $table = $this->getTableName('sessions');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen8!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("SELECT uid FROM {$table} WHERE hash = ?");
@@ -607,9 +604,9 @@ class Auth
 
     public function isEmailTaken($email,$role)
     {
-	    $table = $this->getTableName('users');
+	    $table = $this->getTableName('users',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen9!";
 		    return $return;
 	    }
 
@@ -635,12 +632,11 @@ class Auth
         $return['error'] = true;
 
 
-	    $table = $this->getTableName('users');
+	    $table = $this->getTableName('users',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen10!";
 		    return $return;
 	    }
-
         $query = $this->dbh->prepare("INSERT INTO {$table} VALUES ()");
 
         if (!$query->execute()) {
@@ -706,7 +702,7 @@ class Auth
     {
 	    $table = $this->getTableName('users',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen11!";
 		    return $return;
 	    }
 
@@ -738,9 +734,9 @@ class Auth
 	 */
     public function getUser($uid,$role)
     {
-	    $table = $this->getTableName('users');
+	    $table = $this->getTableName('users',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen12!";
 		    return $return;
 	    }
 
@@ -809,7 +805,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen13!";
 		    return $return;
 	    }
 
@@ -822,7 +818,7 @@ class Auth
         }
 	    $table = $this->getTableName('sessions');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen14!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
@@ -835,7 +831,7 @@ class Auth
 
 	    $table = $this->getTableName('requests');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen15!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
@@ -890,7 +886,7 @@ class Auth
 
 	    $table = $this->getTableName('requests');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen16!";
 		    return $return;
 	    }
 
@@ -923,7 +919,7 @@ class Auth
 
 	    $table = $this->getTableName('requests');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen17!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("INSERT INTO {$table} (uid, rkey, expire, type) VALUES (?, ?, ?, ?)");
@@ -996,7 +992,7 @@ class Auth
 
 	    $table = $this->getTableName('requests');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen18!";
 		    return $return;
 	    }
 
@@ -1039,7 +1035,7 @@ class Auth
     {
 	    $table = $this->getTableName('requests');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen19!";
 		    return $return;
 	    }
 
@@ -1181,7 +1177,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen20!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("UPDATE {$table} SET password = ? WHERE id = ?");
@@ -1232,7 +1228,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen21!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
@@ -1344,7 +1340,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen22!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("UPDATE {$table} SET password = ? WHERE id = ?");
@@ -1424,7 +1420,7 @@ class Auth
 
 	    $table = $this->getTableName('users');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen23!";
 		    return $return;
 	    }
         $query = $this->dbh->prepare("UPDATE {$table} SET email = ? WHERE id = ?");
@@ -1450,7 +1446,7 @@ class Auth
     {
 	    $table = $this->getTableName('attempts',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen24!";
 		    return $return;
 	    }
 	    $ip = $this->getIp();
@@ -1489,7 +1485,7 @@ class Auth
     {
 	    $table = $this->getTableName('attempts');
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen25!";
 		    return $return;
 	    }
         $ip = $this->getIp();
@@ -1509,7 +1505,7 @@ class Auth
     {
 	    $table = $this->getTableName('attempts',$role);
 	    if(!$table) {
-		    $return['message'] = "wrong table chosen!";
+		    $return['message'] = "wrong table chosen26!";
 		    return $return;
 	    }
         if ($all==true) {

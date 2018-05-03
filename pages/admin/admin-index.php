@@ -5,7 +5,22 @@
 	<div class="col-sm-6 box">
 		<div class="tab-menu row">
 			<a href="javascript:void(0);" onclick="formToggle('log');" class="tab-menu-link col-sm-6 bg-primary"><h3>LOGIN</h3></a>
+			<a href="javascript:void(0);" onclick="formToggle('reg');" class="tab-menu-link col-sm-6 bg-danger"><h3>REGISTRATION</h3></a>
 		</div>
+		<form action="/_inc/admin/registration.php" id="reg-form" method="post" style="display:none;">
+			<div class="form-group">
+				<input type="email" name="email" class="form-control" placeholder = "EMAIL" >
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" class="form-control" placeholder = "PASSWORD" >
+			</div>
+			<div class="form-group">
+				<input type="password" name="password_repeate" class="form-control" placeholder = "PASSWORD REPEATE" >
+			</div>
+			<div class="form-group">
+				<input type="submit" value="REGISTER" class="btn btn-small btn-danger">
+			</div>
+		</form>
 		<form action="/_inc/admin/login.php" id="log-form" method="post">
 			<div class="form-group">
 				<input type="email" name="email" class="form-control" placeholder = "EMAIL" >

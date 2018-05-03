@@ -21,6 +21,8 @@
 			if($page !== 'page'){
 				include_once '_partials/header.php';
 			}
+		}elseif ( $user_company_dir === 'admin' && $page !== 'admin-index'){
+				include_once '_partials/admin_header.php';
 		}else {
 			include_once "_partials/header.php";
 		}

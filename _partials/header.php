@@ -87,12 +87,12 @@
 		<?php } else{ ?>
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item<?php if($page=='') echo ' active'?>"><a href="/" class="btn nav-link">HOME</a></li>
-					<li class="nav-item<?php if($page=='index-company') echo ' active'?>"><a href="/company/index-company" class="btn nav-link">COMPANY</a>
+					<li class="nav-item<?php if($page=='') echo ' active'?>"><a href="/" class="btn nav-link"><?=lang('home')?></a></li>
+					<li class="nav-item<?php if($page=='index-company') echo ' active'?>"><a href="/company/index-company" class="btn nav-link"><?=lang('company')?></a>
 
 				</ul>
 				<div class="my-2 my-lg-0">
-					<a href="/_inc/user/login.php" class="btn btn-success">LOG IN</a>
+					<a href="/_inc/user/login.php" class="btn btn-success"><?=lang('login')?></a>
 				</div>
 			</div>
 		<?php } ?>
