@@ -43,8 +43,8 @@ if ( is_company_logged_in() ) {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a href="/company/homepage" class="btn nav-link">HOME</a></li>
-				<li class="nav-item"><a href="/company/offered_jobs" class="btn nav-link">OFFERED JOBS</a></li>
+				<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/company/homepage" class="btn nav-link">HOME</a></li>
+				<li class="nav-item<?php if($page=='offered_jobs') echo ' active'?>"><a href="/company/offered_jobs" class="btn nav-link">OFFERED JOBS</a></li>
 			</ul>
 			<div class="my-2 my-lg-0">
 				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>

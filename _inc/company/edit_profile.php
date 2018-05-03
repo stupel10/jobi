@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	);
 	if( $upd->rowCount() > 0  ){
 		flash()->success('company profile updated');
+		make_log('profile edited.');
 	}else{
 		flash()->error('company profile NOT updated');
 	}

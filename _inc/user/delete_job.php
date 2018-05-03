@@ -12,6 +12,11 @@ $next_page = 'user/all_jobs';
 	$user         = get_user();
 	$user_profile = get_user_profile( $user->id )[0];
 
+	$job =get_job($job_id);
+	if($job['company_id'] != $user_profile['id']){
+		flash()->error('Deleting foreign job forbidden!');
+		redirect('/');
+	}
 
 	global $database;
 	global $auth_config;
@@ -25,9 +30,9 @@ $next_page = 'user/all_jobs';
 
 	$all_jobs = array_diff(explode(',',$user_profile['jobs_registered']), [$job_id] );
 	$in='';
-	foreach ( $all_jobs as $job )
+	foreach ( $all_jobs as $one )
 	{
-		$in = $in.$job.',';
+		$in = $in.$one.',';
 	}
 	$in = rtrim($in,",");
 
@@ -38,6 +43,7 @@ $next_page = 'user/all_jobs';
 
 	if( $upd->rowCount() >0 ){
 		flash()->success('JOB deleted!');
+		make_log("job deleted.job id: ".$job_id);
 	}else {
 		flash()->error('JOB not deleted!');
 	}

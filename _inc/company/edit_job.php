@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 	if( $upd->rowCount() > 0  ){
 		flash()->success('Job saved.');
+		make_log("job saved. Job id: ".$id);
 	}else{
 		flash()->error('Job not created/edited.');
 	}

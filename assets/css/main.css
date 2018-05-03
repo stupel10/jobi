@@ -61,3 +61,52 @@ main {
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
+body.company_register h1,
+body.index h1{
+	text-align: center;
+}
+.box{
+	margin-top: 60px;
+	margin-bottom: 40px;
+	margin-left: 50%;
+	margin-right: 50%;
+	transform: translateX(-50%);
+	padding: 0;
+}
+.box .row {
+	margin-left: 0;
+	margin-right: 0;
+}
+.box .tab-menu a:hover h3{
+	display: inline-block;
+	text-decoration: none;
+}
+.box .tab-menu a{
+	padding-top: 10px;
+	color: #fff;
+}
+.box form {
+	padding: 40px;
+}
+.box form#log-form{
+	border: 3px solid #008bba;
+}
+.box form#reg-form{
+	border: 3px solid #f14125;
+}
+
+/*  Profile photo  */
+.profile-photo-change a {
+	position: relative;
+}
+.profile-photo-change a div.overlay {
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
+	background: rgba(51,51,51,0.8);
+}
+.profile-photo-change a div.overlay span.change-me {
+	position: relative;
+}

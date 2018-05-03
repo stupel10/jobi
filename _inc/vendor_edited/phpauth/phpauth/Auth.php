@@ -204,10 +204,10 @@ class Auth
 
 	    // creating profile
 	    global $database;
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_profiles;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_profiles;
+	    $table = $this->getTableName('profiles');
+	    if(!$table) {
+	    	$return['message'] = "wrong table chosen!";
+	    	return $return;
 	    }
 	    $database->insert($table,
 		    [ 'email'=> $email ] );
@@ -287,10 +287,10 @@ class Auth
             return $return;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("UPDATE {$table} SET isactive = ? WHERE id = ?");
@@ -329,12 +329,10 @@ class Auth
             return $return;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
-	    }else {
-	    	return $return;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
@@ -395,10 +393,9 @@ class Auth
     */
     public function getUID($email,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    return false;
 	    }
 
         $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
@@ -419,12 +416,8 @@ class Auth
 	 */
 	public function getUserActiveProfile($user_id)
 	{
-		$role = $this->getRole();
-		if($role === 'user' ){
-			$table= $this->config->table_users;
-		}elseif ($role === 'company'){
-			$table= $this->config->table_companies;
-		}
+		$table = $this->getTableName('users');
+		if(!$table) return false;
 
 		$query = $this->dbh->prepare("SELECT active_profile FROM {$table} WHERE id = ?");
 		$query->execute(array($user_id));
@@ -470,10 +463,10 @@ class Auth
 
         $data['cookie_crc'] = sha1($data['hash'] . $this->config->site_key);
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_sessions;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_sessions;
+	    $table = $this->getTableName('sessions');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("INSERT INTO {$table} (uid, hash, expiredate, ip, agent, cookie_crc) VALUES (?, ?, ?, ?, ?, ?)");
@@ -495,10 +488,10 @@ class Auth
     */
     protected function deleteExistingSessions($uid,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_sessions;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_sessions;
+	    $table = $this->getTableName('sessions');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
@@ -514,10 +507,10 @@ class Auth
     */
     protected function deleteSession($hash,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_sessions;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_sessions;
+	    $table = $this->getTableName('sessions');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE hash = ?");
@@ -545,10 +538,10 @@ class Auth
             return false;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_sessions;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_sessions;
+	    $table = $this->getTableName('sessions');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT id, uid, expiredate, ip, agent, cookie_crc FROM {$table} WHERE hash = ?");
@@ -591,10 +584,10 @@ class Auth
     */
     public function getSessionUID($hash,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_sessions;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_sessions;
+	    $table = $this->getTableName('sessions');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("SELECT uid FROM {$table} WHERE hash = ?");
         $query->execute(array($hash));
@@ -614,10 +607,10 @@ class Auth
 
     public function isEmailTaken($email,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT count(*) FROM {$table} WHERE email = ?");
@@ -641,10 +634,11 @@ class Auth
     {
         $return['error'] = true;
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("INSERT INTO {$table} VALUES ()");
@@ -710,10 +704,10 @@ class Auth
     */
     protected function getBaseUser($uid, $role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT email, password, isactive FROM {$table} WHERE id = ?");
@@ -744,10 +738,10 @@ class Auth
 	 */
     public function getUser($uid,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT * FROM {$table} WHERE id = ?");
@@ -813,10 +807,10 @@ class Auth
             return $return;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
@@ -826,10 +820,10 @@ class Auth
 
             return $return;
         }
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_sessions;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_sessions;
+	    $table = $this->getTableName('sessions');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
 
@@ -839,10 +833,10 @@ class Auth
             return $return;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_requests;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_requests;
+	    $table = $this->getTableName('requests');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE uid = ?");
 
@@ -894,10 +888,10 @@ class Auth
             }
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_requests;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_requests;
+	    $table = $this->getTableName('requests');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT id, expire FROM {$table} WHERE uid = ? AND type = ?");
@@ -927,10 +921,10 @@ class Auth
         $key = $this->getRandomKey(20);
         $expire = date("Y-m-d H:i:s", strtotime($this->config->request_key_expiration));
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_requests;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_requests;
+	    $table = $this->getTableName('requests');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("INSERT INTO {$table} (uid, rkey, expire, type) VALUES (?, ?, ?, ?)");
 
@@ -1000,10 +994,10 @@ class Auth
     {
         $return['error'] = true;
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_requests;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_requests;
+	    $table = $this->getTableName('requests');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("SELECT id, uid, expire FROM {$table} WHERE rkey = ? AND type = ?");
@@ -1043,10 +1037,10 @@ class Auth
     */
     protected function deleteRequest($id,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_requests;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_requests;
+	    $table = $this->getTableName('requests');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 
         $query = $this->dbh->prepare("DELETE FROM {$table} WHERE id = ?");
@@ -1185,10 +1179,10 @@ class Auth
 
         $password = $this->getHash($password);
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("UPDATE {$table} SET password = ? WHERE id = ?");
         $query->execute(array($password, $data['uid']));
@@ -1236,10 +1230,10 @@ class Auth
             return $return;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("SELECT id FROM {$table} WHERE email = ?");
         $query->execute(array($email));
@@ -1348,10 +1342,10 @@ class Auth
 
         $newpass = $this->getHash($newpass);
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("UPDATE {$table} SET password = ? WHERE id = ?");
         $query->execute(array($newpass, $uid));
@@ -1428,10 +1422,10 @@ class Auth
             return $return;
         }
 
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
+	    $table = $this->getTableName('users');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $query = $this->dbh->prepare("UPDATE {$table} SET email = ? WHERE id = ?");
         $query->execute(array($email, $uid));
@@ -1454,12 +1448,10 @@ class Auth
     */
     public function isBlocked( $role )
     {
-    	if ( $role === 'user'){
-    		$table = $this->config->table_user_attempts;
-	    }elseif ($role === 'company' ){
-    		$table = $this->config->table_company_attempts;
-	    }else{
-	    	return 'block';
+	    $table = $this->getTableName('attempts');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
 	    $ip = $this->getIp();
         $this->deleteAttempts($ip, false,$role);
@@ -1495,10 +1487,10 @@ class Auth
     */
     protected function addAttempt( $role )
     {
-    	if($role === 'user' ){
-    		$table= $this->config->table_user_attempts;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_attempts;
+	    $table = $this->getTableName('attempts');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         $ip = $this->getIp();
         $attempt_expiredate = date("Y-m-d H:i:s", strtotime($this->config->attack_mitigation_time));
@@ -1515,10 +1507,10 @@ class Auth
     */
     protected function deleteAttempts($ip, $all = false,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_user_attempts;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_company_attempts;
+	    $table = $this->getTableName('attempts');
+	    if(!$table) {
+		    $return['message'] = "wrong table chosen!";
+		    return $return;
 	    }
         if ($all==true) {
             $query = $this->dbh->prepare("DELETE FROM {$table} WHERE ip = ?");
@@ -1638,6 +1630,12 @@ class Auth
 				$query->execute(array($hash));
 				if( $query->rowCount() >0 ){
 					return 'company';
+				}else{
+					$query = $this->dbh->prepare("SELECT id FROM {$this->config->table_admin_sessions} WHERE hash = ?");
+					$query->execute(array($hash));
+					if( $query->rowCount() >0 ){
+						return 'admin';
+					}
 				}
 			}
 		}
@@ -1654,11 +1652,9 @@ class Auth
      */
     public function comparePasswords($userid, $password_for_check,$role)
     {
-	    if($role === 'user' ){
-		    $table= $this->config->table_users;
-	    }elseif ($role === 'company'){
-		    $table= $this->config->table_companies;
-	    }
+	    $table=$this->getTableName('users');
+	    if(!$table) return false;
+
         $query = $this->dbh->prepare("SELECT password FROM {$table} WHERE id = ?");
         $query->execute(array($userid));
 
@@ -1673,5 +1669,78 @@ class Auth
         }
 
         return password_verify($password_for_check, $data['password']);
+    }
+
+
+    public function getTableName($requiredTableName){
+    	$role = $this->getRole();
+    	$table = '';
+
+    	switch ($role){
+		    case 'user':
+		    	switch ($requiredTableName){
+				    case 'users':
+				    	$table = $this->config->table_users;
+				    	break;
+				    case 'attempts':
+					    $table = $this->config->table_user_attempts;
+					    break;
+				    case 'profiles':
+				    	$table = $this->config->table_user_profiles;
+				    	break;
+				    case 'requests':
+				    	$table = $this->config->table_user_requests;
+				    	break;
+				    case 'sessions':
+				    	$table = $this->config->table_user_sessions;
+				    	break;
+				    default: break;
+			    }
+		    	break;
+		    case 'company':
+			    switch ($requiredTableName){
+				    case 'users':
+					    $table = $this->config->table_companies;
+					    break;
+				    case 'attempts':
+					    $table = $this->config->table_company_attempts;
+					    break;
+				    case 'profiles':
+					    $table = $this->config->table_company_profiles;
+					    break;
+				    case 'requests':
+					    $table = $this->config->table_company_requests;
+					    break;
+				    case 'sessions':
+					    $table = $this->config->table_company_sessions;
+					    break;
+				    default: break;
+			    }
+			    break;
+		    case 'admin':
+			    switch ($requiredTableName){
+				    case 'users':
+					    $table = $this->config->table_admins;
+					    break;
+				    case 'attempts':
+					    $table = $this->config->table_admin_attempts;
+					    break;
+				    case 'profiles':
+					    $table = $this->config->table_admin_profiles;
+					    break;
+				    case 'requests':
+					    $table = $this->config->table_admin_requests;
+					    break;
+				    case 'sessions':
+					    $table = $this->config->table_admin_sessions;
+					    break;
+				    default: break;
+			    }
+			    break;
+		    default:
+		    	break;
+	    }
+
+	    return $table===''?  false : $table;
     }
 }

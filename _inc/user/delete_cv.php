@@ -20,6 +20,7 @@ require_once '../config.php';
 
 	if($cv === $user_profile['id'] ){
 		$database->delete('resumes',['id'=> $cv_id]);
+		make_log("CV deleted.CV id: ".$cv_id);
 		flash()->success('CV deleted!');
 	}else {
 		flash()->error('CV not deleted!');

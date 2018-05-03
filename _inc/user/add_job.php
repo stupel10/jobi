@@ -26,6 +26,7 @@ require_once "../config.php";
 		]);
 		if( $upd->rowCount() ){
 			flash()->success('Job added to your scanned jobs.');
+			make_log("Job added to users scanned jobs. Job id: ".$job_id);
 		}else {
 			flash()->error( "Job not added to your profile, because your profile was not found." );
 		}

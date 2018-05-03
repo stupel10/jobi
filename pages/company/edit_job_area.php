@@ -1,4 +1,4 @@
-<select name="area" id="select_area" class="filter_selectbox">
+<select name="area" id="select_area" class="filter_selectbox custom-select">
 	<option data-value="0" data-selectable="" class="option"></option>
 	<option data-value="401" data-selectable="" class="option">Bánovce nad Bebravou</option>
 	<option data-value="201" data-selectable="" class="option">Banská Bystrica</option>

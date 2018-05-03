@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 	if( $upd->rowCount() > 0  ){
 		flash()->success('CV created');
+		make_log('CV edited/created.CV id='.$cv_id);
 	}else{
 		flash()->error('cv not created');
 	}

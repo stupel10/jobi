@@ -24,38 +24,58 @@ najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
 2. rozpoznam QR kod cez kniznicu https://github.com/LazarSoft/jsqrcode
 
 
+====================================================
+=============     Co treba upravit:
+====================================================
 
-
-Co treba upravit:
--> linked in
-
--> pridat skenovanie kamerou pomocou getUserMedia() pre platformy, ktore to podporuju.
-
-!-> odoslanie zivotopisu na mail ak to vyzaduje company
-
-!-> preklady - gettext:  _('some text');
-
--> vylepsit ciselniky cez ID, nie stringy
-
--> flash spravy napoziciovat niekam inam
-
--> favicon
-
--> class="active" v <nav>
-
+-> prerobit registraciu jobov{nova tabulka! resumes_sent}
+-> admin cast, third person
 -> admin stranky
 	-> dotaz do DB
 	-> vytvorenie stranky veltrhu
 	-> ...
-
--> public pages pre veltrh -> po nacitani QR kodu pri vstupe na veltrh sa zobrazi uzivatelovy stranka o veltrhu...link na jej web, mapa, vystavovatelia a podobne. Naplnat sa to bude cez admin stranky.
-
+!-> jQuery kktiny
+!-> preklady - gettext:  _('some text');
 -> PHPAuth
 	-> aktivacne emaily
-	-> naco mi tu je capthcha? ...ved vzdy ta fnc vrati true
+	-> capthcha
 	-> pomenit config v db
 	-> zlepsit zvolenie tabulky v classe Auth.php
-
--> vsetky validacie dopytov do DB
-
 -> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne
+
+-> detail spolocnosti pre usera
+-> linky na FB
+-> //TODO
+-> js validacie na polia
+
+
+====================================================
+
+-> backup
+-> logo
+-> favicon
+!->Ist na web (aj kvoli mailom)
+-> vsetky validacie dopytov do DB
+-> roztriedit global functions
+-> CV viac poli
+-> JOBS - viac poli aby sme mohli lepsie vyhladavat
+-> potvrdenie registracie emailom
+-> obnova hesla
+====================================================
+
+-> QR k=od pre veltrh
+-> public pages pre veltrh -> po nacitani QR kodu pri vstupe na veltrh sa zobrazi uzivatelovy stranka o veltrhu...link na jej web, mapa, vystavovatelia a podobne. Naplnat sa to bude cez admin stranky.
+-> PDF UTF-8
+-> linked in
+-> pridat skenovanie kamerou pomocou getUserMedia() pre platformy, ktore to podporuju.
+-> vylepsit ciselniky cez ID, nie stringy
+-> flash spravy napoziciovat niekam inam
+
+
+
+
+
+
+
+
+

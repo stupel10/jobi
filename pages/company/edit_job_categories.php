@@ -1,4 +1,4 @@
-<select name="category" id="select_category" class="filter_selectbox">
+<select name="category" id="select_category" class="filter_selectbox custom-select">
 	<optgroup label="" class="optgroup">
 		<option data-value="0" data-selectable="" class="option"></option>
 	</optgroup>

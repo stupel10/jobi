@@ -21,6 +21,7 @@ $job_offerer = $database->get('jobs',"company_id",['id'=> $job_id]);
 if($job_offerer === $user_profile['id'] ){
 	$database->delete('jobs',['id'=> $job_id]);
 	flash()->success('Job deleted!');
+	make_log("job deleted.Job id:".$job_id);
 }else {
 	flash()->error('Job not deleted!');
 }

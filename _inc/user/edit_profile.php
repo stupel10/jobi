@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	);
 	if( $upd->rowCount() > 0  ){
 		flash()->success('user profile updated');
+		make_log("user profile edited.");
 	}else{
 		flash()->error('user profile NOT updated');
 	}

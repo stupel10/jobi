@@ -4,6 +4,8 @@
 #.LSOverride
 .idea/**
 /assets/images/qr_codes
+/assets/images/profile_photos/user
+/assets/images/profile_photos/company
 /.idea
 
 # Thumbnails

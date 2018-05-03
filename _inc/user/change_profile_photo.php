@@ -6,7 +6,21 @@ $target_dir = "../../assets/images/profile_photos/user/";
 //die();
 $imageFileType = strtolower(pathinfo('./'.basename($_FILES["profile_photo"]["name"],PATHINFO_EXTENSION))['extension']);
 $user = get_user();
-$target_file = $target_dir . 'user_'.$user->id.'.'.$imageFileType;
+$user_profile = get_user_profile($user->id)[0];
+$photo_link_old = $user_profile['photo_link'];
+if( $photo_link_old) {
+	$photo_name_old = explode('/',$photo_link_old);
+	$photo_name_old = $photo_name_old[count($photo_name_old)-1];
+	$photo_name_old = explode('.',$photo_name_old);
+	$photo_name_old = $photo_name_old[0];
+	$photo_name_old = explode('_',$photo_name_old);
+	$new_photo_number = intval($photo_name_old[count($photo_name_old)-1]);
+	$new_photo_number++;
+}else{
+	$new_photo_number = 0;
+}
+
+$target_file = $target_dir . 'user_'.$user_profile['id'].'_photo_'.$new_photo_number.'.'.$imageFileType;
 $uploadOk = 1;
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {

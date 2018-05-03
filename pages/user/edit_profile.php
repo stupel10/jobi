@@ -38,14 +38,19 @@
 			</div>
 		</div>
 		<div class="col-sm-6">
-			ADDRESS:
-			<div class="form-group">
-				<label for="street">STREET</label>
-				<input class="form-control" type="text" name="street" placeholder="street" value="<?php echo $user_profile['address_street']?>">
-			</div>
-			<div class="form-group">
-				<label for="number">NUMBER</label>
-				<input class="form-control" type="text" name="number" placeholder="number" value="<?php echo $user_profile['address_street_number']?>">
+			<div class="row">
+				<div class="col-sm-9">
+					<div class="form-group">
+						<label for="street">STREET</label>
+						<input class="form-control" type="text" name="street" placeholder="street" value="<?php echo $user_profile['address_street']?>">
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label for="number">NUMBER</label>
+						<input class="form-control" type="text" name="number" placeholder="number" value="<?php echo $user_profile['address_street_number']?>">
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="PSC">PSC</label>

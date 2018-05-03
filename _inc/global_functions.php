@@ -1,5 +1,12 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/phpmailer/phpmailer/src/Exception.php';
+require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require 'vendor/phpmailer/phpmailer/src/SMTP.php';
+
 function show_404(){
 	header("HTTP/1.0 404 NOT FOUND");
 	include_once "404.php";
@@ -17,8 +24,8 @@ function get_job($id){
 	}
 
 	return $job[0];
-
 }
+
 function get_company_profile($id){
 	if( ! isset($id) || empty($id) ) {
 		show_404();
@@ -32,6 +39,7 @@ function get_company_profile($id){
 	return $company ? $company[0] : $company;
 
 }
+
 function get_company($id){
 	if( ! isset($id) || empty($id) ) {
 		show_404();
@@ -49,6 +57,7 @@ function get_company($id){
 	return $company[0];
 
 }
+
 function get_resumes($user_id){
 	if( ! isset($user_id) || empty($user_id) ) {
 		show_404();
@@ -66,6 +75,7 @@ function get_resumes($user_id){
 	return $resumes;
 
 }
+
 function redirect( $page ){
 	global $base_url;
 
@@ -81,7 +91,6 @@ function redirect( $page ){
  * Create cookie after logging in
  *
  * @param $data
- * @return bool
  */
 function do_login( $data ){
 
@@ -97,6 +106,7 @@ function do_login( $data ){
 		$auth_config->cookie_http
 	);
 }
+
 /**
  * Do Logout
  *
@@ -108,8 +118,11 @@ function do_logout(){
 	if ( !is_logged_in() ){
 		return true;
 	}
+
 	global $auth;
 	global $auth_config;
+
+	make_log("loggout");
 
 	return $auth->logout( $_COOKIE[$auth_config->cookie_name] );
 
@@ -525,8 +538,6 @@ function register_user_for_job($job_id,$cv_id){
 		return false;
 	}
 
-
-
 	// get resume;
 	$user = get_user();
 	$resume = get_user_cv($user->id,$_GET['cv_id']);
@@ -554,10 +565,62 @@ function register_user_for_job($job_id,$cv_id){
 	if(!$upd->rowCount()){
 		return false;
 	}else{
+
+		$company = get_company_profile($job['company_id']);
+		if($job['send_email']){
+			send_new_job_registration_email($company['email'].'',$job['title'],$user_profile['name'].' '.$user_profile['surname']);
+		}
+
+		make_log('user registered for job. job id:'.$job_id);
 		return true;
 	}
 }
 
+/**
+ * Send email to company with new job registrant
+ *
+ * @param $job_email
+ * @param $jobName
+ * @param $registrantName
+ */
+function send_new_job_registration_email($job_email,$jobName,$registrantName){
+	$mail = new PHPMailer(true);
+	try {
+		//Server settings
+		$mail->SMTPDebug = 0;                                 // Enable verbose debug output
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = 'jakub.vyskoc.tester@gmail.com';                 // SMTP username
+		$mail->Password = 'Jakub9310027573';                           // SMTP password
+		$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		$mail->Port = 587;                                    // TCP port to connect to
+
+		//Recipients
+		$mail->setFrom('jakub.vyskoc.tester@gmail.com', 'JOBI');
+		//$mail->addAddress('jakub.vyskoc@gmail.com', 'eng nav jakub');     // Add a recipient
+		$mail->addAddress($job_email);               // Name is optional
+		//$mail->addReplyTo('info@example.com', 'Information');
+		//$mail->addCC('cc@example.com');
+		//$mail->addBCC('bcc@example.com');
+
+		//Attachments
+		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+		//Content
+		$mail->isHTML(true);                                  // Set email format to HTML
+		$mail->Subject = 'NEW JOB REGISTRANT';
+		$mail->Body    = '<h2>You have new registrant</h2><p>Job:'.$jobName.'</p><p>Registrant:'.$registrantName.'</p><p>I wanted to send this to email:'.$job_email.'</p>';
+		$mail->AltBody = 'You have new registrant for job:'.$jobName.'.Registrant name:'.$registrantName.'.';
+
+		$mail->send();
+		make_log('job registration email sent for job. recipient: '.$job_email.'. email text:'.$mail->Body);
+	} catch (Exception $e) {
+		echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+	}
+
+}
 /**
  *
  * Get cv by id
@@ -591,8 +654,32 @@ function set_profile_photo($photo_link){
 	$upd = $database->update($table,['photo_link'=>$photo_link],['id'=>$user_profile['id']]);
 
 	if(!$upd->rowCount()){
-		flash()->error('Photo link not updated');
+		flash()->error('Photo link not updated.'.$user_profile['id'].$photo_link);
 		return false;
 	}
+
+	make_log("profile photo changed to ".$photo_link);
 	return true;
+}
+
+/**
+ * Create a log
+ *
+ * @param $text
+ *
+ * @return bool
+ */
+function make_log($text){
+	$user = get_user();
+	$user_profile = get_user_profile($user->id)[0];
+
+	global $database;
+	global $auth;
+
+	$log = $database->insert('logs',[
+		'role' =>$auth->getRole(),
+		'profile_id'=>$user_profile['id'],
+		'log' => $text
+	]);
+	return $log ? true : false;
 }

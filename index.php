@@ -29,7 +29,6 @@
 		//echo $link;
 		include file_exists( $link ) ? $link : '404.php';
 	}else {
-		$restricted_pages = false;
 		include_once "_partials/header.php";
 		include 'main.php';
 	}

@@ -14,7 +14,6 @@
 	$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 	$whoops->register();
 
-
 	// global variables
 	require_once 'variables.php';
 

@@ -68,6 +68,22 @@ function change_profile_photo( input ){
 		//preview.src = "";
 	}
 }
+function formToggle(show){
+	var reg_form = $('#reg-form');
+	var log_form = $('#log-form');
+	switch(show){
+		case 'log':
+			reg_form.hide();
+			log_form.show();
+			break;
+		case 'reg':
+			log_form.hide();
+			reg_form.show();
+			break;
+		default:
+			break;
+	}
+}
 // ==========================================================
 // //    SCANING QR CODE
 // var scriptsLoaded = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
@@ -175,3 +191,12 @@ function parseURL(url) {
 }
 //       END SCANING QR CODE
 // ============================================================================================================
+
+// var container = document.getElementById('id');
+// var new_paragraph = document.createElement("P");
+// var text = document.createTextNode("This is paragraph");
+// new_paragraph.appendChild(text);
+// container.appendChild(new_paragraph);
+//
+// var newParagraph = $('<p></p>').append("This is paragraph");
+// $('#id').append(new_paragraph);
