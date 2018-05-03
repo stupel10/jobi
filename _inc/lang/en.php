@@ -1,0 +1,5 @@
+<?php
+
+$lng['hello'] = 'hello';
+
+

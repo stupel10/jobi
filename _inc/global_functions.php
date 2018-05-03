@@ -122,7 +122,7 @@ function do_logout(){
 	global $auth;
 	global $auth_config;
 
-	make_log("loggout");
+	//make_log("loggout");
 
 	return $auth->logout( $_COOKIE[$auth_config->cookie_name] );
 
@@ -682,4 +682,18 @@ function make_log($text){
 		'log' => $text
 	]);
 	return $log ? true : false;
+}
+
+/**
+ * Get text from $lang array by its key
+ *
+ * @param $str
+ *
+ * @return mixed
+ */
+function lang($str){
+	if ( isset($lng[$str]) && !empty($lng[$str]) ){
+		return $lng[$str];
+	}
+	return $str;
 }

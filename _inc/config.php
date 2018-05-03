@@ -20,6 +20,9 @@
 	// database
 	require_once 'database.php';
 
+	// lang
+	require_once 'lang/language.php';
+
 	// authorization -  PHPAuth
 	require_once 'authorization.php';
 

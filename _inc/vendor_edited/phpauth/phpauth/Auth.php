@@ -393,7 +393,7 @@ class Auth
     */
     public function getUID($email,$role)
     {
-	    $table = $this->getTableName('users');
+	    $table = $this->getTableName('users',$role);
 	    if(!$table) {
 		    return false;
 	    }
@@ -463,7 +463,7 @@ class Auth
 
         $data['cookie_crc'] = sha1($data['hash'] . $this->config->site_key);
 
-	    $table = $this->getTableName('sessions');
+	    $table = $this->getTableName('sessions',$role);
 	    if(!$table) {
 		    $return['message'] = "wrong table chosen!";
 		    return $return;
@@ -488,7 +488,7 @@ class Auth
     */
     protected function deleteExistingSessions($uid,$role)
     {
-	    $table = $this->getTableName('sessions');
+	    $table = $this->getTableName('sessions',$role);
 	    if(!$table) {
 		    $return['message'] = "wrong table chosen!";
 		    return $return;
@@ -538,7 +538,7 @@ class Auth
             return false;
         }
 
-	    $table = $this->getTableName('sessions');
+	    $table = $this->getTableName('sessions',$role);
 	    if(!$table) {
 		    $return['message'] = "wrong table chosen!";
 		    return $return;
@@ -704,7 +704,7 @@ class Auth
     */
     protected function getBaseUser($uid, $role)
     {
-	    $table = $this->getTableName('users');
+	    $table = $this->getTableName('users',$role);
 	    if(!$table) {
 		    $return['message'] = "wrong table chosen!";
 		    return $return;
@@ -1448,7 +1448,7 @@ class Auth
     */
     public function isBlocked( $role )
     {
-	    $table = $this->getTableName('attempts');
+	    $table = $this->getTableName('attempts',$role);
 	    if(!$table) {
 		    $return['message'] = "wrong table chosen!";
 		    return $return;
@@ -1507,7 +1507,7 @@ class Auth
     */
     protected function deleteAttempts($ip, $all = false,$role)
     {
-	    $table = $this->getTableName('attempts');
+	    $table = $this->getTableName('attempts',$role);
 	    if(!$table) {
 		    $return['message'] = "wrong table chosen!";
 		    return $return;
@@ -1606,6 +1606,19 @@ class Auth
 		);
 	}
 
+	/**
+	 * Returns is company logged in
+	 * @return boolean
+	 */
+	public function isAdminLogged() {
+
+		return (
+			isset($_COOKIE[$this->config->cookie_name])
+			&&
+			$this->checkSession($_COOKIE[$this->config->cookie_name],'admin')
+		);
+	}
+
     /**
      * Returns current session hash
      * @return string
@@ -1672,8 +1685,10 @@ class Auth
     }
 
 
-    public function getTableName($requiredTableName){
-    	$role = $this->getRole();
+    public function getTableName($requiredTableName,$role=''){
+    	if($role=='') {
+		    $role = $this->getRole();
+	    }
     	$table = '';
 
     	switch ($role){
