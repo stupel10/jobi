@@ -5,14 +5,14 @@ $resumes = get_user_CVs($user->id);
 ?>
 <div class="page-header">
 	<h1>
-		THESE ARE ALL YOUR CVS
+		<?=lang('all_cvs_title')?>
 	</h1>
 </div>
 <div class="row">
 	<div class="col-sm-12">
 		<?php
 			if( $resumes == false) {
-				echo "<br><h3 style='color:red;'>You dont have any CV yet! Go make it!";
+				echo "<br><h3 style='color:red;'>".lang('all_cvs_empty')."</h3>";
 			}else {
 				?>
 				<ul class="list-group">
@@ -23,9 +23,9 @@ $resumes = get_user_CVs($user->id);
 					<li class="list-group-item">
 						<h4><?=$cv["title"]?></h4>
 						<div class="tools pull-right">
-							<a href="/user/cv?cv_id=<?=$cv['id']?>" class="btn btn-success">DETAIL</a>
-							<a href="/user/edit_cv?cv_id=<?=$cv['id']?>" class="btn btn-warning">EDIT</a>
-							<a href="javascript:void(0)" onclick="deleteCV(<?=$cv['id']?>)" class="btn btn-danger delete">DELETE</a>
+							<a href="/user/cv?cv_id=<?=$cv['id']?>" class="btn btn-success"><?=lang('detail')?></a>
+							<a href="/user/edit_cv?cv_id=<?=$cv['id']?>" class="btn btn-warning"><?=lang('edit')?></a>
+							<a href="javascript:void(0)" onclick="deleteCV(<?=$cv['id']?>)" class="btn btn-danger delete"><?=lang('delete')?></a>
 						</div>
 					</li>
 					<?php } ?>
@@ -34,6 +34,6 @@ $resumes = get_user_CVs($user->id);
 	</div>
 	<div class="col-sm-12">
 		<br>
-		<a href="/user/edit_cv" class="btn btn-warning">CREATE NEW CV</a>
+		<a href="/user/edit_cv" class="btn btn-warning"><?=lang('create')?></a>
 	</div>
 </div>

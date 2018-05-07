@@ -29,38 +29,35 @@ najvacsi problem bol zatial s nacitanim QR kodu. Ten momentalne nacitam takto:
 ====================================================
 
 -> prerobit registraciu jobov{nova tabulka! resumes_sent}
--> admin cast, third person
 -> admin stranky
 	-> dotaz do DB
 	-> vytvorenie stranky veltrhu
 	-> ...
-!-> jQuery kktiny
-!-> preklady - gettext:  _('some text');
+-> jQuery kktiny
+-> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne
+
+====================================================
+
+-> linky na FB
+-> //TODO
+-> detail spolocnosti pre usera
+-> js validacie na polia
 -> PHPAuth
 	-> aktivacne emaily
 	-> capthcha
 	-> pomenit config v db
-	-> zlepsit zvolenie tabulky v classe Auth.php
--> ak nieco nenajde v DB, tak hadze na to 404 a nam to padne
-
--> detail spolocnosti pre usera
--> linky na FB
--> //TODO
--> js validacie na polia
-
-
-====================================================
-
 -> backup
 -> logo
 -> favicon
-!->Ist na web (aj kvoli mailom)
+->Ist na web (aj kvoli mailom)
 -> vsetky validacie dopytov do DB
 -> roztriedit global functions
 -> CV viac poli
 -> JOBS - viac poli aby sme mohli lepsie vyhladavat
 -> potvrdenie registracie emailom
 -> obnova hesla
+-> third person
+
 ====================================================
 
 -> QR k=od pre veltrh

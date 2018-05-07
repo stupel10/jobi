@@ -61,10 +61,10 @@
 		if($user_logged){?>
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
-					<li class="nav-item<?php if($page=='scanned_jobs') echo ' active'?>"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
-					<li class="nav-item<?php if($page=='all_jobs') echo ' active'?>"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
-					<li class="nav-item<?php if($page=='cvs') echo ' active'?>"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
+					<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/user/homepage" class="btn nav-link"><?=lang('home')?></a></li>
+					<li class="nav-item<?php if($page=='scanned_jobs') echo ' active'?>"><a href="/user/scanned_jobs" class="btn nav-link"><?=lang('scanned_jobs')?></a></li>
+					<li class="nav-item<?php if($page=='all_jobs') echo ' active'?>"><a href="/user/all_jobs" class="btn nav-link"><?=lang('all_offered_jobs')?></a></li>
+					<li class="nav-item<?php if($page=='cvs') echo ' active'?>"><a href="/user/cvs" class="btn nav-link"><?=lang('my_cvs')?></a></li>
 				</ul>
 				<div class="my-2 my-lg-0">
 					<form action="" method="post">

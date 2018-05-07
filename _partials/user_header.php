@@ -62,17 +62,26 @@ if ( is_user_logged_in() ) {
 		</button>
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/user/homepage" class="btn nav-link">HOME</a></li>
-				<li class="nav-item<?php if($page=='scanned_jobs') echo ' active'?>"><a href="/user/scanned_jobs" class="btn nav-link">SCANED JOBS</a></li>
-				<li class="nav-item<?php if($page=='all_jobs') echo ' active'?>"><a href="/user/all_jobs" class="btn nav-link">ALL OFFERED JOBS</a></li>
-				<li class="nav-item<?php if($page=='cvs') echo ' active'?>"><a href="/user/cvs" class="btn nav-link">MY CVs</a></li>
+				<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/user/homepage" class="btn nav-link"><?=lang('home')?></a></li>
+				<li class="nav-item<?php if($page=='scanned_jobs') echo ' active'?>"><a href="/user/scanned_jobs" class="btn nav-link"><?=lang('scanned_jobs')?></a></li>
+				<li class="nav-item<?php if($page=='all_jobs') echo ' active'?>"><a href="/user/all_jobs" class="btn nav-link"><?=lang('all_offered_jobs')?></a></li>
+				<li class="nav-item<?php if($page=='cvs') echo ' active'?>"><a href="/user/cvs" class="btn nav-link"><?=lang('my_cvs')?></a></li>
 			</ul>
 			<div class="my-2 my-lg-0">
 				<form action="" method="post">
 					<input type="file" name="snanedFile" id="scanBtn" accept=".png, .jpg, .jpeg" style="display:none;" onchange="imageScanned(this);"/>
 				</form>
-				<a href="javacsript:void(0)" class="btn btn-success" onclick="scanImage()">SCAN JOB</a>
-				<a href="/_inc/user/logout.php" class="btn btn-danger">LOG OUT</a>
+				<ul class="navbar-nav mr-auto" style="display: inline-block;">
+					<li class="nav-item dropdown">
+						<a class="btn nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?=lang('lang')?></a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="/user/homepage?lang=EN">English</a>
+							<a class="dropdown-item" href="/user/homepage?lang=SK">Slovenčina</a>
+						</div>
+					</li>
+				</ul>
+				<a href="javacsript:void(0)" class="btn btn-success" onclick="scanImage()"><?=lang('scan_job')?></a>
+				<a href="/_inc/user/logout.php" class="btn btn-danger"><?=lang('log_out')?></a>
 			</div>
 		</div>
 	</div>

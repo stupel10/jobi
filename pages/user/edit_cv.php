@@ -15,10 +15,10 @@ if( !isset($_GET['cv_id']) || empty($_GET['cv_id']) ) {
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="form-group">
-				<label for="title">TITLE</label><br>
+				<label for="title"><?=lang('person_title')?></label><br>
 				<input type="text" name="title" value="<?php if(isset($cv) && $cv) echo $cv['title'] ?>"><br>
-				<label for="text">TEXT</label><br>
-				<textarea name="text" id='editor1' cols="80" rows="100" placeholder="text"><?php if(isset($cv) && $cv) echo $cv['text'] ?></textarea>
+				<label for="text"><?=lang('text')?></label><br>
+				<textarea name="text" id='editor1' cols="80" rows="100"><?php if(isset($cv) && $cv) echo $cv['text'] ?></textarea>
 				<script>
 					// Replace the <textarea id="editor1"> with a CKEditor
 					// instance, using default configuration.

@@ -15,19 +15,19 @@ $jobs = get_all_offered_jobs_filtered($category,$area);
 ?>
 <div class="page-header">
 	<h1>
-		THESE ARE ALL JOBS, THAT ARE OFFERED
+		<?=lang('all_jobs_title')?>
 	</h1>
 </div>
 <div class="row filters">
 	<div class="col-sm-6">
 		<div class="form-group">
-			Filter by category:
+			<?=lang('filter_category')?>:
 			<?php include_once 'pages/company/edit_job_categories.php' ?>
 		</div>
 	</div>
 	<div class="col-sm-6">
 		<div class="form-group">
-			Filter by area:
+			<?=lang('filter_area')?>:
 			<?php include_once 'pages/company/edit_job_area.php' ?>
 		</div>
 	</div>
@@ -47,7 +47,7 @@ $jobs = get_all_offered_jobs_filtered($category,$area);
 	<div class="col-sm-12">
 		<?php
 			if( $jobs == false) {
-				echo "<br><h3 style='color:red;'>There are no Jobs offered yet! Sorry!";
+				echo "<br><h3 style='color:red;'>".lang('all_jobs_empty')."</h3>";
 			}else {
 		?>
 		<ul class="list-group">
@@ -57,9 +57,9 @@ $jobs = get_all_offered_jobs_filtered($category,$area);
 						<h4><?=$job["title"]?> - <?=$job["category"]?> in <?=$job["area"]?></h4>
 						<!--<p>--><?//=$job["text"]?><!--</p>-->
 						<div class="tools pull-right">
-							<a href="/public/job?id=<?=$job['id']?>" class="btn btn-primary">DETAIL</a>
-							<a href="/user/send_cv_to_job?id=<?=$job['id']?>" class="btn btn-success">SEND CV</a>
-							<a href="javascript:void(0)" onclick="deleteUserJob(<?=$job['id']?>)" class="btn btn-danger delete">DELETE</a>
+							<a href="/public/job?id=<?=$job['id']?>" class="btn btn-primary"><?=lang('detail')?></a>
+							<a href="/user/send_cv_to_job?id=<?=$job['id']?>" class="btn btn-success"><?=lang('send_cv')?></a>
+							<a href="javascript:void(0)" onclick="deleteUserJob(<?=$job['id']?>)" class="btn btn-danger delete"><?=lang('delete')?></a>
 						</div>
 					</li>
 					<?php

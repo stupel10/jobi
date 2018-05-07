@@ -5,14 +5,14 @@ $jobs = get_user_assigned_jobs($user->id);
 ?>
 <div class="page-header">
 	<h1>
-		THESE ARE ALL JOBS, YOU SCANNED
+		<?=lang('all_scanned_title')?>
 	</h1>
 </div>
 <div class="row">
 	<div class="col-sm-12">
 		<?php
 			if( $jobs == false) {
-				echo "<br><h3 style='color:red;'>You dont have any Jobs scanned yet! Go scan it!";
+				echo "<br><h3 style='color:red;'>".lang('all_scanned_empty')."</h3>";
 			}else {
 		?>
 		<ul class="list-group">

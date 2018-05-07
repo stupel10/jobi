@@ -13,14 +13,14 @@
 ?>
 <div class="page-header">
 	<h1>
-		Select your CV to send.
+		<?=lang('select_cv_title')?>.
 	</h1>
 </div>
 <div class="row">
 	<div class="col-sm-12">
 		<?php
 		if( $resumes == false) {
-			echo "<br><h3 style='color:red;'>You dont have any CV yet! Go make it!";
+			echo "<br><h3 style='color:red;'>".lang('all_scanned_title')."</h3>";
 		}else {
 			?>
 			<ul class="list-group">
@@ -31,7 +31,7 @@
 					<li class="list-group-item">
 						<h4><?=$cv["title"]?></h4>
 						<div class="tools pull-right">
-							<a href="/_inc/user/send_cv_to_job.php?job_id=<?=$job_id?>&cv_id=<?=$cv["id"]?>" class="btn btn-success">SEND</a>
+							<a href="/_inc/user/send_cv_to_job.php?job_id=<?=$job_id?>&cv_id=<?=$cv["id"]?>" class="btn btn-success"><?=lang('send_cv')?></a>
 						</div>
 				<?php } ?>
 			</ul>
@@ -39,7 +39,7 @@
 	</div>
 	<div class="col-sm-12">
 		<br>
-		<a href="/user/edit_cv" class="btn btn-warning">CREATE NEW CV</a>
+		<a href="/user/edit_cv" class="btn btn-warning"><?=lang('create')?></a>
 	</div>
 </div>
 

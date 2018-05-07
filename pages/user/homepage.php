@@ -1,5 +1,5 @@
 <div class="page-header">
-	<h1>Your profile</h1>
+	<h1><?=lang('your_profile')?></h1><?=$lng['your_profile']?>
 </div>
 <div class="row">
 	<div class="col-sm-6">
@@ -38,6 +38,6 @@
 </div>
 <div class="row">
 	<div class="col-sm-12">
-		<a href="/user/edit_profile" class="btn btn-success">EDIT MY PROFILE</a>
+		<a href="/user/edit_profile" class="btn btn-success"><?=lang('edit')?></a>
 	</div>
 </div>

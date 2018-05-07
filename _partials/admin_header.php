@@ -44,6 +44,14 @@ if ( is_admin_logged_in() ) {
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item<?php if($page=='homepage') echo ' active'?>"><a href="/admin/homepage" class="btn nav-link">ADMIN HOME</a></li>
 				<li class="nav-item<?php if($page=='query') echo ' active'?>"><a href="/admin/query" class="btn nav-link">DATABASE QUERY</a></li>
+				<li class="nav-item dropdown">
+					<a class="btn nav-link dropdown-toggle " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">USERS</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="/admin/users">USERS</a>
+						<a class="dropdown-item" href="/admin/companies">COMPANIES</a>
+					</div>
+				</li>
+				<li class="nav-item<?php if($page=='logs') echo ' active'?>"><a href="/admin/logs" class="btn nav-link">LOGS</a></li>
 			</ul>
 			<div class="my-2 my-lg-0">
 				<a href="/_inc/user/logout.php" class="btn btn-danger"><?=lang('log_out')?></a>
